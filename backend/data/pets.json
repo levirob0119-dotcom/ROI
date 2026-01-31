@@ -1,0 +1,42 @@
+[
+    {
+        "id": "intelligent_driving",
+        "name": "智能驾驶"
+    },
+    {
+        "id": "intelligent_cockpit",
+        "name": "智能座舱"
+    },
+    {
+        "id": "safety",
+        "name": "安全体验"
+    },
+    {
+        "id": "exterior_design",
+        "name": "外观设计及车身外部功能件"
+    },
+    {
+        "id": "interior_design",
+        "name": "内饰设计"
+    },
+    {
+        "id": "driving_experience",
+        "name": "驾驶体验"
+    },
+    {
+        "id": "riding_experience",
+        "name": "乘坐体验"
+    },
+    {
+        "id": "space",
+        "name": "空间体验"
+    },
+    {
+        "id": "cabin_comfort",
+        "name": "座舱环境与舒适"
+    },
+    {
+        "id": "range_charging",
+        "name": "续航 & 补能体验"
+    }
+]

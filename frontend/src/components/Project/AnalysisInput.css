@@ -1,0 +1,622 @@
+/* ========================================
+   AnalysisInput 组件样式
+   ======================================== */
+
+.analysis-input {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    overflow: hidden;
+}
+
+.analysis-input-header {
+    padding: var(--space-4) var(--space-5);
+    border-bottom: 1px solid var(--color-border-light);
+    flex-shrink: 0;
+}
+
+.analysis-input-header-top {
+    margin-bottom: var(--space-3);
+}
+
+.analysis-input-header h2 {
+    font-size: var(--text-base);
+    font-weight: 600;
+    color: var(--color-text-main);
+    margin: 0;
+}
+
+.analysis-input-subtitle {
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+}
+
+/* 车型 Tabs - L 区内联 */
+.vehicle-tabs-inline {
+    display: flex;
+    gap: var(--space-2);
+    flex-wrap: wrap;
+}
+
+.vehicle-tab-inline {
+    display: flex;
+    align-items: center;
+    gap: var(--space-1);
+    padding: var(--space-1) var(--space-3);
+    font-size: var(--text-xs);
+    font-weight: 500;
+    border-radius: var(--radius-full);
+    border: 1px solid var(--color-border);
+    background-color: white;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.vehicle-tab-inline:hover {
+    border-color: var(--color-text-muted);
+    color: var(--color-text-secondary);
+}
+
+.vehicle-tab-inline--active {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+    color: white;
+}
+
+.vehicle-tab-inline--no-data {
+    opacity: 0.6;
+}
+
+.vehicle-tab-inline--no-data:not(.vehicle-tab-inline--active) {
+    border-style: dashed;
+}
+
+.no-data-dot {
+    width: 6px;
+    height: 6px;
+    background-color: #F59E0B;
+    border-radius: 50%;
+    margin-left: 2px;
+}
+
+/* 无数据警告横条 */
+.no-data-warning {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    padding: var(--space-3) var(--space-4);
+    background-color: #FEF3C7;
+    border-bottom: 1px solid #F59E0B;
+    color: #92400E;
+    font-size: var(--text-sm);
+    font-weight: 500;
+}
+
+/* 添加按钮区域 */
+.add-buttons-row {
+    display: flex;
+    gap: var(--space-3);
+    padding: var(--space-4) var(--space-5);
+    border-bottom: 1px solid var(--color-border-light);
+}
+
+.add-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-4);
+    border-radius: var(--radius-md);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    border: 2px solid;
+    transition: all var(--transition-fast);
+    cursor: pointer;
+    flex: 1;
+}
+
+.add-btn--enhanced {
+    border-color: #86EFAC;
+    color: #166534;
+    background-color: white;
+}
+
+.add-btn--enhanced:hover {
+    background-color: #DCFCE7;
+}
+
+.add-btn--enhanced.add-btn--active {
+    background-color: #16A34A;
+    border-color: #16A34A;
+    color: white;
+}
+
+.add-btn--reduced {
+    border-color: #FCA5A5;
+    color: #991B1B;
+    background-color: white;
+}
+
+.add-btn--reduced:hover {
+    background-color: #FEE2E2;
+}
+
+.add-btn--reduced.add-btn--active {
+    background-color: #DC2626;
+    border-color: #DC2626;
+    color: white;
+}
+
+/* PETS 选择面板 (内联展开，非弹窗) */
+.pets-selection-panel {
+    padding: var(--space-4) var(--space-5);
+    background-color: var(--color-surface);
+    border-bottom: 1px solid var(--color-border);
+    animation: slideUp 200ms ease;
+}
+
+.pets-selection-title {
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-3);
+}
+
+.pets-options-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: var(--space-2);
+}
+
+.pets-option-btn {
+    padding: var(--space-3);
+    font-size: var(--text-sm);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    color: var(--color-text-secondary);
+    background-color: white;
+    text-align: center;
+    transition: all var(--transition-fast);
+    cursor: pointer;
+}
+
+.pets-option-btn:hover {
+    border-color: var(--color-primary);
+    background-color: var(--color-primary-light);
+}
+
+.pets-option-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.pets-selection-footer {
+    margin-top: var(--space-3);
+    text-align: right;
+}
+
+/* Content 区域 */
+.analysis-input-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: var(--space-4) var(--space-5);
+}
+
+/* Empty State */
+.empty-state {
+    border: 2px dashed var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-8);
+    text-align: center;
+    color: var(--color-text-muted);
+}
+
+.empty-state-icon {
+    color: var(--color-text-muted);
+    opacity: 0.4;
+    margin-bottom: var(--space-3);
+}
+
+.empty-state-text {
+    font-size: var(--text-sm);
+    margin-bottom: var(--space-2);
+}
+
+.empty-state-hint {
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+}
+
+.empty-state--no-data {
+    border-color: #F59E0B;
+    background-color: #FFFBEB;
+}
+
+.empty-state-icon--warning {
+    color: #F59E0B;
+    opacity: 0.8;
+}
+
+/* PETS Cards */
+.pets-cards-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+}
+
+.pets-card {
+    background-color: white;
+    border-radius: var(--radius-lg);
+    border: 2px solid var(--color-border);
+    overflow: hidden;
+}
+
+.pets-card--enhanced {
+    border-color: #86EFAC;
+}
+
+.pets-card--reduced {
+    border-color: #FCA5A5;
+}
+
+.pets-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-3) var(--space-4);
+    cursor: pointer;
+    transition: background-color var(--transition-fast);
+}
+
+.pets-card--enhanced .pets-card-header {
+    background-color: #DCFCE7;
+}
+
+.pets-card--enhanced .pets-card-header:hover {
+    background-color: #BBF7D0;
+}
+
+.pets-card--reduced .pets-card-header {
+    background-color: #FEE2E2;
+}
+
+.pets-card--reduced .pets-card-header:hover {
+    background-color: #FECACA;
+}
+
+.pets-card-header-left {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+.pets-card-expand-icon {
+    color: var(--color-text-muted);
+}
+
+.pets-card-name {
+    font-weight: 600;
+    font-size: var(--text-sm);
+    color: var(--color-text-main);
+}
+
+.pets-card-type-badge {
+    font-size: var(--text-xs);
+    padding: 2px var(--space-2);
+    border-radius: var(--radius-full);
+    font-weight: 500;
+}
+
+.pets-card-type-badge--enhanced {
+    background-color: #16A34A;
+    color: white;
+}
+
+.pets-card-type-badge--reduced {
+    background-color: #DC2626;
+    color: white;
+}
+
+.pets-card-header-right {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+}
+
+.pets-card-uv-count {
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+}
+
+.pets-card-delete-btn {
+    color: var(--color-text-muted);
+    padding: var(--space-1);
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
+}
+
+.pets-card-delete-btn:hover {
+    color: var(--color-danger);
+    background-color: var(--color-danger-light);
+}
+
+/* PETS Card Content - UV 树状列表 */
+.pets-card-content {
+    padding: var(--space-3) var(--space-4);
+    border-top: 1px solid var(--color-border-light);
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+/* UV L1 Section - 可折叠 */
+.uv-l1-section {
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--space-2);
+    overflow: hidden;
+}
+
+.uv-l1-section:last-child {
+    margin-bottom: 0;
+}
+
+.uv-l1-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-2) var(--space-3);
+    background-color: var(--color-surface);
+    cursor: pointer;
+    transition: background-color var(--transition-fast);
+}
+
+.uv-l1-header:hover {
+    background-color: var(--color-surface-hover);
+}
+
+.uv-l1-header-left {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+.uv-l1-expand-icon {
+    color: var(--color-text-muted);
+    flex-shrink: 0;
+}
+
+.uv-l1-title {
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--color-text-secondary);
+}
+
+.uv-l1-count {
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+    padding: 2px var(--space-2);
+    background-color: white;
+    border-radius: var(--radius-full);
+}
+
+/* UV L2 List */
+.uv-l2-list {
+    padding: var(--space-2) var(--space-3);
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.uv-l2-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: background-color var(--transition-fast);
+    border: 1px solid transparent;
+}
+
+.uv-l2-item:hover {
+    background-color: var(--color-surface);
+}
+
+.uv-l2-item--selected-enhanced {
+    background-color: #DCFCE7;
+    border-color: #86EFAC;
+}
+
+.uv-l2-item--selected-reduced {
+    background-color: #FEE2E2;
+    border-color: #FCA5A5;
+}
+
+.uv-l2-checkbox {
+    width: 16px;
+    height: 16px;
+    border: 2px solid var(--color-border);
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all var(--transition-fast);
+    background-color: white;
+}
+
+.uv-l2-checkbox--checked-enhanced {
+    background-color: #16A34A;
+    border-color: #16A34A;
+}
+
+.uv-l2-checkbox--checked-reduced {
+    background-color: #DC2626;
+    border-color: #DC2626;
+}
+
+.uv-l2-checkbox-icon {
+    color: white;
+}
+
+.uv-l2-name {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    line-height: 1.3;
+}
+
+/* ========================================
+   AnalysisResult 组件样式
+   ======================================== */
+
+.analysis-result {
+    height: 100%;
+    overflow-y: auto;
+}
+
+.analysis-result-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+}
+
+.analysis-result h2 {
+    font-size: var(--text-base);
+    font-weight: 600;
+    color: var(--color-text-main);
+    margin: 0;
+}
+
+/* Vehicle Result Card */
+.vehicle-result-card {
+    background-color: white;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-border);
+    padding: var(--space-4);
+    transition: all var(--transition-fast);
+}
+
+.vehicle-result-card--active {
+    border-color: var(--color-primary);
+    border-width: 2px;
+    box-shadow: var(--shadow-md);
+}
+
+.vehicle-result-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-3);
+}
+
+.vehicle-result-header-left {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+.vehicle-result-icon {
+    color: var(--color-text-muted);
+}
+
+.vehicle-result-icon--active {
+    color: var(--color-primary);
+}
+
+.vehicle-result-name {
+    font-weight: 600;
+    font-size: var(--text-sm);
+    color: var(--color-text-main);
+}
+
+.vehicle-result-badge {
+    font-size: 10px;
+    padding: 2px var(--space-2);
+    background-color: var(--color-primary);
+    color: white;
+    border-radius: var(--radius-full);
+    font-weight: 500;
+}
+
+.vehicle-result-score {
+    font-size: var(--text-2xl);
+    font-weight: 700;
+    color: var(--color-primary);
+}
+
+.vehicle-result-empty {
+    text-align: center;
+    padding: var(--space-4);
+    color: var(--color-text-muted);
+    font-size: var(--text-xs);
+}
+
+/* Score Grid */
+.score-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-2);
+}
+
+.score-box {
+    padding: var(--space-3);
+    border-radius: var(--radius-md);
+    border: 1px solid;
+}
+
+.score-box--enhanced {
+    background-color: #DCFCE7;
+    border-color: #86EFAC;
+}
+
+.score-box--reduced {
+    background-color: #FEE2E2;
+    border-color: #FCA5A5;
+}
+
+.score-box-label {
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-bottom: 2px;
+    text-transform: uppercase;
+    font-weight: 500;
+}
+
+.score-box--enhanced .score-box-label {
+    color: #166534;
+}
+
+.score-box--reduced .score-box-label {
+    color: #991B1B;
+}
+
+.score-box-value {
+    font-size: var(--text-lg);
+    font-weight: 700;
+}
+
+.score-box--enhanced .score-box-value {
+    color: #166534;
+}
+
+.score-box--reduced .score-box-value {
+    color: #991B1B;
+}
+
+/* Animations */
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

@@ -1,0 +1,65 @@
+.sidebar-header {
+    padding: var(--space-4);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.vehicle-select {
+    width: 100%;
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+    font-size: var(--text-sm);
+    color: var(--color-text-main);
+    background-color: white;
+    cursor: pointer;
+}
+
+.vehicle-select:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 2px var(--color-primary-light);
+}
+
+.section-title {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-text-secondary);
+    margin: var(--space-4) var(--space-4) var(--space-2);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.pets-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+}
+
+.pets-item {
+    display: flex;
+    align-items: center;
+    padding: var(--space-3) var(--space-4);
+    cursor: pointer;
+    transition: background-color var(--transition-fast);
+    border-left: 3px solid transparent;
+}
+
+.pets-item:hover {
+    background-color: var(--color-surface);
+}
+
+.pets-item.active {
+    background-color: var(--color-primary-light);
+    border-left-color: var(--color-primary);
+    color: var(--color-primary);
+    font-weight: 500;
+}
+
+.pets-checkbox {
+    margin-right: var(--space-3);
+    accent-color: var(--color-primary);
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}

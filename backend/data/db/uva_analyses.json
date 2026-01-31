@@ -1,0 +1,756 @@
+[
+  {
+    "id": "a6c430e3-6e2f-40de-9552-bd77bd2ca260",
+    "projectId": "bddd6c4f-d037-40f5-8aa2-9de83840c49d",
+    "vehicle": "leo",
+    "enhancedPets": [
+      {
+        "petsId": "intelligent_driving",
+        "uvL2Names": [
+          "氛围感带来的愉悦享受"
+        ]
+      }
+    ],
+    "reducedPets": [
+      {
+        "petsId": "exterior_design",
+        "uvL2Names": [
+          "氛围感带来的愉悦享受"
+        ]
+      }
+    ],
+    "kanoType": "Performance",
+    "usageRate": 50,
+    "penetrationRate": 30,
+    "result": {
+      "vehicle": "leo",
+      "enhanced": {
+        "totalScore": 5.97,
+        "petsList": [
+          {
+            "petsId": "intelligent_driving",
+            "totalScore": 5.97,
+            "uvL1List": [
+              {
+                "l1Name": "愉悦享受",
+                "l1Category": "核心差异UV",
+                "l1Weight": 0.0652,
+                "totalScore": 5.97,
+                "l2List": [
+                  {
+                    "l2Name": "氛围感带来的愉悦享受",
+                    "score": 5.97
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "reduced": {
+        "totalScore": 4.78,
+        "petsList": [
+          {
+            "petsId": "exterior_design",
+            "totalScore": 4.78,
+            "uvL1List": [
+              {
+                "l1Name": "愉悦享受",
+                "l1Category": "核心差异UV",
+                "l1Weight": 0.0652,
+                "totalScore": 4.78,
+                "l2List": [
+                  {
+                    "l2Name": "氛围感带来的愉悦享受",
+                    "score": 4.78
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "totalEnhanced": 5.97,
+      "totalReduced": 4.78,
+      "finalScore": 1.1899999999999995
+    },
+    "createdAt": "2026-01-30T03:40:44.755Z",
+    "updatedAt": "2026-01-30T03:40:44.755Z"
+  },
+  {
+    "id": "84827426-7883-4c41-8cf9-9583e55d7311",
+    "projectId": "bcd92e05-9d5a-432f-8686-4c58f5c7f079",
+    "vehicle": "leo",
+    "enhancedPets": [
+      {
+        "petsId": "intelligent_driving",
+        "uvL2Names": [
+          "氛围感带来的愉悦享受"
+        ]
+      }
+    ],
+    "reducedPets": [
+      {
+        "petsId": "exterior_design",
+        "uvL2Names": [
+          "氛围感带来的愉悦享受"
+        ]
+      }
+    ],
+    "kanoType": "Performance",
+    "usageRate": 50,
+    "penetrationRate": 30,
+    "result": {
+      "vehicle": "leo",
+      "enhanced": {
+        "totalScore": 5.97,
+        "petsList": [
+          {
+            "petsId": "intelligent_driving",
+            "totalScore": 5.97,
+            "uvL1List": [
+              {
+                "l1Name": "愉悦享受",
+                "l1Category": "核心差异UV",
+                "l1Weight": 0.0652,
+                "totalScore": 5.97,
+                "l2List": [
+                  {
+                    "l2Name": "氛围感带来的愉悦享受",
+                    "score": 5.97
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "reduced": {
+        "totalScore": 4.78,
+        "petsList": [
+          {
+            "petsId": "exterior_design",
+            "totalScore": 4.78,
+            "uvL1List": [
+              {
+                "l1Name": "愉悦享受",
+                "l1Category": "核心差异UV",
+                "l1Weight": 0.0652,
+                "totalScore": 4.78,
+                "l2List": [
+                  {
+                    "l2Name": "氛围感带来的愉悦享受",
+                    "score": 4.78
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "totalEnhanced": 5.97,
+      "totalReduced": 4.78,
+      "finalScore": 1.1899999999999995
+    },
+    "createdAt": "2026-01-30T03:40:44.821Z",
+    "updatedAt": "2026-01-30T03:40:44.821Z"
+  },
+  {
+    "id": "2cd6f272-2055-40f0-8a64-77f8ddea5dc8",
+    "projectId": "7b1d0723-c866-4f24-b1f9-527c78dbc53c",
+    "vehicle": "cetus",
+    "enhancedPets": [
+      {
+        "petsId": "intelligent_driving",
+        "uvL2Names": [
+          "氛围感带来的愉悦享受",
+          "空间感带来的愉悦享受"
+        ]
+      }
+    ],
+    "reducedPets": [
+      {
+        "petsId": "intelligent_driving",
+        "uvL2Names": [
+          "氛围感带来的愉悦享受",
+          "空间感带来的愉悦享受"
+        ]
+      }
+    ],
+    "kanoType": "Performance",
+    "usageRate": 50,
+    "penetrationRate": 30,
+    "result": {
+      "vehicle": "cetus",
+      "enhanced": {
+        "totalScore": 11.649999999999999,
+        "petsList": [
+          {
+            "petsId": "intelligent_driving",
+            "totalScore": 11.649999999999999,
+            "uvL1List": [
+              {
+                "l1Name": "愉悦享受",
+                "l1Category": "核心差异UV",
+                "l1Weight": 0.0652,
+                "totalScore": 11.649999999999999,
+                "l2List": [
+                  {
+                    "l2Name": "氛围感带来的愉悦享受",
+                    "score": 5.97
+                  },
+                  {
+                    "l2Name": "空间感带来的愉悦享受",
+                    "score": 5.68
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "reduced": {
+        "totalScore": 11.649999999999999,
+        "petsList": [
+          {
+            "petsId": "intelligent_driving",
+            "totalScore": 11.649999999999999,
+            "uvL1List": [
+              {
+                "l1Name": "愉悦享受",
+                "l1Category": "核心差异UV",
+                "l1Weight": 0.0652,
+                "totalScore": 11.649999999999999,
+                "l2List": [
+                  {
+                    "l2Name": "氛围感带来的愉悦享受",
+                    "score": 5.97
+                  },
+                  {
+                    "l2Name": "空间感带来的愉悦享受",
+                    "score": 5.68
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "totalEnhanced": 11.649999999999999,
+      "totalReduced": 11.649999999999999,
+      "finalScore": 0
+    },
+    "createdAt": "2026-01-31T13:37:53.810Z",
+    "updatedAt": "2026-01-31T13:37:53.810Z"
+  },
+  {
+    "id": "bfaf6bda-1681-46bd-bf61-12548183a43a",
+    "projectId": "a0d832ca-510b-48e9-b827-37c7a542fad6",
+    "vehicle": "leo",
+    "enhancedPets": [
+      {
+        "petsId": "intelligent_driving",
+        "uvL2Names": [
+          "氛围感带来的愉悦享受"
+        ]
+      }
+    ],
+    "reducedPets": [
+      {
+        "petsId": "exterior_design",
+        "uvL2Names": [
+          "氛围感带来的愉悦享受"
+        ]
+      }
+    ],
+    "kanoType": "Performance",
+    "usageRate": 50,
+    "penetrationRate": 30,
+    "result": {
+      "vehicle": "leo",
+      "enhanced": {
+        "totalScore": 5.97,
+        "petsList": [
+          {
+            "petsId": "intelligent_driving",
+            "totalScore": 5.97,
+            "uvL1List": [
+              {
+                "l1Name": "愉悦享受",
+                "l1Category": "核心差异UV",
+                "l1Weight": 0.0652,
+                "totalScore": 5.97,
+                "l2List": [
+                  {
+                    "l2Name": "氛围感带来的愉悦享受",
+                    "score": 5.97
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "reduced": {
+        "totalScore": 4.78,
+        "petsList": [
+          {
+            "petsId": "exterior_design",
+            "totalScore": 4.78,
+            "uvL1List": [
+              {
+                "l1Name": "愉悦享受",
+                "l1Category": "核心差异UV",
+                "l1Weight": 0.0652,
+                "totalScore": 4.78,
+                "l2List": [
+                  {
+                    "l2Name": "氛围感带来的愉悦享受",
+                    "score": 4.78
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "totalEnhanced": 5.97,
+      "totalReduced": 4.78,
+      "finalScore": 1.1899999999999995
+    },
+    "createdAt": "2026-01-31T13:43:38.046Z",
+    "updatedAt": "2026-01-31T13:43:38.046Z"
+  },
+  {
+    "id": "e87c2c89-72e7-425d-9492-81039ff199e0",
+    "projectId": "2a6b4c5d-55a2-40d6-a2da-471af36168cb",
+    "vehicle": "leo",
+    "enhancedPets": [
+      {
+        "petsId": "intelligent_driving",
+        "uvL2Names": [
+          "氛围感带来的愉悦享受"
+        ]
+      }
+    ],
+    "reducedPets": [
+      {
+        "petsId": "exterior_design",
+        "uvL2Names": [
+          "氛围感带来的愉悦享受"
+        ]
+      }
+    ],
+    "kanoType": "Performance",
+    "usageRate": 50,
+    "penetrationRate": 30,
+    "result": {
+      "vehicle": "leo",
+      "enhanced": {
+        "totalScore": 5.97,
+        "petsList": [
+          {
+            "petsId": "intelligent_driving",
+            "totalScore": 5.97,
+            "uvL1List": [
+              {
+                "l1Name": "愉悦享受",
+                "l1Category": "核心差异UV",
+                "l1Weight": 0.0652,
+                "totalScore": 5.97,
+                "l2List": [
+                  {
+                    "l2Name": "氛围感带来的愉悦享受",
+                    "score": 5.97
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "reduced": {
+        "totalScore": 4.78,
+        "petsList": [
+          {
+            "petsId": "exterior_design",
+            "totalScore": 4.78,
+            "uvL1List": [
+              {
+                "l1Name": "愉悦享受",
+                "l1Category": "核心差异UV",
+                "l1Weight": 0.0652,
+                "totalScore": 4.78,
+                "l2List": [
+                  {
+                    "l2Name": "氛围感带来的愉悦享受",
+                    "score": 4.78
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "totalEnhanced": 5.97,
+      "totalReduced": 4.78,
+      "finalScore": 1.1899999999999995
+    },
+    "createdAt": "2026-01-31T13:43:38.248Z",
+    "updatedAt": "2026-01-31T13:43:38.248Z"
+  },
+  {
+    "id": "3081e65b-be33-49e9-888b-2dc787eb45a1",
+    "projectId": "07f72eac-71c9-472d-8644-ce35e8a56532",
+    "vehicle": "leo",
+    "enhancedPets": [
+      {
+        "petsId": "intelligent_driving",
+        "uvL2Names": [
+          "氛围感带来的愉悦享受"
+        ]
+      }
+    ],
+    "reducedPets": [
+      {
+        "petsId": "exterior_design",
+        "uvL2Names": [
+          "氛围感带来的愉悦享受"
+        ]
+      }
+    ],
+    "kanoType": "Performance",
+    "usageRate": 50,
+    "penetrationRate": 30,
+    "result": {
+      "vehicle": "leo",
+      "enhanced": {
+        "totalScore": 5.97,
+        "petsList": [
+          {
+            "petsId": "intelligent_driving",
+            "totalScore": 5.97,
+            "uvL1List": [
+              {
+                "l1Name": "愉悦享受",
+                "l1Category": "核心差异UV",
+                "l1Weight": 0.0652,
+                "totalScore": 5.97,
+                "l2List": [
+                  {
+                    "l2Name": "氛围感带来的愉悦享受",
+                    "score": 5.97
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "reduced": {
+        "totalScore": 4.78,
+        "petsList": [
+          {
+            "petsId": "exterior_design",
+            "totalScore": 4.78,
+            "uvL1List": [
+              {
+                "l1Name": "愉悦享受",
+                "l1Category": "核心差异UV",
+                "l1Weight": 0.0652,
+                "totalScore": 4.78,
+                "l2List": [
+                  {
+                    "l2Name": "氛围感带来的愉悦享受",
+                    "score": 4.78
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "totalEnhanced": 5.97,
+      "totalReduced": 4.78,
+      "finalScore": 1.1899999999999995
+    },
+    "createdAt": "2026-01-31T13:45:57.812Z",
+    "updatedAt": "2026-01-31T13:45:57.812Z"
+  },
+  {
+    "id": "0b33d633-2d81-492a-8b18-7f1a651eca23",
+    "projectId": "6a0b7ff4-50d9-4969-8a53-66b71e01611d",
+    "vehicle": "leo",
+    "enhancedPets": [
+      {
+        "petsId": "intelligent_driving",
+        "uvL2Names": [
+          "氛围感带来的愉悦享受"
+        ]
+      }
+    ],
+    "reducedPets": [
+      {
+        "petsId": "exterior_design",
+        "uvL2Names": [
+          "氛围感带来的愉悦享受"
+        ]
+      }
+    ],
+    "kanoType": "Performance",
+    "usageRate": 50,
+    "penetrationRate": 30,
+    "result": {
+      "vehicle": "leo",
+      "enhanced": {
+        "totalScore": 5.97,
+        "petsList": [
+          {
+            "petsId": "intelligent_driving",
+            "totalScore": 5.97,
+            "uvL1List": [
+              {
+                "l1Name": "愉悦享受",
+                "l1Category": "核心差异UV",
+                "l1Weight": 0.0652,
+                "totalScore": 5.97,
+                "l2List": [
+                  {
+                    "l2Name": "氛围感带来的愉悦享受",
+                    "score": 5.97
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "reduced": {
+        "totalScore": 4.78,
+        "petsList": [
+          {
+            "petsId": "exterior_design",
+            "totalScore": 4.78,
+            "uvL1List": [
+              {
+                "l1Name": "愉悦享受",
+                "l1Category": "核心差异UV",
+                "l1Weight": 0.0652,
+                "totalScore": 4.78,
+                "l2List": [
+                  {
+                    "l2Name": "氛围感带来的愉悦享受",
+                    "score": 4.78
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "totalEnhanced": 5.97,
+      "totalReduced": 4.78,
+      "finalScore": 1.1899999999999995
+    },
+    "createdAt": "2026-01-31T13:45:58.026Z",
+    "updatedAt": "2026-01-31T13:45:58.026Z"
+  },
+  {
+    "id": "7adb2a67-b016-4f25-a29e-10bdb49a9d06",
+    "projectId": "5173b3e9-4db7-4db6-949d-54b7d7d4650f",
+    "vehicle": "leo",
+    "enhancedPets": [
+      {
+        "petsId": "intelligent_driving",
+        "uvL2Names": [
+          "氛围感带来的愉悦享受"
+        ]
+      }
+    ],
+    "reducedPets": [
+      {
+        "petsId": "exterior_design",
+        "uvL2Names": [
+          "氛围感带来的愉悦享受"
+        ]
+      }
+    ],
+    "kanoType": "Performance",
+    "usageRate": 50,
+    "penetrationRate": 30,
+    "result": {
+      "vehicle": "leo",
+      "enhanced": {
+        "totalScore": 5.97,
+        "petsList": [
+          {
+            "petsId": "intelligent_driving",
+            "totalScore": 5.97,
+            "uvL1List": [
+              {
+                "l1Name": "愉悦享受",
+                "l1Category": "核心差异UV",
+                "l1Weight": 0.0652,
+                "totalScore": 5.97,
+                "l2List": [
+                  {
+                    "l2Name": "氛围感带来的愉悦享受",
+                    "score": 5.97
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "reduced": {
+        "totalScore": 4.78,
+        "petsList": [
+          {
+            "petsId": "exterior_design",
+            "totalScore": 4.78,
+            "uvL1List": [
+              {
+                "l1Name": "愉悦享受",
+                "l1Category": "核心差异UV",
+                "l1Weight": 0.0652,
+                "totalScore": 4.78,
+                "l2List": [
+                  {
+                    "l2Name": "氛围感带来的愉悦享受",
+                    "score": 4.78
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "totalEnhanced": 5.97,
+      "totalReduced": 4.78,
+      "finalScore": 1.1899999999999995
+    },
+    "createdAt": "2026-01-31T13:48:41.749Z",
+    "updatedAt": "2026-01-31T13:48:41.749Z"
+  },
+  {
+    "id": "c9cc3c58-df27-47f3-b53a-8045486db1e0",
+    "projectId": "444207bc-ae08-474c-bbef-6acd68a82929",
+    "vehicle": "leo",
+    "enhancedPets": [
+      {
+        "petsId": "intelligent_driving",
+        "uvL2Names": [
+          "氛围感带来的愉悦享受"
+        ]
+      }
+    ],
+    "reducedPets": [
+      {
+        "petsId": "exterior_design",
+        "uvL2Names": [
+          "氛围感带来的愉悦享受"
+        ]
+      }
+    ],
+    "kanoType": "Performance",
+    "usageRate": 50,
+    "penetrationRate": 30,
+    "result": {
+      "vehicle": "leo",
+      "enhanced": {
+        "totalScore": 5.97,
+        "petsList": [
+          {
+            "petsId": "intelligent_driving",
+            "totalScore": 5.97,
+            "uvL1List": [
+              {
+                "l1Name": "愉悦享受",
+                "l1Category": "核心差异UV",
+                "l1Weight": 0.0652,
+                "totalScore": 5.97,
+                "l2List": [
+                  {
+                    "l2Name": "氛围感带来的愉悦享受",
+                    "score": 5.97
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "reduced": {
+        "totalScore": 4.78,
+        "petsList": [
+          {
+            "petsId": "exterior_design",
+            "totalScore": 4.78,
+            "uvL1List": [
+              {
+                "l1Name": "愉悦享受",
+                "l1Category": "核心差异UV",
+                "l1Weight": 0.0652,
+                "totalScore": 4.78,
+                "l2List": [
+                  {
+                    "l2Name": "氛围感带来的愉悦享受",
+                    "score": 4.78
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "totalEnhanced": 5.97,
+      "totalReduced": 4.78,
+      "finalScore": 1.1899999999999995
+    },
+    "createdAt": "2026-01-31T13:48:42.136Z",
+    "updatedAt": "2026-01-31T13:48:42.136Z"
+  },
+  {
+    "id": "d8956cc3-1d62-4f02-809c-cf6d823b89d6",
+    "projectId": "7b1d0723-c866-4f24-b1f9-527c78dbc53c",
+    "vehicle": "leo",
+    "enhancedPets": [
+      {
+        "petsId": "intelligent_cockpit",
+        "uvL2Names": [
+          "氛围感带来的愉悦享受",
+          "空间感带来的愉悦享受"
+        ]
+      }
+    ],
+    "reducedPets": [],
+    "kanoType": "Performance",
+    "usageRate": 50,
+    "penetrationRate": 30,
+    "result": {},
+    "createdAt": "2026-01-31T15:29:44.609Z",
+    "updatedAt": "2026-01-31T15:38:30.622Z"
+  },
+  {
+    "id": "4ad521a5-833d-4ddb-ba1d-0b0442b00e49",
+    "projectId": "7b1d0723-c866-4f24-b1f9-527c78dbc53c",
+    "vehicle": "draco",
+    "enhancedPets": [
+      {
+        "petsId": "intelligent_cockpit",
+        "uvL2Names": [
+          "氛围感带来的愉悦享受",
+          "空间感带来的愉悦享受"
+        ]
+      }
+    ],
+    "reducedPets": [],
+    "kanoType": "Performance",
+    "usageRate": 50,
+    "penetrationRate": 30,
+    "result": {},
+    "createdAt": "2026-01-31T15:31:06.548Z",
+    "updatedAt": "2026-01-31T15:31:06.548Z"
+  }
+]

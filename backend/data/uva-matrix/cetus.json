@@ -1,0 +1,1959 @@
+[
+  {
+    "l1_name": "愉悦享受",
+    "l1_category": "核心差异UV",
+    "l1_weight": 0.0652,
+    "l2_name": "氛围感带来的愉悦享受",
+    "l2_weight": 0.82,
+    "pets_scores": {
+      "intelligent_driving": 5.97,
+      "intelligent_cockpit": 7.17,
+      "safety": 0.0,
+      "exterior_design": 4.78,
+      "interior_design": 8.8,
+      "driving_experience": 5.09,
+      "riding_experience": 16.72,
+      "space": 11.95,
+      "cabin_comfort": 9.26,
+      "range_charging": 4.73
+    }
+  },
+  {
+    "l1_name": "愉悦享受",
+    "l1_category": "核心差异UV",
+    "l1_weight": 0.0652,
+    "l2_name": "空间感带来的愉悦享受",
+    "l2_weight": 0.78,
+    "pets_scores": {
+      "intelligent_driving": 5.68,
+      "intelligent_cockpit": 6.82,
+      "safety": 0.0,
+      "exterior_design": 4.54,
+      "interior_design": 8.37,
+      "driving_experience": 4.84,
+      "riding_experience": 15.91,
+      "space": 11.36,
+      "cabin_comfort": 8.81,
+      "range_charging": 4.5
+    }
+  },
+  {
+    "l1_name": "愉悦享受",
+    "l1_category": "核心差异UV",
+    "l1_weight": 0.0652,
+    "l2_name": "设计审美带来的愉悦享受",
+    "l2_weight": 0.76,
+    "pets_scores": {
+      "intelligent_driving": 5.54,
+      "intelligent_cockpit": 6.64,
+      "safety": 0.0,
+      "exterior_design": 4.43,
+      "interior_design": 8.16,
+      "driving_experience": 4.72,
+      "riding_experience": 15.5,
+      "space": 11.07,
+      "cabin_comfort": 8.58,
+      "range_charging": 4.39
+    }
+  },
+  {
+    "l1_name": "愉悦享受",
+    "l1_category": "核心差异UV",
+    "l1_weight": 0.0652,
+    "l2_name": "安静、静谧的空间带来的愉悦享受",
+    "l2_weight": 0.72,
+    "pets_scores": {
+      "intelligent_driving": 5.24,
+      "intelligent_cockpit": 6.29,
+      "safety": 0.0,
+      "exterior_design": 4.2,
+      "interior_design": 7.73,
+      "driving_experience": 4.47,
+      "riding_experience": 14.68,
+      "space": 10.49,
+      "cabin_comfort": 8.13,
+      "range_charging": 4.16
+    }
+  },
+  {
+    "l1_name": "愉悦享受",
+    "l1_category": "核心差异UV",
+    "l1_weight": 0.0652,
+    "l2_name": "与家人朋友互动带来的愉悦享受",
+    "l2_weight": 0.7,
+    "pets_scores": {
+      "intelligent_driving": 5.1,
+      "intelligent_cockpit": 6.12,
+      "safety": 0.0,
+      "exterior_design": 4.08,
+      "interior_design": 7.51,
+      "driving_experience": 4.34,
+      "riding_experience": 14.28,
+      "space": 10.2,
+      "cabin_comfort": 7.9,
+      "range_charging": 4.04
+    }
+  },
+  {
+    "l1_name": "愉悦享受",
+    "l1_category": "核心差异UV",
+    "l1_weight": 0.0652,
+    "l2_name": "驾驶乐趣，速度与激情带来的愉悦",
+    "l2_weight": 0.67,
+    "pets_scores": {
+      "intelligent_driving": 4.88,
+      "intelligent_cockpit": 5.86,
+      "safety": 0.0,
+      "exterior_design": 3.9,
+      "interior_design": 7.19,
+      "driving_experience": 4.16,
+      "riding_experience": 13.66,
+      "space": 9.76,
+      "cabin_comfort": 7.56,
+      "range_charging": 3.87
+    }
+  },
+  {
+    "l1_name": "愉悦享受",
+    "l1_category": "核心差异UV",
+    "l1_weight": 0.0652,
+    "l2_name": "影音娱乐体验的愉悦享受",
+    "l2_weight": 0.66,
+    "pets_scores": {
+      "intelligent_driving": 4.81,
+      "intelligent_cockpit": 5.77,
+      "safety": 0.0,
+      "exterior_design": 3.85,
+      "interior_design": 7.08,
+      "driving_experience": 4.1,
+      "riding_experience": 13.46,
+      "space": 9.61,
+      "cabin_comfort": 7.45,
+      "range_charging": 3.81
+    }
+  },
+  {
+    "l1_name": "愉悦享受",
+    "l1_category": "核心差异UV",
+    "l1_weight": 0.0652,
+    "l2_name": "智能交互如NOMI带来的愉悦享受",
+    "l2_weight": 0.65,
+    "pets_scores": {
+      "intelligent_driving": 4.73,
+      "intelligent_cockpit": 5.68,
+      "safety": 0.0,
+      "exterior_design": 3.79,
+      "interior_design": 6.97,
+      "driving_experience": 4.03,
+      "riding_experience": 13.26,
+      "space": 9.47,
+      "cabin_comfort": 7.34,
+      "range_charging": 3.75
+    }
+  },
+  {
+    "l1_name": "愉悦享受",
+    "l1_category": "核心差异UV",
+    "l1_weight": 0.0652,
+    "l2_name": "贴心的服务带来的愉悦享受",
+    "l2_weight": 0.58,
+    "pets_scores": {
+      "intelligent_driving": 4.22,
+      "intelligent_cockpit": 5.07,
+      "safety": 0.0,
+      "exterior_design": 3.38,
+      "interior_design": 6.22,
+      "driving_experience": 3.6,
+      "riding_experience": 11.83,
+      "space": 8.45,
+      "cabin_comfort": 6.55,
+      "range_charging": 3.35
+    }
+  },
+  {
+    "l1_name": "愉悦享受",
+    "l1_category": "核心差异UV",
+    "l1_weight": 0.0652,
+    "l2_name": "仪式感带来的愉悦享受",
+    "l2_weight": 0.46,
+    "pets_scores": {
+      "intelligent_driving": 3.35,
+      "intelligent_cockpit": 4.02,
+      "safety": 0.0,
+      "exterior_design": 2.68,
+      "interior_design": 4.94,
+      "driving_experience": 2.86,
+      "riding_experience": 9.38,
+      "space": 6.7,
+      "cabin_comfort": 5.19,
+      "range_charging": 2.66
+    }
+  },
+  {
+    "l1_name": "愉悦享受",
+    "l1_category": "核心差异UV",
+    "l1_weight": 0.0652,
+    "l2_name": "户外活动带来的愉悦享受",
+    "l2_weight": 0.38,
+    "pets_scores": {
+      "intelligent_driving": 2.77,
+      "intelligent_cockpit": 3.32,
+      "safety": 0.0,
+      "exterior_design": 2.21,
+      "interior_design": 4.08,
+      "driving_experience": 2.36,
+      "riding_experience": 7.75,
+      "space": 5.54,
+      "cabin_comfort": 4.29,
+      "range_charging": 2.19
+    }
+  },
+  {
+    "l1_name": "彰显品味",
+    "l1_category": "核心差异UV",
+    "l1_weight": 0.0518,
+    "l2_name": "高级感，彰显高级的设计审美品味",
+    "l2_weight": 0.91,
+    "pets_scores": {
+      "intelligent_driving": 0.0,
+      "intelligent_cockpit": 0.0,
+      "safety": 0.0,
+      "exterior_design": 124.41,
+      "interior_design": 94.79,
+      "driving_experience": 0.0,
+      "riding_experience": 0.0,
+      "space": 0.0,
+      "cabin_comfort": 0.0,
+      "range_charging": 0.0
+    }
+  },
+  {
+    "l1_name": "彰显品味",
+    "l1_category": "核心差异UV",
+    "l1_weight": 0.0518,
+    "l2_name": "风格鲜明，彰显不同风格的设计审美品味",
+    "l2_weight": 0.62,
+    "pets_scores": {
+      "intelligent_driving": 0.0,
+      "intelligent_cockpit": 0.0,
+      "safety": 0.0,
+      "exterior_design": 84.76,
+      "interior_design": 64.58,
+      "driving_experience": 0.0,
+      "riding_experience": 0.0,
+      "space": 0.0,
+      "cabin_comfort": 0.0,
+      "range_charging": 0.0
+    }
+  },
+  {
+    "l1_name": "彰显品味",
+    "l1_category": "核心差异UV",
+    "l1_weight": 0.0518,
+    "l2_name": "有内涵，展现不同的文化内涵",
+    "l2_weight": 0.62,
+    "pets_scores": {
+      "intelligent_driving": 0.0,
+      "intelligent_cockpit": 0.0,
+      "safety": 0.0,
+      "exterior_design": 84.76,
+      "interior_design": 64.58,
+      "driving_experience": 0.0,
+      "riding_experience": 0.0,
+      "space": 0.0,
+      "cabin_comfort": 0.0,
+      "range_charging": 0.0
+    }
+  },
+  {
+    "l1_name": "关怀陪伴",
+    "l1_category": "核心差异UV",
+    "l1_weight": 0.0546,
+    "l2_name": "关怀陪伴「小孩」",
+    "l2_weight": 0.92,
+    "pets_scores": {
+      "intelligent_driving": 0.0,
+      "intelligent_cockpit": 13.36,
+      "safety": 16.45,
+      "exterior_design": 0.0,
+      "interior_design": 0.0,
+      "driving_experience": 8.35,
+      "riding_experience": 26.72,
+      "space": 16.7,
+      "cabin_comfort": 25.55,
+      "range_charging": 6.68
+    }
+  },
+  {
+    "l1_name": "关怀陪伴",
+    "l1_category": "核心差异UV",
+    "l1_weight": 0.0546,
+    "l2_name": "关怀陪伴「伴侣」",
+    "l2_weight": 0.87,
+    "pets_scores": {
+      "intelligent_driving": 0.0,
+      "intelligent_cockpit": 12.63,
+      "safety": 15.56,
+      "exterior_design": 0.0,
+      "interior_design": 0.0,
+      "driving_experience": 7.9,
+      "riding_experience": 25.27,
+      "space": 15.79,
+      "cabin_comfort": 24.16,
+      "range_charging": 6.32
+    }
+  },
+  {
+    "l1_name": "关怀陪伴",
+    "l1_category": "核心差异UV",
+    "l1_weight": 0.0546,
+    "l2_name": "关怀陪伴「自己」",
+    "l2_weight": 0.78,
+    "pets_scores": {
+      "intelligent_driving": 0.0,
+      "intelligent_cockpit": 11.33,
+      "safety": 13.95,
+      "exterior_design": 0.0,
+      "interior_design": 0.0,
+      "driving_experience": 7.08,
+      "riding_experience": 22.65,
+      "space": 14.16,
+      "cabin_comfort": 21.66,
+      "range_charging": 5.66
+    }
+  },
+  {
+    "l1_name": "关怀陪伴",
+    "l1_category": "核心差异UV",
+    "l1_weight": 0.0546,
+    "l2_name": "关怀陪伴「老人」",
+    "l2_weight": 0.68,
+    "pets_scores": {
+      "intelligent_driving": 0.0,
+      "intelligent_cockpit": 9.87,
+      "safety": 12.16,
+      "exterior_design": 0.0,
+      "interior_design": 0.0,
+      "driving_experience": 6.17,
+      "riding_experience": 19.75,
+      "space": 12.34,
+      "cabin_comfort": 18.88,
+      "range_charging": 4.94
+    }
+  },
+  {
+    "l1_name": "关怀陪伴",
+    "l1_category": "核心差异UV",
+    "l1_weight": 0.0546,
+    "l2_name": "关怀陪伴「商务合作伙伴」",
+    "l2_weight": 0.64,
+    "pets_scores": {
+      "intelligent_driving": 0.0,
+      "intelligent_cockpit": 9.29,
+      "safety": 11.45,
+      "exterior_design": 0.0,
+      "interior_design": 0.0,
+      "driving_experience": 5.81,
+      "riding_experience": 18.59,
+      "space": 11.62,
+      "cabin_comfort": 17.77,
+      "range_charging": 4.65
+    }
+  },
+  {
+    "l1_name": "关怀陪伴",
+    "l1_category": "核心差异UV",
+    "l1_weight": 0.0546,
+    "l2_name": "关怀陪伴「朋友」",
+    "l2_weight": 0.39,
+    "pets_scores": {
+      "intelligent_driving": 0.0,
+      "intelligent_cockpit": 5.66,
+      "safety": 6.98,
+      "exterior_design": 0.0,
+      "interior_design": 0.0,
+      "driving_experience": 3.54,
+      "riding_experience": 11.33,
+      "space": 7.08,
+      "cabin_comfort": 10.83,
+      "range_charging": 2.83
+    }
+  },
+  {
+    "l1_name": "关怀陪伴",
+    "l1_category": "核心差异UV",
+    "l1_weight": 0.0546,
+    "l2_name": "关怀陪伴「宠物」",
+    "l2_weight": 0.13,
+    "pets_scores": {
+      "intelligent_driving": 0.0,
+      "intelligent_cockpit": 1.89,
+      "safety": 2.33,
+      "exterior_design": 0.0,
+      "interior_design": 0.0,
+      "driving_experience": 1.18,
+      "riding_experience": 3.78,
+      "space": 2.36,
+      "cabin_comfort": 3.61,
+      "range_charging": 0.94
+    }
+  },
+  {
+    "l1_name": "社交价值",
+    "l1_category": "核心差异UV",
+    "l1_weight": 0.0273,
+    "l2_name": "建立社交联系，认识新的朋友、车友圈",
+    "l2_weight": 0.76,
+    "pets_scores": {
+      "intelligent_driving": 0.0,
+      "intelligent_cockpit": 5.89,
+      "safety": 0.0,
+      "exterior_design": 45.97,
+      "interior_design": 35.52,
+      "driving_experience": 9.63,
+      "riding_experience": 0.0,
+      "space": 0.0,
+      "cabin_comfort": 0.0,
+      "range_charging": 0.0
+    }
+  },
+  {
+    "l1_name": "社交价值",
+    "l1_category": "核心差异UV",
+    "l1_weight": 0.0273,
+    "l2_name": "商业社交价值，获得合作伙伴的信任",
+    "l2_weight": 0.75,
+    "pets_scores": {
+      "intelligent_driving": 0.0,
+      "intelligent_cockpit": 5.82,
+      "safety": 0.0,
+      "exterior_design": 45.37,
+      "interior_design": 35.05,
+      "driving_experience": 9.5,
+      "riding_experience": 0.0,
+      "space": 0.0,
+      "cabin_comfort": 0.0,
+      "range_charging": 0.0
+    }
+  },
+  {
+    "l1_name": "社交价值",
+    "l1_category": "核心差异UV",
+    "l1_weight": 0.0273,
+    "l2_name": "获得他人关注，得到认可，关注度回头率高",
+    "l2_weight": 0.63,
+    "pets_scores": {
+      "intelligent_driving": 0.0,
+      "intelligent_cockpit": 4.89,
+      "safety": 0.0,
+      "exterior_design": 38.11,
+      "interior_design": 29.44,
+      "driving_experience": 7.98,
+      "riding_experience": 0.0,
+      "space": 0.0,
+      "cabin_comfort": 0.0,
+      "range_charging": 0.0
+    }
+  },
+  {
+    "l1_name": "科技领先感",
+    "l1_category": "基线UV",
+    "l1_weight": 0.0656,
+    "l2_name": "科技引领先锋，探索前沿，创新引领",
+    "l2_weight": 0.75,
+    "pets_scores": {
+      "intelligent_driving": 140.19,
+      "intelligent_cockpit": 127.57,
+      "safety": 0.0,
+      "exterior_design": 56.08,
+      "interior_design": 49.07,
+      "driving_experience": 49.07,
+      "riding_experience": 0.0,
+      "space": 0.0,
+      "cabin_comfort": 0.0,
+      "range_charging": 70.1
+    }
+  },
+  {
+    "l1_name": "科技领先感",
+    "l1_category": "基线UV",
+    "l1_weight": 0.0656,
+    "l2_name": "追随科技潮流，紧追时代，不落后",
+    "l2_weight": 0.45,
+    "pets_scores": {
+      "intelligent_driving": 46.73,
+      "intelligent_cockpit": 42.52,
+      "safety": 0.0,
+      "exterior_design": 18.69,
+      "interior_design": 16.36,
+      "driving_experience": 16.36,
+      "riding_experience": 0.0,
+      "space": 0.0,
+      "cabin_comfort": 0.0,
+      "range_charging": 23.37
+    }
+  },
+  {
+    "l1_name": "安心感",
+    "l1_category": "基线UV",
+    "l1_weight": 0.0501,
+    "l2_name": "发生危险/事故时保障生命安全",
+    "l2_weight": 0.86,
+    "pets_scores": {
+      "intelligent_driving": 10.01,
+      "intelligent_cockpit": 3.85,
+      "safety": 17.43,
+      "exterior_design": 0.0,
+      "interior_design": 5.85,
+      "driving_experience": 9.86,
+      "riding_experience": 6.16,
+      "space": 10.01,
+      "cabin_comfort": 6.15,
+      "range_charging": 7.04
+    }
+  },
+  {
+    "l1_name": "安心感",
+    "l1_category": "基线UV",
+    "l1_weight": 0.0501,
+    "l2_name": "预防/避免/减少事故发生",
+    "l2_weight": 0.84,
+    "pets_scores": {
+      "intelligent_driving": 9.78,
+      "intelligent_cockpit": 3.76,
+      "safety": 17.02,
+      "exterior_design": 0.0,
+      "interior_design": 5.71,
+      "driving_experience": 9.63,
+      "riding_experience": 6.02,
+      "space": 9.78,
+      "cabin_comfort": 6.01,
+      "range_charging": 6.88
+    }
+  },
+  {
+    "l1_name": "安心感",
+    "l1_category": "基线UV",
+    "l1_weight": 0.0501,
+    "l2_name": "出行和补能安心保障",
+    "l2_weight": 0.79,
+    "pets_scores": {
+      "intelligent_driving": 9.2,
+      "intelligent_cockpit": 3.54,
+      "safety": 16.01,
+      "exterior_design": 0.0,
+      "interior_design": 5.37,
+      "driving_experience": 9.06,
+      "riding_experience": 5.66,
+      "space": 9.2,
+      "cabin_comfort": 5.65,
+      "range_charging": 6.47
+    }
+  },
+  {
+    "l1_name": "安心感",
+    "l1_category": "基线UV",
+    "l1_weight": 0.0501,
+    "l2_name": "事故发生后的主动支持和保障",
+    "l2_weight": 0.75,
+    "pets_scores": {
+      "intelligent_driving": 8.73,
+      "intelligent_cockpit": 3.36,
+      "safety": 15.2,
+      "exterior_design": 0.0,
+      "interior_design": 5.1,
+      "driving_experience": 8.6,
+      "riding_experience": 5.37,
+      "space": 8.73,
+      "cabin_comfort": 5.36,
+      "range_charging": 6.14
+    }
+  },
+  {
+    "l1_name": "安心感",
+    "l1_category": "基线UV",
+    "l1_weight": 0.0501,
+    "l2_name": "功能操作交互安心，驾驶不分心",
+    "l2_weight": 0.63,
+    "pets_scores": {
+      "intelligent_driving": 7.34,
+      "intelligent_cockpit": 2.82,
+      "safety": 12.77,
+      "exterior_design": 0.0,
+      "interior_design": 4.28,
+      "driving_experience": 7.22,
+      "riding_experience": 4.51,
+      "space": 7.34,
+      "cabin_comfort": 4.5,
+      "range_charging": 5.16
+    }
+  },
+  {
+    "l1_name": "安心感",
+    "l1_category": "基线UV",
+    "l1_weight": 0.0501,
+    "l2_name": "身体健康安全",
+    "l2_weight": 0.6,
+    "pets_scores": {
+      "intelligent_driving": 6.99,
+      "intelligent_cockpit": 2.69,
+      "safety": 12.16,
+      "exterior_design": 0.0,
+      "interior_design": 4.08,
+      "driving_experience": 6.88,
+      "riding_experience": 4.3,
+      "space": 6.99,
+      "cabin_comfort": 4.29,
+      "range_charging": 4.91
+    }
+  },
+  {
+    "l1_name": "安心感",
+    "l1_category": "基线UV",
+    "l1_weight": 0.0501,
+    "l2_name": "个人隐私信息保护",
+    "l2_weight": 0.77,
+    "pets_scores": {
+      "intelligent_driving": 8.97,
+      "intelligent_cockpit": 3.45,
+      "safety": 15.6,
+      "exterior_design": 0.0,
+      "interior_design": 5.23,
+      "driving_experience": 8.83,
+      "riding_experience": 5.52,
+      "space": 8.97,
+      "cabin_comfort": 5.51,
+      "range_charging": 6.31
+    }
+  },
+  {
+    "l1_name": "安心感",
+    "l1_category": "基线UV",
+    "l1_weight": 0.0501,
+    "l2_name": "财产安全保护",
+    "l2_weight": 0.4,
+    "pets_scores": {
+      "intelligent_driving": 4.66,
+      "intelligent_cockpit": 1.79,
+      "safety": 8.11,
+      "exterior_design": 0.0,
+      "interior_design": 2.72,
+      "driving_experience": 4.59,
+      "riding_experience": 2.87,
+      "space": 4.66,
+      "cabin_comfort": 2.86,
+      "range_charging": 3.28
+    }
+  },
+  {
+    "l1_name": "得体感",
+    "l1_category": "基线UV",
+    "l1_weight": 0.0362,
+    "l2_name": "符合自己社会身份、形象的得体感",
+    "l2_weight": 0.8,
+    "pets_scores": {
+      "intelligent_driving": 0.0,
+      "intelligent_cockpit": 0.0,
+      "safety": 0.0,
+      "exterior_design": 49.06,
+      "interior_design": 15.21,
+      "driving_experience": 0.0,
+      "riding_experience": 20.28,
+      "space": 30.42,
+      "cabin_comfort": 20.28,
+      "range_charging": 0.0
+    }
+  },
+  {
+    "l1_name": "得体感",
+    "l1_category": "基线UV",
+    "l1_weight": 0.0362,
+    "l2_name": "适合不同场合的得体感，如出席正式商务场景的得体感",
+    "l2_weight": 0.7,
+    "pets_scores": {
+      "intelligent_driving": 0.0,
+      "intelligent_cockpit": 0.0,
+      "safety": 0.0,
+      "exterior_design": 42.93,
+      "interior_design": 13.31,
+      "driving_experience": 0.0,
+      "riding_experience": 17.74,
+      "space": 26.62,
+      "cabin_comfort": 17.74,
+      "range_charging": 0.0
+    }
+  },
+  {
+    "l1_name": "得体感",
+    "l1_category": "基线UV",
+    "l1_weight": 0.0362,
+    "l2_name": "招待重要合作伙伴、朋友时的得体感，对他人的得体尊重",
+    "l2_weight": 0.64,
+    "pets_scores": {
+      "intelligent_driving": 0.0,
+      "intelligent_cockpit": 0.0,
+      "safety": 0.0,
+      "exterior_design": 39.25,
+      "interior_design": 12.17,
+      "driving_experience": 0.0,
+      "riding_experience": 16.22,
+      "space": 24.33,
+      "cabin_comfort": 16.22,
+      "range_charging": 0.0
+    }
+  },
+  {
+    "l1_name": "展现实力",
+    "l1_category": "基线UV",
+    "l1_weight": 0.0247,
+    "l2_name": "展现社会身份地位",
+    "l2_weight": 0.74,
+    "pets_scores": {
+      "intelligent_driving": 0.0,
+      "intelligent_cockpit": 0.0,
+      "safety": 0.0,
+      "exterior_design": 52.74,
+      "interior_design": 36.92,
+      "driving_experience": 0.0,
+      "riding_experience": 0.0,
+      "space": 0.0,
+      "cabin_comfort": 0.0,
+      "range_charging": 0.0
+    }
+  },
+  {
+    "l1_name": "展现实力",
+    "l1_category": "基线UV",
+    "l1_weight": 0.0247,
+    "l2_name": "展现经济实力",
+    "l2_weight": 0.67,
+    "pets_scores": {
+      "intelligent_driving": 0.0,
+      "intelligent_cockpit": 0.0,
+      "safety": 0.0,
+      "exterior_design": 47.75,
+      "interior_design": 33.42,
+      "driving_experience": 0.0,
+      "riding_experience": 0.0,
+      "space": 0.0,
+      "cabin_comfort": 0.0,
+      "range_charging": 0.0
+    }
+  },
+  {
+    "l1_name": "展现实力",
+    "l1_category": "基线UV",
+    "l1_weight": 0.0247,
+    "l2_name": "展现技术实力",
+    "l2_weight": 0.63,
+    "pets_scores": {
+      "intelligent_driving": 0.0,
+      "intelligent_cockpit": 0.0,
+      "safety": 0.0,
+      "exterior_design": 44.9,
+      "interior_design": 31.43,
+      "driving_experience": 0.0,
+      "riding_experience": 0.0,
+      "space": 0.0,
+      "cabin_comfort": 0.0,
+      "range_charging": 0.0
+    }
+  },
+  {
+    "l1_name": "自由感",
+    "l1_category": "基线UV",
+    "l1_weight": 0.0443,
+    "l2_name": "出行自由，距离不受限制，想去哪就去哪",
+    "l2_weight": 0.86,
+    "pets_scores": {
+      "intelligent_driving": 17.48,
+      "intelligent_cockpit": 0.0,
+      "safety": 0.0,
+      "exterior_design": 0.0,
+      "interior_design": 0.0,
+      "driving_experience": 20.97,
+      "riding_experience": 0.0,
+      "space": 24.47,
+      "cabin_comfort": 13.98,
+      "range_charging": 29.84
+    }
+  },
+  {
+    "l1_name": "自由感",
+    "l1_category": "基线UV",
+    "l1_weight": 0.0443,
+    "l2_name": "车内活动自由，可娱乐、办公、小憩休息、睡觉、吃饭等",
+    "l2_weight": 0.83,
+    "pets_scores": {
+      "intelligent_driving": 16.87,
+      "intelligent_cockpit": 0.0,
+      "safety": 0.0,
+      "exterior_design": 0.0,
+      "interior_design": 0.0,
+      "driving_experience": 20.24,
+      "riding_experience": 0.0,
+      "space": 23.61,
+      "cabin_comfort": 13.49,
+      "range_charging": 28.8
+    }
+  },
+  {
+    "l1_name": "自由感",
+    "l1_category": "基线UV",
+    "l1_weight": 0.0443,
+    "l2_name": "车内交互自由，可轻松自由的进行交互操作",
+    "l2_weight": 0.79,
+    "pets_scores": {
+      "intelligent_driving": 16.05,
+      "intelligent_cockpit": 0.0,
+      "safety": 0.0,
+      "exterior_design": 0.0,
+      "interior_design": 0.0,
+      "driving_experience": 19.27,
+      "riding_experience": 0.0,
+      "space": 22.48,
+      "cabin_comfort": 12.84,
+      "range_charging": 27.41
+    }
+  },
+  {
+    "l1_name": "自由感",
+    "l1_category": "基线UV",
+    "l1_weight": 0.0443,
+    "l2_name": "户外探索和冒险的自由感，不同路况和天气环境都能胜任",
+    "l2_weight": 0.63,
+    "pets_scores": {
+      "intelligent_driving": 12.8,
+      "intelligent_cockpit": 0.0,
+      "safety": 0.0,
+      "exterior_design": 0.0,
+      "interior_design": 0.0,
+      "driving_experience": 15.36,
+      "riding_experience": 0.0,
+      "space": 17.92,
+      "cabin_comfort": 10.24,
+      "range_charging": 21.86
+    }
+  },
+  {
+    "l1_name": "自由感",
+    "l1_category": "基线UV",
+    "l1_weight": 0.0443,
+    "l2_name": "户外活动和场景自由，可户外露营、冲浪、钓鱼等活动",
+    "l2_weight": 0.46,
+    "pets_scores": {
+      "intelligent_driving": 9.35,
+      "intelligent_cockpit": 0.0,
+      "safety": 0.0,
+      "exterior_design": 0.0,
+      "interior_design": 0.0,
+      "driving_experience": 11.22,
+      "riding_experience": 0.0,
+      "space": 13.09,
+      "cabin_comfort": 7.48,
+      "range_charging": 15.96
+    }
+  },
+  {
+    "l1_name": "表达个性",
+    "l1_category": "弱需求",
+    "l1_weight": 0.0328,
+    "l2_name": "表达形象的独特性、审美的与众不同",
+    "l2_weight": 0.86,
+    "pets_scores": {
+      "intelligent_driving": 0.0,
+      "intelligent_cockpit": 0.0,
+      "safety": 0.0,
+      "exterior_design": 77.11,
+      "interior_design": 61.69,
+      "driving_experience": 0.0,
+      "riding_experience": 0.0,
+      "space": 0.0,
+      "cabin_comfort": 0.0,
+      "range_charging": 0.0
+    }
+  },
+  {
+    "l1_name": "表达个性",
+    "l1_category": "弱需求",
+    "l1_weight": 0.0328,
+    "l2_name": "表达专属性、稀缺性，独一无二",
+    "l2_weight": 0.67,
+    "pets_scores": {
+      "intelligent_driving": 0.0,
+      "intelligent_cockpit": 0.0,
+      "safety": 0.0,
+      "exterior_design": 60.08,
+      "interior_design": 48.06,
+      "driving_experience": 0.0,
+      "riding_experience": 0.0,
+      "space": 0.0,
+      "cabin_comfort": 0.0,
+      "range_charging": 0.0
+    }
+  },
+  {
+    "l1_name": "表达个性",
+    "l1_category": "弱需求",
+    "l1_weight": 0.0328,
+    "l2_name": "表达小众文化和价值取向的不同",
+    "l2_weight": 0.5,
+    "pets_scores": {
+      "intelligent_driving": 0.0,
+      "intelligent_cockpit": 0.0,
+      "safety": 0.0,
+      "exterior_design": 44.83,
+      "interior_design": 35.87,
+      "driving_experience": 0.0,
+      "riding_experience": 0.0,
+      "space": 0.0,
+      "cabin_comfort": 0.0,
+      "range_charging": 0.0
+    }
+  },
+  {
+    "l1_name": "社会责任感",
+    "l1_category": "弱需求",
+    "l1_weight": 0.0172,
+    "l2_name": "支持国产、本土、民族品牌的社会责任感",
+    "l2_weight": 0.7,
+    "pets_scores": {
+      "intelligent_driving": 0.0,
+      "intelligent_cockpit": 0.0,
+      "safety": 0.0,
+      "exterior_design": 0.0,
+      "interior_design": 16.22,
+      "driving_experience": 0.0,
+      "riding_experience": 0.0,
+      "space": 0.0,
+      "cabin_comfort": 0.0,
+      "range_charging": 32.43
+    }
+  },
+  {
+    "l1_name": "社会责任感",
+    "l1_category": "弱需求",
+    "l1_weight": 0.0172,
+    "l2_name": "环保，可持续的社会责任感",
+    "l2_weight": 0.66,
+    "pets_scores": {
+      "intelligent_driving": 0.0,
+      "intelligent_cockpit": 0.0,
+      "safety": 0.0,
+      "exterior_design": 0.0,
+      "interior_design": 15.29,
+      "driving_experience": 0.0,
+      "riding_experience": 0.0,
+      "space": 0.0,
+      "cabin_comfort": 0.0,
+      "range_charging": 30.58
+    }
+  },
+  {
+    "l1_name": "社会责任感",
+    "l1_category": "弱需求",
+    "l1_weight": 0.0172,
+    "l2_name": "帮助他人、共享资源的社会责任感",
+    "l2_weight": 0.58,
+    "pets_scores": {
+      "intelligent_driving": 0.0,
+      "intelligent_cockpit": 0.0,
+      "safety": 0.0,
+      "exterior_design": 0.0,
+      "interior_design": 13.44,
+      "driving_experience": 0.0,
+      "riding_experience": 0.0,
+      "space": 0.0,
+      "cabin_comfort": 0.0,
+      "range_charging": 26.87
+    }
+  },
+  {
+    "l1_name": "社会责任感",
+    "l1_category": "弱需求",
+    "l1_weight": 0.0172,
+    "l2_name": "保障公共安全、保护他人、驾驶安全的社会责任感",
+    "l2_weight": 0.54,
+    "pets_scores": {
+      "intelligent_driving": 0.0,
+      "intelligent_cockpit": 0.0,
+      "safety": 0.0,
+      "exterior_design": 0.0,
+      "interior_design": 12.51,
+      "driving_experience": 0.0,
+      "riding_experience": 0.0,
+      "space": 0.0,
+      "cabin_comfort": 0.0,
+      "range_charging": 25.02
+    }
+  },
+  {
+    "l1_name": "舒适价值",
+    "l1_category": "核心差异UV",
+    "l1_weight": 0.0594,
+    "l2_name": "乘坐舒适",
+    "l2_weight": 0.92,
+    "pets_scores": {
+      "intelligent_driving": 4.22,
+      "intelligent_cockpit": 12.66,
+      "safety": 0.0,
+      "exterior_design": 9.08,
+      "interior_design": 10.93,
+      "driving_experience": 12.16,
+      "riding_experience": 17.56,
+      "space": 12.66,
+      "cabin_comfort": 21.99,
+      "range_charging": 0.0
+    }
+  },
+  {
+    "l1_name": "舒适价值",
+    "l1_category": "核心差异UV",
+    "l1_weight": 0.0594,
+    "l2_name": "驾驶平稳舒适",
+    "l2_weight": 0.87,
+    "pets_scores": {
+      "intelligent_driving": 3.99,
+      "intelligent_cockpit": 11.97,
+      "safety": 0.0,
+      "exterior_design": 8.58,
+      "interior_design": 10.33,
+      "driving_experience": 11.49,
+      "riding_experience": 16.6,
+      "space": 11.97,
+      "cabin_comfort": 20.79,
+      "range_charging": 0.0
+    }
+  },
+  {
+    "l1_name": "舒适价值",
+    "l1_category": "核心差异UV",
+    "l1_weight": 0.0594,
+    "l2_name": "空间舒适",
+    "l2_weight": 0.83,
+    "pets_scores": {
+      "intelligent_driving": 3.81,
+      "intelligent_cockpit": 11.42,
+      "safety": 0.0,
+      "exterior_design": 8.19,
+      "interior_design": 9.86,
+      "driving_experience": 10.97,
+      "riding_experience": 15.84,
+      "space": 11.42,
+      "cabin_comfort": 19.84,
+      "range_charging": 0.0
+    }
+  },
+  {
+    "l1_name": "舒适价值",
+    "l1_category": "核心差异UV",
+    "l1_weight": 0.0594,
+    "l2_name": "声音舒适/环境安静",
+    "l2_weight": 0.79,
+    "pets_scores": {
+      "intelligent_driving": 3.62,
+      "intelligent_cockpit": 10.87,
+      "safety": 0.0,
+      "exterior_design": 7.79,
+      "interior_design": 9.38,
+      "driving_experience": 10.44,
+      "riding_experience": 15.08,
+      "space": 10.87,
+      "cabin_comfort": 18.88,
+      "range_charging": 0.0
+    }
+  },
+  {
+    "l1_name": "舒适价值",
+    "l1_category": "核心差异UV",
+    "l1_weight": 0.0594,
+    "l2_name": "环境氛围舒适",
+    "l2_weight": 0.76,
+    "pets_scores": {
+      "intelligent_driving": 3.49,
+      "intelligent_cockpit": 10.46,
+      "safety": 0.0,
+      "exterior_design": 7.5,
+      "interior_design": 9.03,
+      "driving_experience": 10.04,
+      "riding_experience": 14.5,
+      "space": 10.46,
+      "cabin_comfort": 18.17,
+      "range_charging": 0.0
+    }
+  },
+  {
+    "l1_name": "舒适价值",
+    "l1_category": "核心差异UV",
+    "l1_weight": 0.0594,
+    "l2_name": "空气清新舒适",
+    "l2_weight": 0.67,
+    "pets_scores": {
+      "intelligent_driving": 3.07,
+      "intelligent_cockpit": 9.22,
+      "safety": 0.0,
+      "exterior_design": 6.61,
+      "interior_design": 7.96,
+      "driving_experience": 8.85,
+      "riding_experience": 12.79,
+      "space": 9.22,
+      "cabin_comfort": 16.01,
+      "range_charging": 0.0
+    }
+  },
+  {
+    "l1_name": "舒适价值",
+    "l1_category": "核心差异UV",
+    "l1_weight": 0.0594,
+    "l2_name": "温度舒适",
+    "l2_weight": 0.56,
+    "pets_scores": {
+      "intelligent_driving": 2.57,
+      "intelligent_cockpit": 7.71,
+      "safety": 0.0,
+      "exterior_design": 5.52,
+      "interior_design": 6.65,
+      "driving_experience": 7.4,
+      "riding_experience": 10.69,
+      "space": 7.71,
+      "cabin_comfort": 13.39,
+      "range_charging": 0.0
+    }
+  },
+  {
+    "l1_name": "空间价值",
+    "l1_category": "核心差异UV",
+    "l1_weight": 0.0734,
+    "l2_name": "乘坐空间",
+    "l2_weight": 0.86,
+    "pets_scores": {
+      "intelligent_driving": 0.0,
+      "intelligent_cockpit": 0.0,
+      "safety": 0.0,
+      "exterior_design": 0.0,
+      "interior_design": 15.31,
+      "driving_experience": 0.0,
+      "riding_experience": 40.42,
+      "space": 73.49,
+      "cabin_comfort": 30.62,
+      "range_charging": 0.0
+    }
+  },
+  {
+    "l1_name": "空间价值",
+    "l1_category": "核心差异UV",
+    "l1_weight": 0.0734,
+    "l2_name": "储物空间",
+    "l2_weight": 0.83,
+    "pets_scores": {
+      "intelligent_driving": 0.0,
+      "intelligent_cockpit": 0.0,
+      "safety": 0.0,
+      "exterior_design": 0.0,
+      "interior_design": 14.78,
+      "driving_experience": 0.0,
+      "riding_experience": 39.01,
+      "space": 70.93,
+      "cabin_comfort": 29.55,
+      "range_charging": 0.0
+    }
+  },
+  {
+    "l1_name": "空间价值",
+    "l1_category": "核心差异UV",
+    "l1_weight": 0.0734,
+    "l2_name": "空间功能与灵活性，功能丰富，满足不同场景",
+    "l2_weight": 0.79,
+    "pets_scores": {
+      "intelligent_driving": 0.0,
+      "intelligent_cockpit": 0.0,
+      "safety": 0.0,
+      "exterior_design": 0.0,
+      "interior_design": 14.06,
+      "driving_experience": 0.0,
+      "riding_experience": 37.13,
+      "space": 67.51,
+      "cabin_comfort": 28.13,
+      "range_charging": 0.0
+    }
+  },
+  {
+    "l1_name": "空间价值",
+    "l1_category": "核心差异UV",
+    "l1_weight": 0.0734,
+    "l2_name": "空间带来的进出便利",
+    "l2_weight": 0.74,
+    "pets_scores": {
+      "intelligent_driving": 0.0,
+      "intelligent_cockpit": 0.0,
+      "safety": 0.0,
+      "exterior_design": 0.0,
+      "interior_design": 13.17,
+      "driving_experience": 0.0,
+      "riding_experience": 34.78,
+      "space": 63.24,
+      "cabin_comfort": 26.35,
+      "range_charging": 0.0
+    }
+  },
+  {
+    "l1_name": "空间价值",
+    "l1_category": "核心差异UV",
+    "l1_weight": 0.0734,
+    "l2_name": "空间视觉感受（空间视野感等）",
+    "l2_weight": 0.73,
+    "pets_scores": {
+      "intelligent_driving": 0.0,
+      "intelligent_cockpit": 0.0,
+      "safety": 0.0,
+      "exterior_design": 0.0,
+      "interior_design": 13.0,
+      "driving_experience": 0.0,
+      "riding_experience": 34.31,
+      "space": 62.38,
+      "cabin_comfort": 25.99,
+      "range_charging": 0.0
+    }
+  },
+  {
+    "l1_name": "驾驶&出行价值",
+    "l1_category": "核心差异UV",
+    "l1_weight": 0.0666,
+    "l2_name": "满足出行距离需求，续航里程、补能基础设施保障",
+    "l2_weight": 0.85,
+    "pets_scores": {
+      "intelligent_driving": 35.26,
+      "intelligent_cockpit": 0.0,
+      "safety": 35.26,
+      "exterior_design": 0.0,
+      "interior_design": 0.0,
+      "driving_experience": 49.36,
+      "riding_experience": 0.0,
+      "space": 0.0,
+      "cabin_comfort": 0.0,
+      "range_charging": 53.74
+    }
+  },
+  {
+    "l1_name": "驾驶&出行价值",
+    "l1_category": "核心差异UV",
+    "l1_weight": 0.0666,
+    "l2_name": "满足基础驾驶功能，加速、制动、转向等",
+    "l2_weight": 0.84,
+    "pets_scores": {
+      "intelligent_driving": 34.84,
+      "intelligent_cockpit": 0.0,
+      "safety": 34.84,
+      "exterior_design": 0.0,
+      "interior_design": 0.0,
+      "driving_experience": 48.78,
+      "riding_experience": 0.0,
+      "space": 0.0,
+      "cabin_comfort": 0.0,
+      "range_charging": 53.11
+    }
+  },
+  {
+    "l1_name": "驾驶&出行价值",
+    "l1_category": "核心差异UV",
+    "l1_weight": 0.0666,
+    "l2_name": "满足出行效率需求，充换电速度等补能效率等",
+    "l2_weight": 0.82,
+    "pets_scores": {
+      "intelligent_driving": 34.01,
+      "intelligent_cockpit": 0.0,
+      "safety": 34.01,
+      "exterior_design": 0.0,
+      "interior_design": 0.0,
+      "driving_experience": 47.62,
+      "riding_experience": 0.0,
+      "space": 0.0,
+      "cabin_comfort": 0.0,
+      "range_charging": 51.85
+    }
+  },
+  {
+    "l1_name": "驾驶&出行价值",
+    "l1_category": "核心差异UV",
+    "l1_weight": 0.0666,
+    "l2_name": "满足基础出行场景，实现通勤等需求",
+    "l2_weight": 0.75,
+    "pets_scores": {
+      "intelligent_driving": 31.11,
+      "intelligent_cockpit": 0.0,
+      "safety": 31.11,
+      "exterior_design": 0.0,
+      "interior_design": 0.0,
+      "driving_experience": 43.55,
+      "riding_experience": 0.0,
+      "space": 0.0,
+      "cabin_comfort": 0.0,
+      "range_charging": 47.42
+    }
+  },
+  {
+    "l1_name": "安全价值",
+    "l1_category": "基线UV",
+    "l1_weight": 0.0672,
+    "l2_name": "发生危险/事故时保障生命安全",
+    "l2_weight": 0.86,
+    "pets_scores": {
+      "intelligent_driving": 21.26,
+      "intelligent_cockpit": 11.34,
+      "safety": 51.03,
+      "exterior_design": 0.0,
+      "interior_design": 0.0,
+      "driving_experience": 12.76,
+      "riding_experience": 14.18,
+      "space": 0.0,
+      "cabin_comfort": 0.0,
+      "range_charging": 8.51
+    }
+  },
+  {
+    "l1_name": "安全价值",
+    "l1_category": "基线UV",
+    "l1_weight": 0.0672,
+    "l2_name": "预防/避免/减少事故发生",
+    "l2_weight": 0.84,
+    "pets_scores": {
+      "intelligent_driving": 20.77,
+      "intelligent_cockpit": 11.08,
+      "safety": 49.85,
+      "exterior_design": 0.0,
+      "interior_design": 0.0,
+      "driving_experience": 12.46,
+      "riding_experience": 13.85,
+      "space": 0.0,
+      "cabin_comfort": 0.0,
+      "range_charging": 8.31
+    }
+  },
+  {
+    "l1_name": "安全价值",
+    "l1_category": "基线UV",
+    "l1_weight": 0.0672,
+    "l2_name": "事故发生后的主动支持和保障",
+    "l2_weight": 0.75,
+    "pets_scores": {
+      "intelligent_driving": 18.54,
+      "intelligent_cockpit": 9.89,
+      "safety": 44.51,
+      "exterior_design": 0.0,
+      "interior_design": 0.0,
+      "driving_experience": 11.13,
+      "riding_experience": 12.36,
+      "space": 0.0,
+      "cabin_comfort": 0.0,
+      "range_charging": 7.42
+    }
+  },
+  {
+    "l1_name": "安全价值",
+    "l1_category": "基线UV",
+    "l1_weight": 0.0672,
+    "l2_name": "功能操作交互安心，驾驶不分心",
+    "l2_weight": 0.63,
+    "pets_scores": {
+      "intelligent_driving": 15.58,
+      "intelligent_cockpit": 8.31,
+      "safety": 37.38,
+      "exterior_design": 0.0,
+      "interior_design": 0.0,
+      "driving_experience": 9.35,
+      "riding_experience": 10.38,
+      "space": 0.0,
+      "cabin_comfort": 0.0,
+      "range_charging": 6.23
+    }
+  },
+  {
+    "l1_name": "安全价值",
+    "l1_category": "基线UV",
+    "l1_weight": 0.0672,
+    "l2_name": "身体健康安全",
+    "l2_weight": 0.6,
+    "pets_scores": {
+      "intelligent_driving": 14.84,
+      "intelligent_cockpit": 7.91,
+      "safety": 35.6,
+      "exterior_design": 0.0,
+      "interior_design": 0.0,
+      "driving_experience": 8.9,
+      "riding_experience": 9.89,
+      "space": 0.0,
+      "cabin_comfort": 0.0,
+      "range_charging": 5.93
+    }
+  },
+  {
+    "l1_name": "安全价值",
+    "l1_category": "基线UV",
+    "l1_weight": 0.0672,
+    "l2_name": "个人隐私信息保护",
+    "l2_weight": 0.77,
+    "pets_scores": {
+      "intelligent_driving": 19.04,
+      "intelligent_cockpit": 10.15,
+      "safety": 45.69,
+      "exterior_design": 0.0,
+      "interior_design": 0.0,
+      "driving_experience": 11.42,
+      "riding_experience": 12.69,
+      "space": 0.0,
+      "cabin_comfort": 0.0,
+      "range_charging": 7.62
+    }
+  },
+  {
+    "l1_name": "安全价值",
+    "l1_category": "基线UV",
+    "l1_weight": 0.0672,
+    "l2_name": "财产安全保护",
+    "l2_weight": 0.4,
+    "pets_scores": {
+      "intelligent_driving": 9.89,
+      "intelligent_cockpit": 5.27,
+      "safety": 23.74,
+      "exterior_design": 0.0,
+      "interior_design": 0.0,
+      "driving_experience": 5.93,
+      "riding_experience": 6.59,
+      "space": 0.0,
+      "cabin_comfort": 0.0,
+      "range_charging": 3.96
+    }
+  },
+  {
+    "l1_name": "解放时间&精力价值",
+    "l1_category": "弱需求",
+    "l1_weight": 0.0398,
+    "l2_name": "解放驾驶精力，减轻驾驶疲劳",
+    "l2_weight": 0.82,
+    "pets_scores": {
+      "intelligent_driving": 31.34,
+      "intelligent_cockpit": 17.91,
+      "safety": 0.0,
+      "exterior_design": 0.0,
+      "interior_design": 0.0,
+      "driving_experience": 24.63,
+      "riding_experience": 0.0,
+      "space": 0.0,
+      "cabin_comfort": 0.0,
+      "range_charging": 11.19
+    }
+  },
+  {
+    "l1_name": "解放时间&精力价值",
+    "l1_category": "弱需求",
+    "l1_weight": 0.0398,
+    "l2_name": "提高补能效率，减少补能时间",
+    "l2_weight": 0.81,
+    "pets_scores": {
+      "intelligent_driving": 30.96,
+      "intelligent_cockpit": 17.69,
+      "safety": 0.0,
+      "exterior_design": 0.0,
+      "interior_design": 0.0,
+      "driving_experience": 24.33,
+      "riding_experience": 0.0,
+      "space": 0.0,
+      "cabin_comfort": 0.0,
+      "range_charging": 11.06
+    }
+  },
+  {
+    "l1_name": "解放时间&精力价值",
+    "l1_category": "弱需求",
+    "l1_weight": 0.0398,
+    "l2_name": "减少维修、保养、处理问题的时间和精力",
+    "l2_weight": 0.75,
+    "pets_scores": {
+      "intelligent_driving": 28.67,
+      "intelligent_cockpit": 16.38,
+      "safety": 0.0,
+      "exterior_design": 0.0,
+      "interior_design": 0.0,
+      "driving_experience": 22.52,
+      "riding_experience": 0.0,
+      "space": 0.0,
+      "cabin_comfort": 0.0,
+      "range_charging": 10.24
+    }
+  },
+  {
+    "l1_name": "解放时间&精力价值",
+    "l1_category": "弱需求",
+    "l1_weight": 0.0398,
+    "l2_name": "提高出行效率，出行路线和规划最优",
+    "l2_weight": 0.74,
+    "pets_scores": {
+      "intelligent_driving": 28.28,
+      "intelligent_cockpit": 16.16,
+      "safety": 0.0,
+      "exterior_design": 0.0,
+      "interior_design": 0.0,
+      "driving_experience": 22.22,
+      "riding_experience": 0.0,
+      "space": 0.0,
+      "cabin_comfort": 0.0,
+      "range_charging": 10.1
+    }
+  },
+  {
+    "l1_name": "解放时间&精力价值",
+    "l1_category": "弱需求",
+    "l1_weight": 0.0398,
+    "l2_name": "减少操作精力，轻松交互，直观易懂",
+    "l2_weight": 0.72,
+    "pets_scores": {
+      "intelligent_driving": 27.52,
+      "intelligent_cockpit": 15.73,
+      "safety": 0.0,
+      "exterior_design": 0.0,
+      "interior_design": 0.0,
+      "driving_experience": 21.62,
+      "riding_experience": 0.0,
+      "space": 0.0,
+      "cabin_comfort": 0.0,
+      "range_charging": 9.83
+    }
+  },
+  {
+    "l1_name": "可靠性价值",
+    "l1_category": "基线UV",
+    "l1_weight": 0.0607,
+    "l2_name": "产品质量稳定可靠",
+    "l2_weight": 0.95,
+    "pets_scores": {
+      "intelligent_driving": 28.38,
+      "intelligent_cockpit": 31.3,
+      "safety": 76.39,
+      "exterior_design": 0.0,
+      "interior_design": 0.0,
+      "driving_experience": 32.01,
+      "riding_experience": 0.0,
+      "space": 0.0,
+      "cabin_comfort": 0.0,
+      "range_charging": 46.12
+    }
+  },
+  {
+    "l1_name": "可靠性价值",
+    "l1_category": "基线UV",
+    "l1_weight": 0.0607,
+    "l2_name": "产品售后服务稳定可靠",
+    "l2_weight": 0.9,
+    "pets_scores": {
+      "intelligent_driving": 26.89,
+      "intelligent_cockpit": 29.65,
+      "safety": 72.37,
+      "exterior_design": 0.0,
+      "interior_design": 0.0,
+      "driving_experience": 30.32,
+      "riding_experience": 0.0,
+      "space": 0.0,
+      "cabin_comfort": 0.0,
+      "range_charging": 43.69
+    }
+  },
+  {
+    "l1_name": "可靠性价值",
+    "l1_category": "基线UV",
+    "l1_weight": 0.0607,
+    "l2_name": "品牌和公司稳定可靠",
+    "l2_weight": 0.84,
+    "pets_scores": {
+      "intelligent_driving": 25.09,
+      "intelligent_cockpit": 27.68,
+      "safety": 67.54,
+      "exterior_design": 0.0,
+      "interior_design": 0.0,
+      "driving_experience": 28.3,
+      "riding_experience": 0.0,
+      "space": 0.0,
+      "cabin_comfort": 0.0,
+      "range_charging": 40.78
+    }
+  },
+  {
+    "l1_name": "经济性价值",
+    "l1_category": "弱需求",
+    "l1_weight": 0.0434,
+    "l2_name": "使用成本",
+    "l2_weight": 0.84,
+    "pets_scores": {
+      "intelligent_driving": 0.0,
+      "intelligent_cockpit": 0.0,
+      "safety": 0.0,
+      "exterior_design": 0.0,
+      "interior_design": 0.0,
+      "driving_experience": 0.0,
+      "riding_experience": 0.0,
+      "space": 0.0,
+      "cabin_comfort": 0.0,
+      "range_charging": 80.15
+    }
+  },
+  {
+    "l1_name": "经济性价值",
+    "l1_category": "弱需求",
+    "l1_weight": 0.0434,
+    "l2_name": "保养成本",
+    "l2_weight": 0.74,
+    "pets_scores": {
+      "intelligent_driving": 0.0,
+      "intelligent_cockpit": 0.0,
+      "safety": 0.0,
+      "exterior_design": 0.0,
+      "interior_design": 0.0,
+      "driving_experience": 0.0,
+      "riding_experience": 0.0,
+      "space": 0.0,
+      "cabin_comfort": 0.0,
+      "range_charging": 70.61
+    }
+  },
+  {
+    "l1_name": "经济性价值",
+    "l1_category": "弱需求",
+    "l1_weight": 0.0434,
+    "l2_name": "购买成本",
+    "l2_weight": 0.74,
+    "pets_scores": {
+      "intelligent_driving": 0.0,
+      "intelligent_cockpit": 0.0,
+      "safety": 0.0,
+      "exterior_design": 0.0,
+      "interior_design": 0.0,
+      "driving_experience": 0.0,
+      "riding_experience": 0.0,
+      "space": 0.0,
+      "cabin_comfort": 0.0,
+      "range_charging": 70.61
+    }
+  },
+  {
+    "l1_name": "经济性价值",
+    "l1_category": "弱需求",
+    "l1_weight": 0.0434,
+    "l2_name": "维修成本",
+    "l2_weight": 0.72,
+    "pets_scores": {
+      "intelligent_driving": 0.0,
+      "intelligent_cockpit": 0.0,
+      "safety": 0.0,
+      "exterior_design": 0.0,
+      "interior_design": 0.0,
+      "driving_experience": 0.0,
+      "riding_experience": 0.0,
+      "space": 0.0,
+      "cabin_comfort": 0.0,
+      "range_charging": 68.7
+    }
+  },
+  {
+    "l1_name": "经济性价值",
+    "l1_category": "弱需求",
+    "l1_weight": 0.0434,
+    "l2_name": "保险成本",
+    "l2_weight": 0.55,
+    "pets_scores": {
+      "intelligent_driving": 0.0,
+      "intelligent_cockpit": 0.0,
+      "safety": 0.0,
+      "exterior_design": 0.0,
+      "interior_design": 0.0,
+      "driving_experience": 0.0,
+      "riding_experience": 0.0,
+      "space": 0.0,
+      "cabin_comfort": 0.0,
+      "range_charging": 52.48
+    }
+  },
+  {
+    "l1_name": "经济性价值",
+    "l1_category": "弱需求",
+    "l1_weight": 0.0434,
+    "l2_name": "资产保值",
+    "l2_weight": 0.57,
+    "pets_scores": {
+      "intelligent_driving": 0.0,
+      "intelligent_cockpit": 0.0,
+      "safety": 0.0,
+      "exterior_design": 0.0,
+      "interior_design": 0.0,
+      "driving_experience": 0.0,
+      "riding_experience": 0.0,
+      "space": 0.0,
+      "cabin_comfort": 0.0,
+      "range_charging": 54.39
+    }
+  },
+  {
+    "l1_name": "经济性价值",
+    "l1_category": "弱需求",
+    "l1_weight": 0.0434,
+    "l2_name": "经济收益价值",
+    "l2_weight": 0.39,
+    "pets_scores": {
+      "intelligent_driving": 0.0,
+      "intelligent_cockpit": 0.0,
+      "safety": 0.0,
+      "exterior_design": 0.0,
+      "interior_design": 0.0,
+      "driving_experience": 0.0,
+      "riding_experience": 0.0,
+      "space": 0.0,
+      "cabin_comfort": 0.0,
+      "range_charging": 37.21
+    }
+  },
+  {
+    "l1_name": "娱乐价值",
+    "l1_category": "基线UV",
+    "l1_weight": 0.0504,
+    "l2_name": "车内休闲娱乐方式的多样丰富性",
+    "l2_weight": 0.91,
+    "pets_scores": {
+      "intelligent_driving": 0.0,
+      "intelligent_cockpit": 134.3,
+      "safety": 0.0,
+      "exterior_design": 55.96,
+      "interior_design": 0.0,
+      "driving_experience": 0.0,
+      "riding_experience": 0.0,
+      "space": 0.0,
+      "cabin_comfort": 92.89,
+      "range_charging": 0.0
+    }
+  },
+  {
+    "l1_name": "娱乐价值",
+    "l1_category": "基线UV",
+    "l1_weight": 0.0504,
+    "l2_name": "车带来户外娱乐方式和活动的拓展",
+    "l2_weight": 0.71,
+    "pets_scores": {
+      "intelligent_driving": 0.0,
+      "intelligent_cockpit": 104.78,
+      "safety": 0.0,
+      "exterior_design": 43.66,
+      "interior_design": 0.0,
+      "driving_experience": 0.0,
+      "riding_experience": 0.0,
+      "space": 0.0,
+      "cabin_comfort": 72.47,
+      "range_charging": 0.0
+    }
+  },
+  {
+    "l1_name": "便利性价值",
+    "l1_category": "基线UV",
+    "l1_weight": 0.0391,
+    "l2_name": "驾驶操控便利性",
+    "l2_weight": 0.8,
+    "pets_scores": {
+      "intelligent_driving": 0.0,
+      "intelligent_cockpit": 5.15,
+      "safety": 0.0,
+      "exterior_design": 17.16,
+      "interior_design": 8.58,
+      "driving_experience": 0.0,
+      "riding_experience": 0.0,
+      "space": 8.58,
+      "cabin_comfort": 0.0,
+      "range_charging": 14.28
+    }
+  },
+  {
+    "l1_name": "便利性价值",
+    "l1_category": "基线UV",
+    "l1_weight": 0.0391,
+    "l2_name": "车机软件功能如导航交互操作便利",
+    "l2_weight": 0.78,
+    "pets_scores": {
+      "intelligent_driving": 0.0,
+      "intelligent_cockpit": 5.02,
+      "safety": 0.0,
+      "exterior_design": 16.74,
+      "interior_design": 8.37,
+      "driving_experience": 0.0,
+      "riding_experience": 0.0,
+      "space": 8.37,
+      "cabin_comfort": 0.0,
+      "range_charging": 13.92
+    }
+  },
+  {
+    "l1_name": "便利性价值",
+    "l1_category": "基线UV",
+    "l1_weight": 0.0391,
+    "l2_name": "远程查看和操作功能便利，如远程调节车内空调温度",
+    "l2_weight": 0.77,
+    "pets_scores": {
+      "intelligent_driving": 0.0,
+      "intelligent_cockpit": 4.96,
+      "safety": 0.0,
+      "exterior_design": 16.52,
+      "interior_design": 8.26,
+      "driving_experience": 0.0,
+      "riding_experience": 0.0,
+      "space": 8.26,
+      "cabin_comfort": 0.0,
+      "range_charging": 13.74
+    }
+  },
+  {
+    "l1_name": "便利性价值",
+    "l1_category": "基线UV",
+    "l1_weight": 0.0391,
+    "l2_name": "出行带来的整体生活便利性",
+    "l2_weight": 0.74,
+    "pets_scores": {
+      "intelligent_driving": 0.0,
+      "intelligent_cockpit": 4.76,
+      "safety": 0.0,
+      "exterior_design": 15.88,
+      "interior_design": 7.94,
+      "driving_experience": 0.0,
+      "riding_experience": 0.0,
+      "space": 7.94,
+      "cabin_comfort": 0.0,
+      "range_charging": 13.2
+    }
+  },
+  {
+    "l1_name": "便利性价值",
+    "l1_category": "基线UV",
+    "l1_weight": 0.0391,
+    "l2_name": "补能便利性",
+    "l2_weight": 0.74,
+    "pets_scores": {
+      "intelligent_driving": 0.0,
+      "intelligent_cockpit": 4.76,
+      "safety": 0.0,
+      "exterior_design": 15.88,
+      "interior_design": 7.94,
+      "driving_experience": 0.0,
+      "riding_experience": 0.0,
+      "space": 7.94,
+      "cabin_comfort": 0.0,
+      "range_charging": 13.2
+    }
+  },
+  {
+    "l1_name": "便利性价值",
+    "l1_category": "基线UV",
+    "l1_weight": 0.0391,
+    "l2_name": "车内硬件功能如座椅调节操作便利",
+    "l2_weight": 0.72,
+    "pets_scores": {
+      "intelligent_driving": 0.0,
+      "intelligent_cockpit": 4.63,
+      "safety": 0.0,
+      "exterior_design": 15.45,
+      "interior_design": 7.72,
+      "driving_experience": 0.0,
+      "riding_experience": 0.0,
+      "space": 7.72,
+      "cabin_comfort": 0.0,
+      "range_charging": 12.85
+    }
+  },
+  {
+    "l1_name": "便利性价值",
+    "l1_category": "基线UV",
+    "l1_weight": 0.0391,
+    "l2_name": "储物和拿取便利性",
+    "l2_weight": 0.7,
+    "pets_scores": {
+      "intelligent_driving": 0.0,
+      "intelligent_cockpit": 4.51,
+      "safety": 0.0,
+      "exterior_design": 15.02,
+      "interior_design": 7.51,
+      "driving_experience": 0.0,
+      "riding_experience": 0.0,
+      "space": 7.51,
+      "cabin_comfort": 0.0,
+      "range_charging": 12.49
+    }
+  },
+  {
+    "l1_name": "便利性价值",
+    "l1_category": "基线UV",
+    "l1_weight": 0.0391,
+    "l2_name": "上下车进出便利性",
+    "l2_weight": 0.57,
+    "pets_scores": {
+      "intelligent_driving": 0.0,
+      "intelligent_cockpit": 3.67,
+      "safety": 0.0,
+      "exterior_design": 12.23,
+      "interior_design": 6.11,
+      "driving_experience": 0.0,
+      "riding_experience": 0.0,
+      "space": 6.11,
+      "cabin_comfort": 0.0,
+      "range_charging": 10.17
+    }
+  },
+  {
+    "l1_name": "健康价值",
+    "l1_category": "弱需求",
+    "l1_weight": 0.0302,
+    "l2_name": "身体舒适健康，符合人体工程学",
+    "l2_weight": 0.76,
+    "pets_scores": {
+      "intelligent_driving": 0.0,
+      "intelligent_cockpit": 0.0,
+      "safety": 0.0,
+      "exterior_design": 0.0,
+      "interior_design": 47.96,
+      "driving_experience": 0.0,
+      "riding_experience": 0.0,
+      "space": 0.0,
+      "cabin_comfort": 60.46,
+      "range_charging": 0.0
+    }
+  },
+  {
+    "l1_name": "健康价值",
+    "l1_category": "弱需求",
+    "l1_weight": 0.0302,
+    "l2_name": "空气质量健康，清新无异味、无有害物质",
+    "l2_weight": 0.73,
+    "pets_scores": {
+      "intelligent_driving": 0.0,
+      "intelligent_cockpit": 0.0,
+      "safety": 0.0,
+      "exterior_design": 0.0,
+      "interior_design": 46.07,
+      "driving_experience": 0.0,
+      "riding_experience": 0.0,
+      "space": 0.0,
+      "cabin_comfort": 58.07,
+      "range_charging": 0.0
+    }
+  },
+  {
+    "l1_name": "健康价值",
+    "l1_category": "弱需求",
+    "l1_weight": 0.0302,
+    "l2_name": "健康监测和主动建议",
+    "l2_weight": 0.63,
+    "pets_scores": {
+      "intelligent_driving": 0.0,
+      "intelligent_cockpit": 0.0,
+      "safety": 0.0,
+      "exterior_design": 0.0,
+      "interior_design": 39.76,
+      "driving_experience": 0.0,
+      "riding_experience": 0.0,
+      "space": 0.0,
+      "cabin_comfort": 50.12,
+      "range_charging": 0.0
+    }
+  }
+]
