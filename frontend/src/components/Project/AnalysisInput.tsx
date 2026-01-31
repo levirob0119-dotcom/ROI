@@ -1,7 +1,11 @@
 import React, { useState, useMemo } from 'react';
-import { Plus, Minus, ChevronDown, ChevronRight, Trash2, Check, Monitor, Car, AlertTriangle } from 'lucide-react';
+import { Plus, Minus, Monitor, Car, AlertTriangle, X } from 'lucide-react';
 import type { Pets, UVL1, VehicleDataStatus } from '@/services/data';
-import './AnalysisInput.css';
+import PetsEntryCard from './PetsEntryCard';
+import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
+import { cn } from '@/lib/utils';
+// import './AnalysisInput.css'; // Legacy styles removed
 
 // PETS 卡片条目
 interface PetsEntry {
@@ -61,15 +65,15 @@ const AnalysisInput: React.FC<AnalysisInputProps> = ({
     };
 
     return (
-        <div className="analysis-input">
-            {/* Header with Vehicle Tabs */}
-            <div className="analysis-input-header">
-                <div className="analysis-input-header-top">
-                    <h2>体验维度录入</h2>
+        <div className="flex flex-col h-full bg-background rounded-lg border shadow-sm">
+            {/* Header */}
+            <div className="flex flex-col border-b">
+                <div className="p-4 pb-2">
+                    <h2 className="text-base font-semibold text-foreground">体验维度录入</h2>
                 </div>
 
-                {/* 车型 Tabs - 显示数据状态 */}
-                <div className="vehicle-tabs-inline">
+                {/* 车型 Tabs - Legacy Pill Style */}
+                <div className="px-4 pb-4 flex flex-wrap gap-2">
                     {vehicles.map(v => {
                         const isActive = currentVehicle === v;
                         const status = vehiclesDataStatus.find(s => s.id.toLowerCase() === v.toLowerCase());
@@ -79,96 +83,127 @@ const AnalysisInput: React.FC<AnalysisInputProps> = ({
                             <button
                                 key={v}
                                 onClick={() => onVehicleChange(v)}
-                                className={`vehicle-tab-inline ${isActive ? 'vehicle-tab-inline--active' : ''} ${!hasData ? 'vehicle-tab-inline--no-data' : ''}`}
+                                className={cn(
+                                    "flex items-center gap-1.5 px-3 py-1 text-xs font-medium rounded-full transition-all border",
+                                    isActive
+                                        ? "bg-violet-500 text-white border-violet-500 shadow-sm" // Hardcoded Violet to match legacy design
+                                        : "bg-white text-muted-foreground border-input hover:border-foreground/20 hover:text-foreground",
+                                    !hasData && !isActive && "border-dashed opacity-70"
+                                )}
                                 title={hasData ? '' : '暂无 UVA 数据'}
                             >
-                                <Car size={12} />
+                                <Car className="h-3.5 w-3.5" />
                                 {v.toUpperCase()}
-                                {!hasData && <span className="no-data-dot" />}
+                                {!hasData && (
+                                    <span className="w-1.5 h-1.5 rounded-full bg-amber-500 ml-0.5" />
+                                )}
                             </button>
                         );
                     })}
                 </div>
             </div>
 
-            {/* 无数据车型提示 */}
+            {/* 无数据警告横条 - Full Width Strip */}
             {!currentVehicleHasData && (
-                <div className="no-data-warning">
-                    <AlertTriangle size={16} />
+                <div className="w-full bg-amber-50 border-b border-amber-200 text-amber-800 px-4 py-2 flex items-center justify-center gap-2 text-sm font-medium animate-in fade-in slide-in-from-top-1">
+                    <AlertTriangle className="h-4 w-4 text-amber-600" />
                     <span>{currentVehicle.toUpperCase()} 暂无 UVA 数据，无法进行测算</span>
                 </div>
             )}
 
-            {/* 两个添加按钮 - 无数据时禁用 */}
-            <div className="add-buttons-row">
-                <button
-                    className={`add-btn add-btn--enhanced ${addMode === 'enhanced' ? 'add-btn--active' : ''}`}
-                    onClick={() => setAddMode(addMode === 'enhanced' ? null : 'enhanced')}
-                    disabled={availablePets.length === 0 || !currentVehicleHasData}
-                >
-                    <Plus size={16} />
-                    增强体验
-                </button>
-                <button
-                    className={`add-btn add-btn--reduced ${addMode === 'reduced' ? 'add-btn--active' : ''}`}
-                    onClick={() => setAddMode(addMode === 'reduced' ? null : 'reduced')}
-                    disabled={availablePets.length === 0 || !currentVehicleHasData}
-                >
-                    <Minus size={16} />
-                    减弱体验
-                </button>
+            {/* 两个添加按钮 - Distinct Outlined Style */}
+            <div className="p-4 border-b bg-white/50">
+                <div className="flex gap-4">
+                    <button
+                        className={cn(
+                            "flex-1 flex items-center justify-center gap-2 h-10 rounded-md text-sm font-medium border-2 transition-all outline-none focus:ring-2 focus:ring-offset-1 focus:ring-emerald-500",
+                            addMode === 'enhanced'
+                                ? "bg-emerald-600 border-emerald-600 text-white shadow-md"
+                                : "bg-white border-emerald-400 text-emerald-700 hover:bg-emerald-50",
+                            (!availablePets.length || !currentVehicleHasData) && "opacity-50 cursor-not-allowed grayscale"
+                        )}
+                        onClick={() => {
+                            if (availablePets.length > 0 && currentVehicleHasData) {
+                                setAddMode(addMode === 'enhanced' ? null : 'enhanced');
+                            }
+                        }}
+                        disabled={availablePets.length === 0 || !currentVehicleHasData}
+                    >
+                        <Plus className="h-4 w-4" />
+                        增强体验
+                    </button>
+                    <button
+                        className={cn(
+                            "flex-1 flex items-center justify-center gap-2 h-10 rounded-md text-sm font-medium border-2 transition-all outline-none focus:ring-2 focus:ring-offset-1 focus:ring-rose-500",
+                            addMode === 'reduced'
+                                ? "bg-rose-600 border-rose-600 text-white shadow-md"
+                                : "bg-white border-rose-400 text-rose-700 hover:bg-rose-50",
+                            (!availablePets.length || !currentVehicleHasData) && "opacity-50 cursor-not-allowed grayscale"
+                        )}
+                        onClick={() => {
+                            if (availablePets.length > 0 && currentVehicleHasData) {
+                                setAddMode(addMode === 'reduced' ? null : 'reduced');
+                            }
+                        }}
+                        disabled={availablePets.length === 0 || !currentVehicleHasData}
+                    >
+                        <Minus className="h-4 w-4" />
+                        减弱体验
+                    </button>
+                </div>
             </div>
 
-            {/* PETS 选择面板 (内联展开) */}
+            {/* PETS 选择面板 */}
             {addMode && availablePets.length > 0 && currentVehicleHasData && (
-                <div className="pets-selection-panel">
-                    <div className="pets-selection-title">
-                        选择要{addMode === 'enhanced' ? '增强' : '减弱'}的体验维度
+                <div className="px-4 py-3 bg-muted/30 border-b animate-in slide-in-from-top-2 duration-200">
+                    <div className="flex items-center justify-between mb-3">
+                        <span className="text-sm font-medium text-muted-foreground">
+                            选择要<span className={addMode === 'enhanced' ? "text-emerald-600" : "text-rose-600"}>{addMode === 'enhanced' ? '增强' : '减弱'}</span>的维度:
+                        </span>
+                        <Button variant="ghost" size="icon" className="h-6 w-6 rounded-full" onClick={() => setAddMode(null)}>
+                            <X className="h-3.5 w-3.5" />
+                        </Button>
                     </div>
-                    <div className="pets-options-grid">
+                    <div className="grid grid-cols-2 gap-2 max-h-[300px] overflow-y-auto">
                         {availablePets.map(pets => (
                             <button
                                 key={pets.id}
-                                className="pets-option-btn"
+                                className="px-3 py-2 text-sm bg-white border rounded-md hover:border-primary hover:text-primary transition-colors text-left truncate shadow-sm"
                                 onClick={() => handleSelectPets(pets.id)}
                             >
                                 {pets.name}
                             </button>
                         ))}
                     </div>
-                    <div className="pets-selection-footer">
-                        <button
-                            className="btn-ghost"
-                            onClick={() => setAddMode(null)}
-                        >
-                            取消
-                        </button>
-                    </div>
                 </div>
             )}
 
-            {/* Content */}
-            <div className="analysis-input-content">
+            {/* Content Area */}
+            <div className="flex-1 overflow-y-auto p-4 bg-muted/5">
                 {!currentVehicleHasData ? (
-                    <div className="empty-state empty-state--no-data">
-                        <AlertTriangle size={40} className="empty-state-icon empty-state-icon--warning" />
-                        <p className="empty-state-text">该车型暂无 UVA 数据</p>
-                        <p className="empty-state-hint">
+                    <div className="flex flex-col items-center justify-center p-8 mt-4 text-center border-2 border-dashed border-amber-300 bg-amber-50/50 rounded-xl">
+                        <div className="mb-4 p-3 bg-amber-100 rounded-full">
+                            <AlertTriangle className="h-8 w-8 text-amber-500" />
+                        </div>
+                        <h3 className="text-base font-semibold text-amber-900">该车型暂无数据</h3>
+                        <p className="mt-1 text-sm text-amber-700 max-w-[280px]">
                             请切换至有数据的车型（如 CETUS）或联系管理员导入数据
                         </p>
                     </div>
                 ) : petsEntries.length === 0 ? (
-                    <div className="empty-state">
-                        <Monitor size={40} className="empty-state-icon" />
-                        <p className="empty-state-text">暂无录入数据</p>
-                        <p className="empty-state-hint">
-                            点击上方「增强体验」或「减弱体验」开始添加
+                    <div className="flex flex-col items-center justify-center p-8 mt-4 text-center border-2 border-dashed border-border rounded-xl">
+                        <div className="mb-4 p-3 bg-muted rounded-full">
+                            <Monitor className="h-6 w-6 text-muted-foreground" />
+                        </div>
+                        <h3 className="text-sm font-medium text-muted-foreground">暂无录入数据</h3>
+                        <p className="text-xs text-muted-foreground mt-1">
+                            请点击上方按钮添加体验维度
                         </p>
                     </div>
                 ) : (
-                    <div className="pets-cards-list">
+                    <div className="space-y-3 pb-8">
                         {petsEntries.map(entry => (
-                            <PetsCard
+                            <PetsEntryCard
                                 key={entry.petsId}
                                 entry={entry}
                                 uvData={uvData}
@@ -180,134 +215,6 @@ const AnalysisInput: React.FC<AnalysisInputProps> = ({
                     </div>
                 )}
             </div>
-        </div>
-    );
-};
-
-// PETS Card 子组件
-interface PetsCardProps {
-    entry: PetsEntry;
-    uvData: UVL1[];
-    onToggleExpand: () => void;
-    onDelete: () => void;
-    onToggleUV: (uvL2Name: string) => void;
-}
-
-const PetsCard: React.FC<PetsCardProps> = ({
-    entry,
-    uvData,
-    onToggleExpand,
-    onDelete,
-    onToggleUV
-}) => {
-    // 使用 number 类型匹配 l1_id，默认全部折叠
-    const [expandedL1s, setExpandedL1s] = useState<Set<number>>(new Set());
-
-    const isEnhanced = entry.type === 'enhanced';
-    const cardClass = `pets-card ${isEnhanced ? 'pets-card--enhanced' : 'pets-card--reduced'}`;
-
-    const toggleL1 = (l1Id: number) => {
-        setExpandedL1s(prev => {
-            const next = new Set(prev);
-            if (next.has(l1Id)) {
-                next.delete(l1Id);
-            } else {
-                next.add(l1Id);
-            }
-            return next;
-        });
-    };
-
-    // 计算每个 L1 下的选中数量
-    const getL1SelectionCount = (l1: UVL1): { selected: number; total: number } => {
-        const total = l1.l2_items.length;
-        const selected = l1.l2_items.filter(l2 => entry.uvL2Names.includes(l2.name)).length;
-        return { selected, total };
-    };
-
-    return (
-        <div className={cardClass}>
-            {/* Header */}
-            <div className="pets-card-header" onClick={onToggleExpand}>
-                <div className="pets-card-header-left">
-                    {entry.isExpanded ? (
-                        <ChevronDown size={16} className="pets-card-expand-icon" />
-                    ) : (
-                        <ChevronRight size={16} className="pets-card-expand-icon" />
-                    )}
-                    <span className="pets-card-name">{entry.petsName}</span>
-                    <span className={`pets-card-type-badge ${isEnhanced ? 'pets-card-type-badge--enhanced' : 'pets-card-type-badge--reduced'}`}>
-                        {isEnhanced ? '+增强' : '−减弱'}
-                    </span>
-                </div>
-                <div className="pets-card-header-right">
-                    <span className="pets-card-uv-count">
-                        {entry.uvL2Names.length} 个 UV
-                    </span>
-                    <button
-                        className="pets-card-delete-btn"
-                        onClick={(e) => { e.stopPropagation(); onDelete(); }}
-                    >
-                        <Trash2 size={14} />
-                    </button>
-                </div>
-            </div>
-
-            {/* Expanded Content - 树状 UV 列表 */}
-            {entry.isExpanded && (
-                <div className="pets-card-content">
-                    {uvData.map(l1 => {
-                        const isL1Expanded = expandedL1s.has(l1.l1_id);
-                        const { selected, total } = getL1SelectionCount(l1);
-
-                        return (
-                            <div key={l1.l1_id} className="uv-l1-section">
-                                {/* L1 Header - 可折叠 */}
-                                <div
-                                    className="uv-l1-header"
-                                    onClick={() => toggleL1(l1.l1_id)}
-                                >
-                                    <div className="uv-l1-header-left">
-                                        {isL1Expanded ? (
-                                            <ChevronDown size={14} className="uv-l1-expand-icon" />
-                                        ) : (
-                                            <ChevronRight size={14} className="uv-l1-expand-icon" />
-                                        )}
-                                        <span className="uv-l1-title">{l1.l1_name}</span>
-                                    </div>
-                                    <span className="uv-l1-count">
-                                        {selected}/{total}
-                                    </span>
-                                </div>
-
-                                {/* L2 Items */}
-                                {isL1Expanded && (
-                                    <div className="uv-l2-list">
-                                        {l1.l2_items.map(l2 => {
-                                            const isSelected = entry.uvL2Names.includes(l2.name);
-                                            const itemClass = `uv-l2-item ${isSelected ? (isEnhanced ? 'uv-l2-item--selected-enhanced' : 'uv-l2-item--selected-reduced') : ''}`;
-                                            const checkboxClass = `uv-l2-checkbox ${isSelected ? (isEnhanced ? 'uv-l2-checkbox--checked-enhanced' : 'uv-l2-checkbox--checked-reduced') : ''}`;
-
-                                            return (
-                                                <div
-                                                    key={l2.id}
-                                                    className={itemClass}
-                                                    onClick={() => onToggleUV(l2.name)}
-                                                >
-                                                    <div className={checkboxClass}>
-                                                        {isSelected && <Check size={10} className="uv-l2-checkbox-icon" />}
-                                                    </div>
-                                                    <span className="uv-l2-name">{l2.name}</span>
-                                                </div>
-                                            );
-                                        })}
-                                    </div>
-                                )}
-                            </div>
-                        );
-                    })}
-                </div>
-            )}
         </div>
     );
 };

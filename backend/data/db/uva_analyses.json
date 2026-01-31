@@ -159,89 +159,21 @@
     "id": "2cd6f272-2055-40f0-8a64-77f8ddea5dc8",
     "projectId": "7b1d0723-c866-4f24-b1f9-527c78dbc53c",
     "vehicle": "cetus",
-    "enhancedPets": [
-      {
-        "petsId": "intelligent_driving",
-        "uvL2Names": [
-          "氛围感带来的愉悦享受",
-          "空间感带来的愉悦享受"
-        ]
-      }
-    ],
+    "enhancedPets": [],
     "reducedPets": [
       {
-        "petsId": "intelligent_driving",
+        "petsId": "range_charging",
         "uvL2Names": [
-          "氛围感带来的愉悦享受",
-          "空间感带来的愉悦享受"
+          "关怀陪伴「小孩」"
         ]
       }
     ],
     "kanoType": "Performance",
     "usageRate": 50,
     "penetrationRate": 30,
-    "result": {
-      "vehicle": "cetus",
-      "enhanced": {
-        "totalScore": 11.649999999999999,
-        "petsList": [
-          {
-            "petsId": "intelligent_driving",
-            "totalScore": 11.649999999999999,
-            "uvL1List": [
-              {
-                "l1Name": "愉悦享受",
-                "l1Category": "核心差异UV",
-                "l1Weight": 0.0652,
-                "totalScore": 11.649999999999999,
-                "l2List": [
-                  {
-                    "l2Name": "氛围感带来的愉悦享受",
-                    "score": 5.97
-                  },
-                  {
-                    "l2Name": "空间感带来的愉悦享受",
-                    "score": 5.68
-                  }
-                ]
-              }
-            ]
-          }
-        ]
-      },
-      "reduced": {
-        "totalScore": 11.649999999999999,
-        "petsList": [
-          {
-            "petsId": "intelligent_driving",
-            "totalScore": 11.649999999999999,
-            "uvL1List": [
-              {
-                "l1Name": "愉悦享受",
-                "l1Category": "核心差异UV",
-                "l1Weight": 0.0652,
-                "totalScore": 11.649999999999999,
-                "l2List": [
-                  {
-                    "l2Name": "氛围感带来的愉悦享受",
-                    "score": 5.97
-                  },
-                  {
-                    "l2Name": "空间感带来的愉悦享受",
-                    "score": 5.68
-                  }
-                ]
-              }
-            ]
-          }
-        ]
-      },
-      "totalEnhanced": 11.649999999999999,
-      "totalReduced": 11.649999999999999,
-      "finalScore": 0
-    },
+    "result": {},
     "createdAt": "2026-01-31T13:37:53.810Z",
-    "updatedAt": "2026-01-31T13:37:53.810Z"
+    "updatedAt": "2026-01-31T17:00:52.409Z"
   },
   {
     "id": "bfaf6bda-1681-46bd-bf61-12548183a43a",
