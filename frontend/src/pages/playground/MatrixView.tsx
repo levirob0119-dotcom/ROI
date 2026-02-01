@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowLeft, Grip, Maximize2 } from 'lucide-react';
+import { ArrowLeft, Grip } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import Navbar from '@/components/layout/Navbar';
 import { dataService, type Pets } from '@/services/data';
 
 const MatrixView: React.FC = () => {

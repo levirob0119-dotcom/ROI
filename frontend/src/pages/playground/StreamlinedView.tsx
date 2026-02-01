@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ProjectHeader from '@/components/Project/ProjectHeader';
 import AnalysisInput from '@/components/Project/AnalysisInput';
@@ -25,16 +25,28 @@ const MOCK_PETS: Pets[] = [
 ];
 
 const MOCK_UV: UVL1[] = [
-    { name: '感知硬件', items: ['激光雷达', '摄像头数目'] },
-    { name: '功能体验', items: ['高速 NOA', '城市 NOA', '自动泊车'] }
+    {
+        l1_id: 1,
+        l1_name: '感知硬件',
+        l2_items: [
+            { id: 101, name: '激光雷达' },
+            { id: 102, name: '摄像头数目' }
+        ]
+    },
+    {
+        l1_id: 2,
+        l1_name: '功能体验',
+        l2_items: [
+            { id: 201, name: '高速 NOA' },
+            { id: 202, name: '城市 NOA' },
+            { id: 203, name: '自动泊车' }
+        ]
+    }
 ];
 
 const StreamlinedView: React.FC = () => {
     const navigate = useNavigate();
-    const [activeMode, setActiveMode] = useState<'enhanced' | 'reduced'>('enhanced');
     const [currentVehicle, setCurrentVehicle] = useState('NIO ET5');
-    const [activePetsId, setActivePetsId] = useState<string | null>(null);
-    const [selections, setSelections] = useState<string[]>([]);
 
     const handleBack = () => navigate('/demo');
 
@@ -60,22 +72,27 @@ const StreamlinedView: React.FC = () => {
 
             <div className="flex-1 flex min-h-0">
                 <AnalysisInput
-                    project={MOCK_PROJECT}
                     petsList={MOCK_PETS}
                     uvData={MOCK_UV}
+                    vehicles={['NIO ET5', 'Tesla Model 3']}
+                    vehiclesDataStatus={[
+                        { id: 'NIO ET5', name: 'NIO ET5', hasData: true },
+                        { id: 'Tesla Model 3', name: 'Tesla Model 3', hasData: true }
+                    ]}
                     currentVehicle={currentVehicle}
-                    activeMode={activeMode}
-                    activePetsId={activePetsId}
-                    currentSelections={selections}
+                    petsEntries={[]} // Mock empty entries
                     onVehicleChange={setCurrentVehicle}
-                    onModeChange={setActiveMode}
-                    onPetsSelect={setActivePetsId}
-                    onToggleUV={(uv) => {
-                        setSelections(prev => prev.includes(uv) ? prev.filter(x => x !== uv) : [...prev, uv]);
-                    }}
+                    onAddPets={() => { }}
+                    onDeletePets={() => { }}
+                    onToggleExpand={() => { }}
+                    onToggleUV={() => { }}
                 />
                 <AnalysisResult
-                    result={{ finalScore: 82, totalEnhanced: 3, totalReduced: 1, usageRate: 65 }}
+                    vehicles={[currentVehicle]}
+                    currentVehicle={currentVehicle}
+                    results={{
+                        [currentVehicle]: { finalScore: 82, totalEnhanced: 3, totalReduced: 1, usageRate: 65 }
+                    }}
                 />
             </div>
         </div>

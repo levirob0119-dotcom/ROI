@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowLeft, ArrowRight, Check, Car, ThumbsUp, ThumbsDown } from 'lucide-react';
+import { ArrowRight, Check, Car, ThumbsUp, ThumbsDown } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '@/components/layout/Navbar';
-import { dataService, type Pets, type UVL1 } from '@/services/data';
+import { dataService, type Pets } from '@/services/data';
 
 // Simplified Wizard for Demo
 const WizardView: React.FC = () => {
@@ -62,8 +62,8 @@ const WizardView: React.FC = () => {
                                     key={v}
                                     onClick={() => setVehicle(v)}
                                     className={`p-6 rounded-xl border-2 transition-all ${vehicle === v
-                                            ? 'border-indigo-600 bg-indigo-50 shadow-md'
-                                            : 'border-gray-200 hover:border-gray-300 bg-white'
+                                        ? 'border-indigo-600 bg-indigo-50 shadow-md'
+                                        : 'border-gray-200 hover:border-gray-300 bg-white'
                                         }`}
                                 >
                                     <Car size={32} className={`mx-auto mb-2 ${vehicle === v ? 'text-indigo-600' : 'text-gray-400'}`} />
@@ -88,8 +88,8 @@ const WizardView: React.FC = () => {
                                     key={p.id}
                                     onClick={() => toggleSelection(p.id)}
                                     className={`p-4 rounded-lg border cursor-pointer transition-all ${selections.includes(p.id)
-                                            ? 'border-green-500 bg-green-50 shadow-sm ring-1 ring-green-500'
-                                            : 'border-gray-200 bg-white hover:border-green-300'
+                                        ? 'border-green-500 bg-green-50 shadow-sm ring-1 ring-green-500'
+                                        : 'border-gray-200 bg-white hover:border-green-300'
                                         }`}
                                 >
                                     <div className="font-bold mb-1">{p.name}</div>
@@ -114,8 +114,8 @@ const WizardView: React.FC = () => {
                                     key={p.id}
                                     onClick={() => toggleSelection(p.id + '_bad')}
                                     className={`p-4 rounded-lg border cursor-pointer transition-all ${selections.includes(p.id + '_bad')
-                                            ? 'border-red-500 bg-red-50 shadow-sm ring-1 ring-red-500'
-                                            : 'border-gray-200 bg-white hover:border-red-300'
+                                        ? 'border-red-500 bg-red-50 shadow-sm ring-1 ring-red-500'
+                                        : 'border-gray-200 bg-white hover:border-red-300'
                                         }`}
                                 >
                                     <div className="font-bold mb-1">{p.name}</div>

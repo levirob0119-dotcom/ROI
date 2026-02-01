@@ -3,7 +3,7 @@ import { type UVL1 } from '@/services/data';
 
 interface UVSelectionTableProps {
     uvData: UVL1[];
-    selectedUVs: string[]; // List of selected UV L2 Names
+    selectedUVs: string[]; // List of selected UV L2 Names, now stored as l2_names or IDs
     onToggle: (uvL2Name: string) => void;
 }
 
@@ -17,17 +17,17 @@ const UVSelectionTable: React.FC<UVSelectionTableProps> = ({ uvData, selectedUVs
             <div className="max-h-[500px] overflow-y-auto p-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {uvData.map((l1) => (
-                        <div key={l1.name} className="break-inside-avoid">
+                        <div key={l1.l1_id} className="break-inside-avoid">
                             <h4 className="font-bold text-gray-800 mb-2 pb-1 border-b border-gray-100 flex items-center gap-2">
                                 <span className="w-1.5 h-4 bg-indigo-500 rounded-full"></span>
-                                {l1.name}
+                                {l1.l1_name}
                             </h4>
                             <div className="space-y-1">
-                                {l1.items.map((l2) => {
-                                    const isSelected = selectedUVs.includes(l2);
+                                {l1.l2_items.map((l2) => {
+                                    const isSelected = selectedUVs.includes(l2.name);
                                     return (
                                         <label
-                                            key={l2}
+                                            key={l2.id}
                                             className={`flex items-start gap-2 p-2 rounded cursor-pointer transition-colors ${isSelected ? 'bg-indigo-50 text-indigo-700' : 'hover:bg-gray-50 text-gray-600'
                                                 }`}
                                         >
@@ -35,9 +35,9 @@ const UVSelectionTable: React.FC<UVSelectionTableProps> = ({ uvData, selectedUVs
                                                 type="checkbox"
                                                 className="mt-1 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                                                 checked={isSelected}
-                                                onChange={() => onToggle(l2)}
+                                                onChange={() => onToggle(l2.name)}
                                             />
-                                            <span className="text-sm leading-snug">{l2}</span>
+                                            <span className="text-sm leading-snug">{l2.name}</span>
                                         </label>
                                     );
                                 })}

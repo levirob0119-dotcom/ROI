@@ -6,10 +6,43 @@ import { type UVL1 } from '@/services/data';
 
 // Mock Data
 const MOCK_UV: UVL1[] = [
-    { name: '愉悦享受', items: ['高级音响体验', '座椅按摩', '香氛系统'] },
-    { name: '科技领先', items: ['高速 NOA', '城市 NOA', '自动泊车', 'HUD 抬头显示'] },
-    { name: '安全感', items: ['主动刹车 AEB', '盲区监测', '车身强度'] },
-    { name: '便利性', items: ['手机蓝牙钥匙', '语音交互', 'OTA 升级'] }
+    {
+        l1_id: 1,
+        l1_name: '愉悦享受',
+        l2_items: [
+            { id: 101, name: '高级音响体验' },
+            { id: 102, name: '座椅按摩' },
+            { id: 103, name: '香氛系统' }
+        ]
+    },
+    {
+        l1_id: 2,
+        l1_name: '科技领先',
+        l2_items: [
+            { id: 201, name: '高速 NOA' },
+            { id: 202, name: '城市 NOA' },
+            { id: 203, name: '自动泊车' },
+            { id: 204, name: 'HUD 抬头显示' }
+        ]
+    },
+    {
+        l1_id: 3,
+        l1_name: '安全感',
+        l2_items: [
+            { id: 301, name: '主动刹车 AEB' },
+            { id: 302, name: '盲区监测' },
+            { id: 303, name: '车身强度' }
+        ]
+    },
+    {
+        l1_id: 4,
+        l1_name: '便利性',
+        l2_items: [
+            { id: 401, name: '手机蓝牙钥匙' },
+            { id: 402, name: '语音交互' },
+            { id: 403, name: 'OTA 升级' }
+        ]
+    }
 ];
 
 interface ImpactPath {
@@ -29,10 +62,9 @@ const PathStreamlinedView: React.FC = () => {
     const [isCreating, setIsCreating] = useState(false);
     const [newPathName, setNewPathName] = useState('');
     const [newPathType, setNewPathType] = useState<'enhanced' | 'reduced'>('enhanced');
-    const [newPathVehicle, setNewPathVehicle] = useState('NIO ET5');
 
     // Project Info State (Mock)
-    const [projectDesc, setProjectDesc] = useState('NIO ET5 竞争力分析');
+    const projectDesc = 'NIO ET5 竞争力分析';
 
     const handleBack = () => navigate('/demo');
 
@@ -44,7 +76,7 @@ const PathStreamlinedView: React.FC = () => {
             id: Date.now().toString(),
             name: newPathName,
             type: newPathType,
-            vehicle: newPathVehicle,
+            vehicle: 'NIO ET5',
             selectedUVs: []
         };
         setPaths([...paths, newPath]);
@@ -72,7 +104,6 @@ const PathStreamlinedView: React.FC = () => {
 
     // Calculation Logic (Mock)
     const score = useMemo(() => {
-        let total = 0;
         let enhanced = 0;
         let reduced = 0;
         paths.forEach(p => {
@@ -191,8 +222,8 @@ const PathStreamlinedView: React.FC = () => {
                                     key={path.id}
                                     onClick={() => setActivePathId(path.id)}
                                     className={`relative p-3 rounded-lg border transition-all cursor-pointer group ${isActive
-                                            ? 'border-indigo-500 bg-indigo-50 ring-1 ring-indigo-500'
-                                            : 'border-gray-200 bg-white hover:border-indigo-300'
+                                        ? 'border-indigo-500 bg-indigo-50 ring-1 ring-indigo-500'
+                                        : 'border-gray-200 bg-white hover:border-indigo-300'
                                         }`}
                                 >
                                     <div className="flex justify-between items-start mb-2">
