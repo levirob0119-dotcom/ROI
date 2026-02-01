@@ -1,10 +1,16 @@
-<svg width="300" height="150" viewBox="0 0 300 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
   <style>
-    .nio-icon { fill: #111111; }
+    .roi-icon { stroke: #000000; fill: none; }
     @media (prefers-color-scheme: dark) {
-      .nio-icon { fill: #ffffff; }
+      .roi-icon { stroke: #ffffff; }
     }
   </style>
-  <path class="nio-icon" d="M150 135C80 135 20 85 20 60C20 35 150 0 150 0C150 0 280 35 280 60C280 85 220 135 150 135Z" />
-  <path class="nio-icon" d="M150 75C90 75 45 100 45 125H255C255 100 210 75 150 75Z" />
+  
+  <!-- Outer Hexagon (Structure/Matrix) -->
+  <path class="roi-icon" d="M256 32 L448 128 V384 L256 480 L64 384 V128 L256 32Z" stroke-width="32" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <!-- Inner Upward Chart/Arrow (ROI/Growth) -->
+  <path class="roi-icon" d="M160 320 L224 256 L288 320 L352 192" stroke-width="32" stroke-linecap="round" stroke-linejoin="round"/>
+  <path class="roi-icon" d="M352 192 L352 256" stroke-width="32" stroke-linecap="round" stroke-linejoin="round"/>
+  <path class="roi-icon" d="M352 192 L288 192" stroke-width="32" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
