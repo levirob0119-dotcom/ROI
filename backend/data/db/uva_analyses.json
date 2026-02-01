@@ -159,21 +159,21 @@
     "id": "2cd6f272-2055-40f0-8a64-77f8ddea5dc8",
     "projectId": "7b1d0723-c866-4f24-b1f9-527c78dbc53c",
     "vehicle": "cetus",
-    "enhancedPets": [],
-    "reducedPets": [
+    "enhancedPets": [
       {
-        "petsId": "range_charging",
+        "petsId": "intelligent_driving",
         "uvL2Names": [
-          "关怀陪伴「小孩」"
+          "氛围感带来的愉悦享受"
         ]
       }
     ],
+    "reducedPets": [],
     "kanoType": "Performance",
     "usageRate": 50,
     "penetrationRate": 30,
     "result": {},
     "createdAt": "2026-01-31T13:37:53.810Z",
-    "updatedAt": "2026-01-31T17:00:52.409Z"
+    "updatedAt": "2026-02-01T07:23:09.286Z"
   },
   {
     "id": "bfaf6bda-1681-46bd-bf61-12548183a43a",

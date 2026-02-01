@@ -1,19 +1,23 @@
 /* ========================================
-   导航栏
+   导航栏 - 设计架构重构
+   Raycast 毛玻璃效果
    ======================================== */
 .navbar {
     height: 56px;
-    background-color: rgba(255, 255, 255, 0.85);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--color-border);
+
+    /* Raycast 毛玻璃 */
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 var(--space-6);
+    padding: 0 24px;
     position: sticky;
     top: 0;
-    z-index: 40;
+    z-index: 50;
 }
 
 /* ========================================
@@ -22,7 +26,7 @@
 .navbar-brand {
     display: flex;
     align-items: center;
-    gap: var(--space-3);
+    gap: 12px;
     text-decoration: none;
 }
 
@@ -32,9 +36,20 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
-    border-radius: var(--radius-md);
+
+    /* NIO Blue 渐变 */
+    background: linear-gradient(135deg, hsl(214, 94%, 64%) 0%, hsl(214, 94%, 56%) 100%);
+    border-radius: 8px;
     color: white;
+
+    /* 微妙阴影 */
+    box-shadow: 0 2px 8px hsla(214, 94%, 64%, 0.25);
+
+    transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.brand-logo:hover {
+    transform: scale(1.05);
 }
 
 .brand-logo svg {
@@ -43,10 +58,10 @@
 }
 
 .brand-text {
-    font-size: var(--text-base);
+    font-size: 14px;
     font-weight: 600;
-    color: var(--color-text-main);
-    letter-spacing: -0.01em;
+    color: hsl(var(--foreground));
+    letter-spacing: -0.02em;
 }
 
 /* ========================================
@@ -55,32 +70,34 @@
 .navbar-user {
     display: flex;
     align-items: center;
-    gap: var(--space-4);
+    gap: 16px;
 }
 
 .user-info {
     display: flex;
     align-items: center;
-    gap: var(--space-3);
+    gap: 12px;
 }
 
 .user-avatar {
     width: 28px;
     height: 28px;
-    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+
+    /* NIO Blue 渐变 */
+    background: linear-gradient(135deg, hsl(214, 94%, 64%) 0%, hsl(214, 94%, 56%) 100%);
     color: white;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: 600;
-    font-size: var(--text-xs);
+    font-size: 12px;
 }
 
 .user-name {
-    font-size: var(--text-sm);
+    font-size: 13px;
     font-weight: 500;
-    color: var(--color-text-main);
+    color: hsl(var(--foreground));
 }
 
 .btn-logout {
@@ -89,15 +106,15 @@
     justify-content: center;
     width: 32px;
     height: 32px;
-    color: var(--color-text-muted);
+    color: hsl(var(--muted-foreground));
     background: transparent;
     border: none;
-    border-radius: var(--radius-md);
+    border-radius: 8px;
     cursor: pointer;
-    transition: all var(--transition-fast);
+    transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .btn-logout:hover {
-    background-color: var(--color-surface);
-    color: var(--color-danger);
+    background: rgba(0, 0, 0, 0.04);
+    color: hsl(var(--destructive));
 }
