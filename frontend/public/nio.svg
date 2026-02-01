@@ -1,13 +1,13 @@
 <svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
   <style>
-    .nio-icon { stroke: #000000; }
+    .nio-icon { fill: #000000; }
     @media (prefers-color-scheme: dark) {
-      .nio-icon { stroke: #ffffff; }
+      .nio-icon { fill: #ffffff; }
     }
   </style>
-  <!-- Sky (Top) -->
-  <path class="nio-icon" d="M106 200 A 150 150 0 0 1 406 200" stroke-width="40" stroke-linecap="butt" />
+  <!-- Sky (Top Semi-circle Arch) -->
+  <path class="nio-icon" d="M256 64 C 160 64, 80 120, 80 200 L 140 200 C 140 145, 190 110, 256 110 C 322 110, 372 145, 372 200 L 432 200 C 432 120, 352 64, 256 64 Z" />
   
-  <!-- Earth (Bottom) -->
-  <path class="nio-icon" d="M106 280 L 256 400 L 406 280" stroke-width="40" stroke-linecap="butt" stroke-linejoin="miter" />
+  <!-- Earth (Bottom Chevron) -->
+  <path class="nio-icon" d="M85 240 L 160 240 L 256 310 L 352 240 L 427 240 L 256 380 Z" />
 </svg>
