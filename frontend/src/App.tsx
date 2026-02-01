@@ -9,6 +9,9 @@ import WizardView from '@/pages/playground/WizardView';
 import MatrixView from '@/pages/playground/MatrixView';
 import StreamlinedView from '@/pages/playground/StreamlinedView';
 import PathStreamlinedView from '@/pages/playground/PathStreamlinedView';
+import ComponentShowcase from '@/pages/playground/ComponentShowcase';
+import { SidebarLayout } from '@/components/layout/SidebarLayout';
+import WorkflowSettings from '@/pages/settings/WorkflowSettings';
 
 // 保护路由组件
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
@@ -39,7 +42,10 @@ function App() {
             path="/"
             element={
               <ProtectedRoute>
-                <Dashboard />
+                {/* 暂时保留原Dashboard，后续重构移除Navbar */}
+                <SidebarLayout>
+                  <Dashboard />
+                </SidebarLayout>
               </ProtectedRoute>
             }
           />
@@ -47,7 +53,19 @@ function App() {
             path="/project/:id"
             element={
               <ProtectedRoute>
-                <ProjectDetail />
+                <SidebarLayout>
+                  <ProjectDetail />
+                </SidebarLayout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/settings/workflow"
+            element={
+              <ProtectedRoute>
+                <SidebarLayout>
+                  <WorkflowSettings />
+                </SidebarLayout>
               </ProtectedRoute>
             }
           />
@@ -57,6 +75,7 @@ function App() {
           <Route path="/demo/matrix" element={<ProtectedRoute><MatrixView /></ProtectedRoute>} />
           <Route path="/demo/streamlined" element={<ProtectedRoute><StreamlinedView /></ProtectedRoute>} />
           <Route path="/demo/path" element={<ProtectedRoute><PathStreamlinedView /></ProtectedRoute>} />
+          <Route path="/components" element={<ProtectedRoute><SidebarLayout><ComponentShowcase /></SidebarLayout></ProtectedRoute>} />
         </Routes>
       </AuthProvider>
     </Router>

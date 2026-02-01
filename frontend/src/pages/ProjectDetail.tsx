@@ -1,31 +1,14 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
-import { Loader2 } from 'lucide-react';
+import { Loader2, Plus, Calculator, Save, Settings } from 'lucide-react';
 import { projectService } from '@/services/projects';
-import { dataService, type Pets, type UVL1, type VehicleDataStatus } from '@/services/data';
+import { dataService, type Pets, type UVL1 } from '@/services/data';
 import type { Project } from '@/types/models';
-import ProjectHeader from '@/components/Project/ProjectHeader';
-import AnalysisInput from '@/components/Project/AnalysisInput';
-import AnalysisResult from '@/components/Project/AnalysisResult';
+import type { ProjectAnalysisData } from '@/types/analysis';
+import PetsEntryCard from '@/components/Project/PetsEntryCard';
+import AddPetsDialog from '@/components/Project/AddPetsDialog';
+import VehicleResultPanel from '@/components/Project/VehicleResultPanel';
 import EditProjectModal from '@/components/EditProjectModal';
-import './ProjectDetail.css';
-
-// 新数据模型：PETS 条目
-interface PetsEntry {
-    petsId: string;
-    petsName: string;
-    type: 'enhanced' | 'reduced';
-    uvL2Names: string[];
-    isExpanded: boolean;
-}
-
-// 每个车型的分析数据
-interface VehicleAnalysis {
-    petsEntries: PetsEntry[];
-}
-
-// 整个项目的分析数据
-type ProjectAnalysisData = Record<string, VehicleAnalysis>;
 
 const ProjectDetail: React.FC = () => {
     const { id } = useParams<{ id: string }>();
@@ -34,17 +17,17 @@ const ProjectDetail: React.FC = () => {
     const [project, setProject] = useState<Project | null>(null);
     const [petsList, setPetsList] = useState<Pets[]>([]);
     const [uvData, setUVData] = useState<UVL1[]>([]);
-    const [vehiclesDataStatus, setVehiclesDataStatus] = useState<VehicleDataStatus[]>([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [isSaving, setIsSaving] = useState(false);
+    const [isCalculating, setIsCalculating] = useState(false);
+
+    // Analysis State (new structure)
+    const [analysisData, setAnalysisData] = useState<ProjectAnalysisData>({});
+    const [calculationResults, setCalculationResults] = useState<Record<string, any>>({});
 
     // UX State
     const [currentVehicle, setCurrentVehicle] = useState<string>('');
+    const [isAddPetsOpen, setIsAddPetsOpen] = useState(false);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-
-    // 新数据模型: 每个车型有自己的 petsEntries
-    const [analysisData, setAnalysisData] = useState<ProjectAnalysisData>({});
-    const [calculationResults, setCalculationResults] = useState<Record<string, any>>({});
 
     useEffect(() => {
         if (id) {
@@ -54,17 +37,15 @@ const ProjectDetail: React.FC = () => {
 
     const initData = async (projectId: string) => {
         try {
-            const [projectData, petsData, uvDataResponse, vehiclesStatus] = await Promise.all([
+            const [projectData, petsData, uvDataResponse] = await Promise.all([
                 projectService.getById(projectId),
                 dataService.getPets(),
-                dataService.getUVData(),
-                dataService.getVehiclesDataStatus()
+                dataService.getUVData()
             ]);
 
             setProject(projectData);
             setPetsList(petsData);
             setUVData(uvDataResponse);
-            setVehiclesDataStatus(vehiclesStatus);
 
             // Initialize analysis state for each vehicle
             const initialAnalysis: ProjectAnalysisData = {};
@@ -84,17 +65,17 @@ const ProjectDetail: React.FC = () => {
         }
     };
 
-    // 当前车型的分析数据
-    const currentPetsEntries = useMemo(() => {
-        return analysisData[currentVehicle]?.petsEntries || [];
+    // Current vehicle's analysis data
+    const currentAnalysis = useMemo(() => {
+        return analysisData[currentVehicle] || { petsEntries: [] };
     }, [analysisData, currentVehicle]);
 
-    // 车型切换
-    const handleVehicleChange = (vehicle: string) => {
-        setCurrentVehicle(vehicle);
-    };
+    // Existing PETS IDs for current vehicle
+    const existingPetsIds = useMemo(() => {
+        return currentAnalysis.petsEntries.map(e => e.petsId);
+    }, [currentAnalysis]);
 
-    // 添加 PETS
+    // Handlers
     const handleAddPets = (petsId: string, petsName: string, type: 'enhanced' | 'reduced') => {
         setAnalysisData(prev => {
             const vehicleData = prev[currentVehicle] || { petsEntries: [] };
@@ -111,7 +92,6 @@ const ProjectDetail: React.FC = () => {
         });
     };
 
-    // 删除 PETS
     const handleDeletePets = (petsId: string) => {
         setAnalysisData(prev => {
             const vehicleData = prev[currentVehicle] || { petsEntries: [] };
@@ -125,7 +105,6 @@ const ProjectDetail: React.FC = () => {
         });
     };
 
-    // 展开/折叠 PETS 卡片
     const handleToggleExpand = (petsId: string) => {
         setAnalysisData(prev => {
             const vehicleData = prev[currentVehicle] || { petsEntries: [] };
@@ -141,7 +120,6 @@ const ProjectDetail: React.FC = () => {
         });
     };
 
-    // 切换 UV 选择
     const handleToggleUV = (petsId: string, uvL2Name: string) => {
         setAnalysisData(prev => {
             const vehicleData = prev[currentVehicle] || { petsEntries: [] };
@@ -164,68 +142,34 @@ const ProjectDetail: React.FC = () => {
         });
     };
 
-    // 将新数据模型转换为 API 格式
-    const formatForAPI = (entries: PetsEntry[]) => {
-        const enhancedPets = entries
-            .filter(e => e.type === 'enhanced' && e.uvL2Names.length > 0)
-            .map(e => ({ petsId: e.petsId, uvL2Names: e.uvL2Names }));
-        const reducedPets = entries
-            .filter(e => e.type === 'reduced' && e.uvL2Names.length > 0)
-            .map(e => ({ petsId: e.petsId, uvL2Names: e.uvL2Names }));
-        return { enhancedPets, reducedPets };
-    };
-
-    // 测算
     const handleCalculate = async () => {
         if (!currentVehicle) return;
-        setIsSaving(true);
+
+        setIsCalculating(true);
         try {
-            const { enhancedPets, reducedPets } = formatForAPI(currentPetsEntries);
-            const payload = {
+            // Build API payload from petsEntries
+            const entries = currentAnalysis.petsEntries;
+            const enhancedPets = entries
+                .filter(e => e.type === 'enhanced' && e.uvL2Names.length > 0)
+                .map(e => ({ petsId: e.petsId, uvL2Names: e.uvL2Names }));
+            const reducedPets = entries
+                .filter(e => e.type === 'reduced' && e.uvL2Names.length > 0)
+                .map(e => ({ petsId: e.petsId, uvL2Names: e.uvL2Names }));
+
+            const result = await dataService.calculateUVA({
                 vehicle: currentVehicle,
                 enhancedPets,
                 reducedPets
-            };
-            const result = await dataService.calculateUVA(payload);
+            });
+
             setCalculationResults(prev => ({
                 ...prev,
                 [currentVehicle]: result
             }));
-            alert(`测算完成！总分: ${result.finalScore}`);
         } catch (error) {
             console.error('Calculate failed', error);
-            alert('测算失败');
         } finally {
-            setIsSaving(false);
-        }
-    };
-
-    // 保存
-    const handleSave = async () => {
-        if (!currentVehicle || !id) return;
-
-        // 如果还没测算，先测算
-        if (!calculationResults[currentVehicle]) {
-            await handleCalculate();
-        }
-
-        const { enhancedPets, reducedPets } = formatForAPI(currentPetsEntries);
-        const payload = {
-            projectId: id,
-            vehicle: currentVehicle,
-            enhancedPets,
-            reducedPets,
-            kanoType: 'Performance',
-            usageRate: 50,
-            penetrationRate: 30,
-            result: calculationResults[currentVehicle] || {}
-        };
-
-        try {
-            await dataService.saveAnalysis(payload);
-            alert('保存成功！');
-        } catch (error) {
-            console.error('Save failed', error);
+            setIsCalculating(false);
         }
     };
 
@@ -236,7 +180,7 @@ const ProjectDetail: React.FC = () => {
     if (isLoading) {
         return (
             <div className="flex items-center justify-center min-h-screen">
-                <Loader2 className="animate-spin text-primary" size={32} />
+                <Loader2 className="animate-spin text-indigo-600" size={32} />
             </div>
         );
     }
@@ -244,45 +188,159 @@ const ProjectDetail: React.FC = () => {
     if (!project) return null;
 
     return (
-        <div className="project-detail-page bg-gray-50 flex flex-col h-screen overflow-hidden">
-            {/* T 区: 顶部 - 方案信息 + 当前车型展示 */}
-            <ProjectHeader
-                project={project}
-                currentVehicle={currentVehicle}
-                isSaving={isSaving}
-                onEdit={() => setIsEditModalOpen(true)}
-                onSave={handleSave}
-                onCalculate={handleCalculate}
-            />
+        <div className="h-screen flex flex-col bg-gray-100 overflow-hidden">
+            {/* T 区: 顶部 - 方案信息 + 车型选择 */}
+            <header className="bg-white border-b border-gray-200 px-6 py-4">
+                <div className="flex items-center justify-between">
+                    {/* 左侧: 方案信息 */}
+                    <div>
+                        <h1 className="text-xl font-bold text-gray-900">{project.name}</h1>
+                        <p className="text-sm text-gray-500 mt-0.5">{project.description || '暂无描述'}</p>
+                    </div>
+
+                    {/* 中间: 车型 Tabs */}
+                    <div className="flex items-center gap-2 bg-gray-100 p-1 rounded-lg">
+                        {project.vehicles.map(v => (
+                            <button
+                                key={v}
+                                onClick={() => setCurrentVehicle(v)}
+                                className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${currentVehicle === v
+                                    ? 'bg-white text-indigo-700 shadow-sm'
+                                    : 'text-gray-600 hover:text-gray-900'
+                                    }`}
+                            >
+                                {v.toUpperCase()}
+                            </button>
+                        ))}
+                    </div>
+
+                    {/* 右侧: 操作按钮 */}
+                    <div className="flex items-center gap-3">
+                        <button
+                            onClick={() => setIsEditModalOpen(true)}
+                            className="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg"
+                        >
+                            <Settings size={18} />
+                        </button>
+                        <button
+                            onClick={handleCalculate}
+                            disabled={isCalculating}
+                            className="flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded-lg font-medium hover:bg-indigo-700 disabled:opacity-50 transition-colors"
+                        >
+                            <Calculator size={16} />
+                            {isCalculating ? '计算中...' : '测算'}
+                        </button>
+                        <button className="flex items-center gap-2 px-4 py-2 bg-gray-800 text-white rounded-lg font-medium hover:bg-gray-900 transition-colors">
+                            <Save size={16} />
+                            保存
+                        </button>
+                    </div>
+                </div>
+            </header>
 
             {/* 主区域: L + R */}
-            <div className="detail-content">
-                {/* L 区: 录入 */}
-                <div className="sidebar">
-                    <AnalysisInput
-                        petsList={petsList}
-                        uvData={uvData}
-                        vehicles={project.vehicles}
-                        vehiclesDataStatus={vehiclesDataStatus}
-                        currentVehicle={currentVehicle}
-                        petsEntries={currentPetsEntries}
-                        onVehicleChange={handleVehicleChange}
-                        onAddPets={handleAddPets}
-                        onDeletePets={handleDeletePets}
-                        onToggleExpand={handleToggleExpand}
-                        onToggleUV={handleToggleUV}
-                    />
+            <div className="flex-1 flex min-h-0">
+                {/* L 区: 录入区 */}
+                <div className="w-1/2 border-r border-gray-200 bg-white overflow-y-auto">
+                    <div className="p-6">
+                        <div className="flex items-center justify-between mb-4">
+                            <h2 className="text-lg font-bold text-gray-900">
+                                体验维度录入 · {currentVehicle.toUpperCase()}
+                            </h2>
+                            <button
+                                onClick={() => setIsAddPetsOpen(true)}
+                                className="flex items-center gap-2 px-3 py-2 bg-indigo-600 text-white rounded-lg text-sm font-medium hover:bg-indigo-700 transition-colors"
+                            >
+                                <Plus size={16} />
+                                添加 PETS
+                            </button>
+                        </div>
+
+                        {/* PETS Entry Cards */}
+                        {currentAnalysis.petsEntries.length === 0 ? (
+                            <div className="border-2 border-dashed border-gray-200 rounded-xl p-10 text-center">
+                                <p className="text-gray-500 mb-4">暂无录入数据</p>
+                                <button
+                                    onClick={() => setIsAddPetsOpen(true)}
+                                    className="text-indigo-600 hover:text-indigo-700 font-medium"
+                                >
+                                    点击添加第一个体验维度
+                                </button>
+                            </div>
+                        ) : (
+                            <div className="space-y-4">
+                                {currentAnalysis.petsEntries.map(entry => (
+                                    <PetsEntryCard
+                                        key={entry.petsId}
+                                        entry={entry}
+                                        uvData={uvData}
+                                        onToggleExpand={() => handleToggleExpand(entry.petsId)}
+                                        onDelete={() => handleDeletePets(entry.petsId)}
+                                        onToggleUV={(uvName) => handleToggleUV(entry.petsId, uvName)}
+                                    />
+                                ))}
+                            </div>
+                        )}
+
+                        {/* Kano & Frequency (placeholder) */}
+                        {currentAnalysis.petsEntries.length > 0 && (
+                            <div className="mt-6 pt-6 border-t border-gray-100">
+                                <h3 className="text-sm font-medium text-gray-700 mb-3">附加配置 (可选)</h3>
+                                <div className="grid grid-cols-2 gap-4">
+                                    <div className="bg-gray-50 rounded-lg p-4">
+                                        <label className="text-xs text-gray-500 block mb-2">Kano 需求属性</label>
+                                        <select className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm">
+                                            <option value="">未设置</option>
+                                            <option value="must-be">必备型</option>
+                                            <option value="performance">期望型</option>
+                                            <option value="attractive">魅力型</option>
+                                        </select>
+                                    </div>
+                                    <div className="bg-gray-50 rounded-lg p-4">
+                                        <label className="text-xs text-gray-500 block mb-2">需求使用频次</label>
+                                        <input
+                                            type="range"
+                                            min="0"
+                                            max="100"
+                                            className="w-full"
+                                            disabled
+                                        />
+                                        <p className="text-xs text-gray-400 mt-1">功能待开发</p>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+                    </div>
                 </div>
 
-                {/* R 区: 结果 */}
-                <div className="main-area">
-                    <AnalysisResult
-                        vehicles={project.vehicles}
-                        currentVehicle={currentVehicle}
-                        results={calculationResults}
-                    />
+                {/* R 区: 结果区 */}
+                <div className="w-1/2 bg-gray-50 overflow-y-auto">
+                    <div className="p-6">
+                        <h2 className="text-lg font-bold text-gray-900 mb-4">UVA 测算结果</h2>
+
+                        <div className="space-y-4">
+                            {project.vehicles.map(v => (
+                                <VehicleResultPanel
+                                    key={v}
+                                    vehicle={v}
+                                    result={calculationResults[v]}
+                                    isActive={currentVehicle === v}
+                                />
+                            ))}
+                        </div>
+                    </div>
                 </div>
             </div>
+
+            {/* Dialogs */}
+            {isAddPetsOpen && (
+                <AddPetsDialog
+                    petsList={petsList}
+                    existingPetsIds={existingPetsIds}
+                    onAdd={handleAddPets}
+                    onClose={() => setIsAddPetsOpen(false)}
+                />
+            )}
 
             <EditProjectModal
                 isOpen={isEditModalOpen}

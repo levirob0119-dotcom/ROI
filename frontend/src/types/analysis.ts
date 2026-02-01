@@ -5,7 +5,7 @@ export interface PetsEntry {
     petsName: string;
     type: 'enhanced' | 'reduced';
     uvL2Names: string[];
-    isExpanded?: boolean;
+    isExpanded: boolean;
 }
 
 export interface VehicleAnalysis {

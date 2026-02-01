@@ -9,10 +9,10 @@ import type { Transition, Variants } from 'framer-motion';
 // 过渡曲线
 // ========================================
 export const easings = {
-    smooth: [0.16, 1, 0.3, 1],       // Vercel 默认
-    bounce: [0.34, 1.56, 0.64, 1],   // 弹性
-    snap: [0.65, 0, 0.35, 1],        // 快速
-    easeOut: [0, 0, 0.2, 1],         // 标准
+    smooth: [0.16, 1, 0.3, 1] as const,       // Vercel 默认
+    bounce: [0.34, 1.56, 0.64, 1] as const,   // 弹性
+    snap: [0.65, 0, 0.35, 1] as const,        // 快速
+    easeOut: [0, 0, 0.2, 1] as const,         // 标准
 };
 
 // ========================================

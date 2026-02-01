@@ -8,13 +8,7 @@ import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { transitions } from '@/lib/motion';
 
-export interface PetsEntry {
-    petsId: string;
-    petsName: string;
-    type: 'enhanced' | 'reduced';
-    uvL2Names: string[];
-    isExpanded: boolean;
-}
+import type { PetsEntry } from '@/types/analysis';
 
 interface PetsEntryCardProps {
     entry: PetsEntry;

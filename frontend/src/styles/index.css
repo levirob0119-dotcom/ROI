@@ -2,499 +2,108 @@
 @tailwind components;
 @tailwind utilities;
 
-/* DM Sans font import */
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&display=swap');
+/* Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap');
 
 @layer base {
   :root {
-    /* ========================================
-       设计架构重构 - Vercel + Raycast + Linear 融合
-       NIO Blue (#4E92F9) 品牌色
-       ======================================== */
-
     /* Backgrounds */
     --background: 0 0% 100%;
-    --background-secondary: 220 20% 97%;
-    --foreground: 213 17% 15%;
+    /* White */
+    --foreground: 222 47% 11%;
+    /* Slate 900 */
 
-    /* Cards & Surfaces */
+    /* Card */
     --card: 0 0% 100%;
     --card-foreground: 222 47% 11%;
+
+    /* Popover */
     --popover: 0 0% 100%;
     --popover-foreground: 222 47% 11%;
-    --elevated: 220 13% 95%;
 
-    /* Secondary / Muted */
-    --secondary: 220 14% 96%;
-    --secondary-foreground: 222 47% 11%;
-    --muted: 220 14% 96%;
-    --muted-foreground: 215 16% 47%;
-
-    /* Primary - NIO Blue */
+    /* Primary - #137FEC (214, 94%, 64%) is mapped in config, but keeping var for reference if needed */
     --primary: 214 94% 64%;
-    --primary-hover: 214 94% 56%;
-    --primary-glow: 214 94% 64% / 0.15;
     --primary-foreground: 0 0% 100%;
 
-    /* Accent */
-    --accent: 220 14% 96%;
+    /* Secondary - Slate 100 #F1F5F9 */
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222 47% 11%;
+
+    /* Muted - Slate 100 #F1F5F9 */
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215 16% 47%;
+    /* Slate 500 */
+
+    /* Accent - Slate 100 #F1F5F9 */
+    --accent: 210 40% 96.1%;
     --accent-foreground: 222 47% 11%;
 
-    /* States */
+    /* Destructive - Red 500 #EF4444 */
     --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 98%;
-    --warning: 38 92% 50%;
-    --warning-foreground: 48 96% 89%;
-    --success: 160 84% 39%;
-    --success-foreground: 144 80% 95%;
+    --destructive-foreground: 210 40% 98%;
 
     /* Borders */
-    --border: 220 13% 91%;
-    --border-hover: 214 94% 64% / 0.2;
-    --border-interactive: 220 13% 85%;
-    --input: 220 13% 91%;
+    --border: 214 32% 91%;
+    /* Slate 200 #E2E8F0 */
+    --input: 214 32% 91%;
     --ring: 214 94% 64%;
+    /* Primary */
 
     /* Radius */
-    --radius-xs: 4px;
-    --radius-sm: 6px;
-    --radius: 8px;
-    --radius-md: 10px;
-    --radius-lg: 12px;
-    --radius-xl: 16px;
-
-    /* Charts */
-    --chart-1: 214 94% 64%;
-    --chart-2: 173 58% 39%;
-    --chart-3: 197 37% 24%;
-    --chart-4: 43 74% 66%;
-    --chart-5: 27 87% 67%;
-
-    /* ========================================
-       Legacy Aliases (backward compat)
-       ======================================== */
-    --color-surface: hsl(var(--background-secondary));
-    --color-text-main: hsl(var(--foreground));
-    --color-text-muted: hsl(var(--muted-foreground));
-    --color-text-secondary: hsl(var(--muted-foreground));
-    --color-border: hsl(var(--border));
-    --color-border-light: hsl(var(--border));
-    --color-primary: hsl(var(--primary));
-    --color-primary-light: hsl(var(--primary) / 0.1);
-    --color-secondary: hsl(var(--secondary));
-    --color-danger: hsl(var(--destructive));
-    --color-danger-light: hsl(var(--destructive) / 0.1);
-    --color-surface-hover: hsl(var(--elevated));
-
-    /* Spacing (8px grid) */
-    --space-1: 4px;
-    --space-2: 8px;
-    --space-3: 12px;
-    --space-4: 16px;
-    --space-5: 20px;
-    --space-6: 24px;
-    --space-8: 32px;
-    --space-10: 40px;
-    --space-12: 48px;
-
-    /* Typography */
-    --text-xs: 12px;
-    --text-sm: 13px;
-    --text-base: 14px;
-    --text-lg: 16px;
-    --text-xl: 18px;
-    --text-2xl: 24px;
-    --text-3xl: 30px;
-
-    /* Transitions - Vercel 风格 */
-    --ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
-    --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
-    --transition-fast: 100ms var(--ease-smooth);
-    --transition-base: 200ms var(--ease-smooth);
-    --transition-slow: 300ms var(--ease-smooth);
-
-    /* Shadows - 多层次 */
-    --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.04);
-    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
-    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.04);
-    --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.1), 0 4px 8px rgba(0, 0, 0, 0.04);
-    --shadow-xl: 0 24px 48px rgba(0, 0, 0, 0.12);
-    --shadow-glow: 0 0 0 1px hsl(var(--primary) / 0.1), 0 8px 24px rgba(0, 0, 0, 0.08);
+    --radius: 0.5rem;
   }
 
   .dark {
     --background: 222 47% 11%;
     --foreground: 210 40% 98%;
+
     --card: 222 47% 11%;
     --card-foreground: 210 40% 98%;
+
     --popover: 222 47% 11%;
     --popover-foreground: 210 40% 98%;
+
     --primary: 214 94% 64%;
-    --primary-foreground: 0 0% 100%;
+    --primary-foreground: 222 47% 11%;
+
     --secondary: 217 33% 17%;
     --secondary-foreground: 210 40% 98%;
+
     --muted: 217 33% 17%;
     --muted-foreground: 215 20% 65%;
+
     --accent: 217 33% 17%;
     --accent-foreground: 210 40% 98%;
-    --destructive: 0 63% 31%;
+
+    --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
+
     --border: 217 33% 17%;
     --input: 217 33% 17%;
     --ring: 214 94% 64%;
   }
+}
 
+@layer base {
   * {
     @apply border-border;
   }
 
   body {
     @apply bg-background text-foreground;
-    font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
-    font-size: 14px;
-    letter-spacing: -0.01em;
-    line-height: 1.5;
+    font-family: 'Inter', system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
-
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    @apply font-semibold;
-    letter-spacing: -0.03em;
-    line-height: 1.2;
-  }
-
-  h1 {
-    font-size: var(--text-3xl);
-  }
-
-  h2 {
-    font-size: var(--text-2xl);
-  }
-
-  h3 {
-    font-size: var(--text-xl);
-  }
-}
-
-/* ========================================
-   渐变 Mesh 背景 - Vercel 风格
-   ======================================== */
-.page-background {
-  position: relative;
-  min-height: 100vh;
-  background:
-    radial-gradient(ellipse 80% 50% at 20% -10%, hsla(214, 94%, 64%, 0.08) 0%, transparent 50%),
-    radial-gradient(ellipse 60% 40% at 80% 110%, hsla(214, 94%, 64%, 0.06) 0%, transparent 50%),
-    linear-gradient(180deg, hsl(220, 20%, 98%) 0%, hsl(220, 14%, 96%) 100%);
-}
-
-/* 噪点纹理 - Raycast 风格 */
-.page-background::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  opacity: 0.025;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-  pointer-events: none;
-  z-index: 0;
-}
-
-.page-background>* {
-  position: relative;
-  z-index: 1;
 }
 
 @layer utilities {
-  /* ========================================
-     交互工具类
-     ======================================== */
-
-  /* Focus Ring - NIO Blue */
-  .focus-ring {
-    @apply outline-none;
-    box-shadow: 0 0 0 3px hsl(var(--primary) / 0.2);
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
   }
 
-  /* Glass Effect - Raycast 风格 */
-  .glass {
-    background: rgba(255, 255, 255, 0.85);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(0, 0, 0, 0.06);
-  }
-
-  /* Skeleton Shimmer */
-  .skeleton {
-    background: linear-gradient(90deg,
-        hsl(var(--muted)) 25%,
-        hsl(var(--border)) 50%,
-        hsl(var(--muted)) 75%);
-    background-size: 200% 100%;
-    animation: shimmer 1.5s infinite;
-    border-radius: var(--radius);
-  }
-
-  /* Hover Lift - 增强版 */
-  .hover-lift {
-    transition: transform var(--transition-base), box-shadow var(--transition-base);
-  }
-
-  .hover-lift:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-lg);
-  }
-}
-
-@layer components {
-
-  /* ========================================
-     卡片系统 - Linear 发光边框
-     ======================================== */
-  .card-premium {
-    background: rgba(255, 255, 255, 0.9);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border: 1px solid rgba(0, 0, 0, 0.06);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-sm);
-    transition:
-      transform var(--transition-base),
-      box-shadow var(--transition-base),
-      border-color var(--transition-base);
-  }
-
-  .card-premium:hover {
-    transform: translateY(-4px);
-    border-color: hsl(var(--border-hover));
-    box-shadow: var(--shadow-glow);
-  }
-
-  /* ========================================
-     按钮系统 - 尺寸变体
-     ======================================== */
-
-  /* 基础按钮样式 */
-  .btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    font-weight: 500;
-    border-radius: var(--radius);
-    cursor: pointer;
-    transition:
-      transform var(--transition-fast),
-      box-shadow var(--transition-base),
-      background-color var(--transition-fast);
-  }
-
-  .btn:active {
-    transform: scale(0.97);
-  }
-
-  .btn:focus-visible {
-    outline: none;
-    box-shadow: 0 0 0 3px hsl(var(--primary) / 0.2);
-  }
-
-  /* 尺寸 */
-  .btn-xs {
-    height: 28px;
-    padding: 0 12px;
-    font-size: 12px;
-    border-radius: var(--radius-xs);
-  }
-
-  .btn-sm {
-    height: 32px;
-    padding: 0 14px;
-    font-size: 13px;
-    border-radius: var(--radius-sm);
-  }
-
-  .btn-md {
-    height: 36px;
-    padding: 0 16px;
-    font-size: 14px;
-  }
-
-  .btn-lg {
-    height: 44px;
-    padding: 0 24px;
-    font-size: 15px;
-    border-radius: var(--radius-md);
-  }
-
-  /* 变体 - Primary */
-  .btn-primary {
-    background: hsl(var(--primary));
-    color: hsl(var(--primary-foreground));
-    box-shadow: 0 2px 8px hsl(var(--primary) / 0.25);
-  }
-
-  .btn-primary:hover {
-    background: hsl(var(--primary-hover));
-    box-shadow: 0 4px 12px hsl(var(--primary) / 0.3);
-    transform: translateY(-1px);
-  }
-
-  /* 变体 - Secondary */
-  .btn-secondary {
-    background: rgba(0, 0, 0, 0.04);
-    color: hsl(var(--foreground));
-  }
-
-  .btn-secondary:hover {
-    background: rgba(0, 0, 0, 0.08);
-  }
-
-  /* 变体 - Outline */
-  .btn-outline {
-    background: transparent;
-    color: hsl(var(--primary));
-    border: 1px solid hsl(var(--primary) / 0.3);
-  }
-
-  .btn-outline:hover {
-    background: hsl(var(--primary) / 0.05);
-    border-color: hsl(var(--primary) / 0.5);
-  }
-
-  /* 变体 - Ghost */
-  .btn-ghost {
-    background: transparent;
-    color: hsl(var(--muted-foreground));
-  }
-
-  .btn-ghost:hover {
-    background: hsl(var(--elevated));
-    color: hsl(var(--foreground));
-  }
-
-  /* 变体 - Danger */
-  .btn-danger {
-    background: hsl(var(--destructive));
-    color: hsl(var(--destructive-foreground));
-    box-shadow: 0 2px 8px hsl(var(--destructive) / 0.2);
-  }
-
-  .btn-danger:hover {
-    background: hsl(0 84% 55%);
-    box-shadow: 0 4px 12px hsl(var(--destructive) / 0.3);
-  }
-
-  /* ========================================
-     空状态 - 渐变背景 + 引导
-     ======================================== */
-  .empty-state {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 48px 24px;
-    text-align: center;
-    background:
-      radial-gradient(ellipse at 50% 0%, hsla(214, 94%, 64%, 0.06) 0%, transparent 60%),
-      rgba(255, 255, 255, 0.6);
-    border-radius: var(--radius-lg);
-    border: 1px solid rgba(0, 0, 0, 0.04);
-  }
-
-  .empty-state-icon {
-    width: 56px;
-    height: 56px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 16px;
-    background: linear-gradient(135deg, hsl(var(--primary) / 0.1) 0%, hsl(var(--primary) / 0.05) 100%);
-    border-radius: 50%;
-    color: hsl(var(--primary));
-  }
-
-  .empty-state-title {
-    font-size: var(--text-lg);
-    font-weight: 600;
-    color: hsl(var(--foreground));
-    margin-bottom: 8px;
-  }
-
-  .empty-state-desc {
-    font-size: var(--text-sm);
-    color: hsl(var(--muted-foreground));
-    margin-bottom: 20px;
-    max-width: 280px;
-  }
-}
-
-/* ========================================
-   Keyframes
-   ======================================== */
-@keyframes shimmer {
-  0% {
-    background-position: -200% 0;
-  }
-
-  100% {
-    background-position: 200% 0;
-  }
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes pulse {
-
-  0%,
-  100% {
-    opacity: 1;
-  }
-
-  50% {
-    opacity: 0.5;
-  }
-}
-
-@keyframes bounce {
-
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-
-  50% {
-    transform: translateY(-4px);
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
 }

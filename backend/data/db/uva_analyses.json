@@ -171,9 +171,41 @@
     "kanoType": "Performance",
     "usageRate": 50,
     "penetrationRate": 30,
-    "result": {},
+    "result": {
+      "vehicle": "cetus",
+      "enhanced": {
+        "totalScore": 5.97,
+        "petsList": [
+          {
+            "petsId": "intelligent_driving",
+            "totalScore": 5.97,
+            "uvL1List": [
+              {
+                "l1Name": "愉悦享受",
+                "l1Category": "核心差异UV",
+                "l1Weight": 0.0652,
+                "totalScore": 5.97,
+                "l2List": [
+                  {
+                    "l2Name": "氛围感带来的愉悦享受",
+                    "score": 5.97
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "reduced": {
+        "totalScore": 0,
+        "petsList": []
+      },
+      "totalEnhanced": 5.97,
+      "totalReduced": 0,
+      "finalScore": 5.97
+    },
     "createdAt": "2026-01-31T13:37:53.810Z",
-    "updatedAt": "2026-02-01T07:23:09.286Z"
+    "updatedAt": "2026-02-01T08:33:29.208Z"
   },
   {
     "id": "bfaf6bda-1681-46bd-bf61-12548183a43a",
