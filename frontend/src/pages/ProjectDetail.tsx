@@ -2,13 +2,16 @@ import React, { useEffect, useState, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import { Loader2, Plus, Calculator, Save, Settings } from 'lucide-react';
 import { projectService } from '@/services/projects';
-import { dataService, type Pets, type UVL1 } from '@/services/data';
+import { dataService, type Pets, type UVL1, type VehicleDataStatus } from '@/services/data';
 import type { Project } from '@/types/models';
 import type { ProjectAnalysisData } from '@/types/analysis';
 import PetsEntryCard from '@/components/Project/PetsEntryCard';
 import AddPetsDialog from '@/components/Project/AddPetsDialog';
 import VehicleResultPanel from '@/components/Project/VehicleResultPanel';
 import EditProjectModal from '@/components/EditProjectModal';
+import { Slider } from '@/components/ui/slider';
+import { RadioGroup } from '@/components/ui/radio-group';
+import { useToast } from '@/components/ui/toast';
 
 const ProjectDetail: React.FC = () => {
     const { id } = useParams<{ id: string }>();
@@ -28,6 +31,8 @@ const ProjectDetail: React.FC = () => {
     const [currentVehicle, setCurrentVehicle] = useState<string>('');
     const [isAddPetsOpen, setIsAddPetsOpen] = useState(false);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+    const [vehicleDataStatus, setVehicleDataStatus] = useState<VehicleDataStatus[]>([]);
+    const { showToast, ToastComponent } = useToast();
 
     useEffect(() => {
         if (id) {
@@ -37,15 +42,17 @@ const ProjectDetail: React.FC = () => {
 
     const initData = async (projectId: string) => {
         try {
-            const [projectData, petsData, uvDataResponse] = await Promise.all([
+            const [projectData, petsData, uvDataResponse, vehicleStatus] = await Promise.all([
                 projectService.getById(projectId),
                 dataService.getPets(),
-                dataService.getUVData()
+                dataService.getUVData(),
+                dataService.getVehiclesDataStatus()
             ]);
 
             setProject(projectData);
             setPetsList(petsData);
             setUVData(uvDataResponse);
+            setVehicleDataStatus(vehicleStatus);
 
             // Initialize analysis state for each vehicle
             const initialAnalysis: ProjectAnalysisData = {};
@@ -54,15 +61,26 @@ const ProjectDetail: React.FC = () => {
             });
             setAnalysisData(initialAnalysis);
 
-            // Default select first vehicle
-            if (projectData.vehicles.length > 0) {
-                setCurrentVehicle(projectData.vehicles[0]);
+            // Default select first vehicle that has data
+            const firstVehicleWithData = projectData.vehicles.find(v => {
+                const status = vehicleStatus.find(s => s.id.toLowerCase() === v.toLowerCase());
+                return status?.hasData !== false;
+            }) || projectData.vehicles[0];
+
+            if (firstVehicleWithData) {
+                setCurrentVehicle(firstVehicleWithData);
             }
         } catch (error) {
             console.error('Failed to init project data', error);
         } finally {
             setIsLoading(false);
         }
+    };
+
+    // Check if a vehicle has UVA data
+    const vehicleHasData = (vehicleId: string): boolean => {
+        const status = vehicleDataStatus.find(s => s.id.toLowerCase() === vehicleId.toLowerCase());
+        return status?.hasData !== false;
     };
 
     // Current vehicle's analysis data
@@ -142,6 +160,19 @@ const ProjectDetail: React.FC = () => {
         });
     };
 
+    const handleUpdateConfig = (field: 'kanoType' | 'usageRate' | 'penetrationRate', value: any) => {
+        setAnalysisData(prev => {
+            const vehicleData = prev[currentVehicle] || { petsEntries: [] };
+            return {
+                ...prev,
+                [currentVehicle]: {
+                    ...vehicleData,
+                    [field]: value
+                }
+            };
+        });
+    };
+
     const handleCalculate = async () => {
         if (!currentVehicle) return;
 
@@ -159,7 +190,10 @@ const ProjectDetail: React.FC = () => {
             const result = await dataService.calculateUVA({
                 vehicle: currentVehicle,
                 enhancedPets,
-                reducedPets
+                reducedPets,
+                kanoType: currentAnalysis.kanoType,
+                usageRate: currentAnalysis.usageRate,
+                penetrationRate: currentAnalysis.penetrationRate
             });
 
             setCalculationResults(prev => ({
@@ -200,18 +234,27 @@ const ProjectDetail: React.FC = () => {
 
                     {/* 中间: 车型 Tabs */}
                     <div className="flex items-center gap-2 bg-gray-100 p-1 rounded-lg">
-                        {project.vehicles.map(v => (
-                            <button
-                                key={v}
-                                onClick={() => setCurrentVehicle(v)}
-                                className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${currentVehicle === v
-                                    ? 'bg-white text-indigo-700 shadow-sm'
-                                    : 'text-gray-600 hover:text-gray-900'
-                                    }`}
-                            >
-                                {v.toUpperCase()}
-                            </button>
-                        ))}
+                        {project.vehicles.map(v => {
+                            const hasData = vehicleHasData(v);
+                            return (
+                                <button
+                                    key={v}
+                                    onClick={() => {
+                                        if (hasData) {
+                                            setCurrentVehicle(v);
+                                        } else {
+                                            showToast('当前车型暂无数据', 'warning');
+                                        }
+                                    }}
+                                    className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${currentVehicle === v
+                                        ? 'bg-white text-indigo-700 shadow-sm'
+                                        : 'text-gray-600 hover:text-gray-900'
+                                        }`}
+                                >
+                                    {v.toUpperCase()}
+                                </button>
+                            );
+                        })}
                     </div>
 
                     {/* 右侧: 操作按钮 */}
@@ -282,30 +325,48 @@ const ProjectDetail: React.FC = () => {
                             </div>
                         )}
 
-                        {/* Kano & Frequency (placeholder) */}
+                        {/* Kano & Frequency Configuration */}
                         {currentAnalysis.petsEntries.length > 0 && (
-                            <div className="mt-6 pt-6 border-t border-gray-100">
-                                <h3 className="text-sm font-medium text-gray-700 mb-3">附加配置 (可选)</h3>
-                                <div className="grid grid-cols-2 gap-4">
-                                    <div className="bg-gray-50 rounded-lg p-4">
-                                        <label className="text-xs text-gray-500 block mb-2">Kano 需求属性</label>
-                                        <select className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm">
-                                            <option value="">未设置</option>
-                                            <option value="must-be">必备型</option>
-                                            <option value="performance">期望型</option>
-                                            <option value="attractive">魅力型</option>
-                                        </select>
-                                    </div>
-                                    <div className="bg-gray-50 rounded-lg p-4">
-                                        <label className="text-xs text-gray-500 block mb-2">需求使用频次</label>
-                                        <input
-                                            type="range"
-                                            min="0"
-                                            max="100"
-                                            className="w-full"
-                                            disabled
+                            <div className="mt-6 pt-6 border-t border-border">
+                                <h3 className="text-sm font-semibold text-foreground mb-4">附加配置</h3>
+                                <div className="space-y-6">
+                                    {/* Kano Type */}
+                                    <div>
+                                        <label className="text-xs text-muted-foreground block mb-3 font-medium">Kano 需求属性</label>
+                                        <RadioGroup
+                                            name={`kano-${currentVehicle}`}
+                                            value={currentAnalysis.kanoType}
+                                            onChange={(value) => handleUpdateConfig('kanoType', value)}
+                                            options={[
+                                                { value: 'must-be', label: '必备型', description: 'a' },
+                                                { value: 'performance', label: '期望型', description: 'b' },
+                                                { value: 'attractive', label: '魅力型', description: 'c' }
+                                            ]}
                                         />
-                                        <p className="text-xs text-gray-400 mt-1">功能待开发</p>
+                                    </div>
+
+                                    {/* Frequency Sliders */}
+                                    <div className="grid grid-cols-2 gap-6">
+                                        <div className="bg-card rounded-xl border border-border p-4">
+                                            <label className="text-xs text-muted-foreground font-medium block mb-4">使用率</label>
+                                            <Slider
+                                                value={currentAnalysis.usageRate || 0}
+                                                min={0}
+                                                max={100}
+                                                unit="%"
+                                                onChange={(value) => handleUpdateConfig('usageRate', value)}
+                                            />
+                                        </div>
+                                        <div className="bg-card rounded-xl border border-border p-4">
+                                            <label className="text-xs text-muted-foreground font-medium block mb-4">渗透率</label>
+                                            <Slider
+                                                value={currentAnalysis.penetrationRate || 0}
+                                                min={0}
+                                                max={100}
+                                                unit="%"
+                                                onChange={(value) => handleUpdateConfig('penetrationRate', value)}
+                                            />
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -324,6 +385,7 @@ const ProjectDetail: React.FC = () => {
                                     key={v}
                                     vehicle={v}
                                     result={calculationResults[v]}
+                                    config={analysisData[v]}
                                     isActive={currentVehicle === v}
                                 />
                             ))}
@@ -348,6 +410,9 @@ const ProjectDetail: React.FC = () => {
                 onClose={() => setIsEditModalOpen(false)}
                 onSuccess={handleEditSuccess}
             />
+
+            {/* Toast Notifications */}
+            <ToastComponent />
         </div>
     );
 };

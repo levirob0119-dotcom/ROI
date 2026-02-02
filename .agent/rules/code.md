@@ -2,4 +2,4 @@
 trigger: always_on
 ---
 
-in chinese
+使用中文为默认语言
