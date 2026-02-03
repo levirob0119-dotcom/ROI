@@ -100,7 +100,7 @@ const VehicleResultCard: React.FC<VehicleResultCardProps> = ({ vehicle, result, 
                 <div className="score-box score-box--enhanced">
                     <div className="score-box-label">
                         <TrendingUp size={10} />
-                        增强
+                        提升
                     </div>
                     <div className="score-box-value">
                         +{formatNumber(result.totalEnhanced)}
@@ -109,7 +109,7 @@ const VehicleResultCard: React.FC<VehicleResultCardProps> = ({ vehicle, result, 
                 <div className="score-box score-box--reduced">
                     <div className="score-box-label">
                         <TrendingDown size={10} />
-                        减弱
+                        降低
                     </div>
                     <div className="score-box-value">
                         -{formatNumber(result.totalReduced)}

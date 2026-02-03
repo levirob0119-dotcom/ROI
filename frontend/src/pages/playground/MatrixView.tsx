@@ -91,7 +91,7 @@ const MatrixView: React.FC = () => {
                 </div>
 
                 <div className="mt-4 text-xs text-gray-500">
-                    操作提示：单击循环切换状态 (空 → 增强 → 减弱 → 空)。右键可查看详细 UV 指标。
+                    操作提示：单击循环切换状态 (空 → 提升 → 降低 → 空)。右键可查看详细 UV 指标。
                 </div>
             </div>
         </div>

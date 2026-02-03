@@ -180,13 +180,13 @@ const PathStreamlinedView: React.FC = () => {
                                                 onClick={() => setNewPathType('enhanced')}
                                                 className={`flex-1 py-1.5 text-xs font-bold rounded ${newPathType === 'enhanced' ? 'bg-indigo-600 text-white' : 'bg-gray-100 text-gray-600'}`}
                                             >
-                                                增强 (+)
+                                                提升 (+)
                                             </button>
                                             <button
                                                 onClick={() => setNewPathType('reduced')}
                                                 className={`flex-1 py-1.5 text-xs font-bold rounded ${newPathType === 'reduced' ? 'bg-red-500 text-white' : 'bg-gray-100 text-gray-600'}`}
                                             >
-                                                减弱 (-)
+                                                降低 (-)
                                             </button>
                                         </div>
                                     </div>

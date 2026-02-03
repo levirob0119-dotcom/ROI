@@ -86,7 +86,7 @@ const AddPetsDialog: React.FC<AddPetsDialogProps> = ({
                                         }`}
                                 >
                                     <Plus size={18} />
-                                    增强
+                                    提升
                                 </button>
                                 <button
                                     onClick={() => setSelectedType('reduced')}
@@ -96,7 +96,7 @@ const AddPetsDialog: React.FC<AddPetsDialogProps> = ({
                                         }`}
                                 >
                                     <Minus size={18} />
-                                    减弱
+                                    降低
                                 </button>
                             </div>
                         </div>

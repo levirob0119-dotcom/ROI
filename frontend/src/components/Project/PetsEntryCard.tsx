@@ -78,7 +78,7 @@ const PetsEntryCard: React.FC<PetsEntryCardProps> = ({
                             variant={isEnhanced ? "success" : "destructive"}
                             className="ml-2"
                         >
-                            {isEnhanced ? '+增强' : '−减弱'}
+                            {isEnhanced ? '+提升' : '−降低'}
                         </Badge>
                     </div>
                     <div className="flex items-center gap-3">

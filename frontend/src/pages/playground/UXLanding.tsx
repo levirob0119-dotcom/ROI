@@ -49,7 +49,7 @@ const UXLanding: React.FC = () => {
                     />
                     <DemoCard
                         title="方案 B: 向导模式"
-                        desc="分步引导，先选增强再选减弱。降低认知负载，适合演示和新手引导。"
+                        desc="分步引导，先选提升再选降低。降低认知负载，适合演示和新手引导。"
                         icon={ListOrdered}
                         path="/demo/wizard"
                         color="bg-purple-500"

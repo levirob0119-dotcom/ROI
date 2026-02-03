@@ -182,10 +182,10 @@ const ProjectDetail: React.FC = () => {
             const entries = currentAnalysis.petsEntries;
             const enhancedPets = entries
                 .filter(e => e.type === 'enhanced' && e.uvL2Names.length > 0)
-                .map(e => ({ petsId: e.petsId, uvL2Names: e.uvL2Names }));
+                .map(e => ({ petsId: e.petsId, petsName: e.petsName, uvL2Names: e.uvL2Names }));
             const reducedPets = entries
                 .filter(e => e.type === 'reduced' && e.uvL2Names.length > 0)
-                .map(e => ({ petsId: e.petsId, uvL2Names: e.uvL2Names }));
+                .map(e => ({ petsId: e.petsId, petsName: e.petsName, uvL2Names: e.uvL2Names }));
 
             const result = await dataService.calculateUVA({
                 vehicle: currentVehicle,
@@ -338,9 +338,9 @@ const ProjectDetail: React.FC = () => {
                                             value={currentAnalysis.kanoType}
                                             onChange={(value) => handleUpdateConfig('kanoType', value)}
                                             options={[
-                                                { value: 'must-be', label: '必备型', description: 'a' },
-                                                { value: 'performance', label: '期望型', description: 'b' },
-                                                { value: 'attractive', label: '魅力型', description: 'c' }
+                                                { value: 'must-be', label: '必备型' },
+                                                { value: 'performance', label: '期望型' },
+                                                { value: 'attractive', label: '魅力型' }
                                             ]}
                                         />
                                     </div>
@@ -348,7 +348,10 @@ const ProjectDetail: React.FC = () => {
                                     {/* Frequency Sliders */}
                                     <div className="grid grid-cols-2 gap-6">
                                         <div className="bg-card rounded-xl border border-border p-4">
-                                            <label className="text-xs text-muted-foreground font-medium block mb-4">使用率</label>
+                                            <label className="text-xs text-muted-foreground font-medium block mb-4">
+                                                使用率
+                                                <span className="font-normal text-muted-foreground/60 ml-2">该功能在对应车型上一定周期内的使用概率</span>
+                                            </label>
                                             <Slider
                                                 value={currentAnalysis.usageRate || 0}
                                                 min={0}
@@ -358,7 +361,10 @@ const ProjectDetail: React.FC = () => {
                                             />
                                         </div>
                                         <div className="bg-card rounded-xl border border-border p-4">
-                                            <label className="text-xs text-muted-foreground font-medium block mb-4">渗透率</label>
+                                            <label className="text-xs text-muted-foreground font-medium block mb-4">
+                                                渗透率
+                                                <span className="font-normal text-muted-foreground/60 ml-2">激活并使用过该功能的车辆占比「全生命周期，一次就算」</span>
+                                            </label>
                                             <Slider
                                                 value={currentAnalysis.penetrationRate || 0}
                                                 min={0}

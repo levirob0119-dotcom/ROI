@@ -50,30 +50,16 @@ const RadioGroup: React.FC<RadioGroupProps> = ({
                         className="sr-only"
                     />
 
-                    {/* Custom Radio Circle */}
-                    <div className={cn(
-                        "h-4 w-4 rounded-full border-2 flex items-center justify-center transition-all",
-                        value === option.value
-                            ? "border-primary bg-primary"
-                            : "border-muted-foreground/50"
-                    )}>
-                        {value === option.value && (
-                            <div className="h-1.5 w-1.5 rounded-full bg-white" />
-                        )}
-                    </div>
-
                     {/* Label Content */}
-                    <div className="flex flex-col">
-                        <span className={cn(
-                            "text-sm font-medium",
-                            value === option.value ? "text-primary" : "text-foreground"
-                        )}>
-                            {option.label}
-                        </span>
-                        {option.description && (
-                            <span className="text-xs text-muted-foreground">{option.description}</span>
-                        )}
-                    </div>
+                    <span className={cn(
+                        "text-sm font-medium",
+                        value === option.value ? "text-primary" : "text-foreground"
+                    )}>
+                        {option.label}
+                    </span>
+                    {option.description && (
+                        <span className="text-xs text-muted-foreground ml-1">{option.description}</span>
+                    )}
                 </label>
             ))}
         </div>

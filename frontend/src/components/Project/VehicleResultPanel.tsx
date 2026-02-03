@@ -1,5 +1,5 @@
 import React from 'react';
-import { TrendingUp, TrendingDown, ChevronDown, ChevronRight, Car, Gauge, Users, Tag } from 'lucide-react';
+import { TrendingUp, TrendingDown, ChevronDown, ChevronRight, Car, Gauge, Users, Tag, Diamond } from 'lucide-react';
 import type { VehicleAnalysis } from '../../types/analysis';
 
 interface VehicleResultPanelProps {
@@ -16,6 +16,30 @@ const VehicleResultPanel: React.FC<VehicleResultPanelProps> = ({
     isActive
 }) => {
     const [isExpanded, setIsExpanded] = React.useState(true);
+    // Track expanded state for each PETS
+    const [expandedPets, setExpandedPets] = React.useState<Record<string, boolean>>({});
+
+    // Initialize/Sync expanded states when result changes
+    React.useEffect(() => {
+        if (result) {
+            const initialExpanded: Record<string, boolean> = {};
+            if (result.enhanced?.petsList) {
+                result.enhanced.petsList.forEach((p: any) => initialExpanded[p.petsId] = true);
+            }
+            if (result.reduced?.petsList) {
+                result.reduced.petsList.forEach((p: any) => initialExpanded[p.petsId] = true);
+            }
+            setExpandedPets(initialExpanded);
+        }
+    }, [result]);
+
+    const togglePetsExpand = (petsId: string, event: React.MouseEvent) => {
+        event.stopPropagation();
+        setExpandedPets(prev => ({
+            ...prev,
+            [petsId]: !prev[petsId]
+        }));
+    };
 
     // Get Kano label
     const getKanoLabel = (type?: string) => {
@@ -47,69 +71,55 @@ const VehicleResultPanel: React.FC<VehicleResultPanelProps> = ({
     const { totalEnhanced, totalReduced, finalScore, enhanced, reduced } = result;
     const maxScore = Math.max(totalEnhanced, totalReduced, 50); // For progress bar normalization
 
-    // Render hierarchical requirement groups with visual accumulation
-    const renderRequirementGroups = (groups: any[], type: 'enhanced' | 'reduced') => {
-        if (!groups || groups.length === 0) return <p className="text-sm text-muted-foreground py-2">无数据</p>;
+    // Render Requirement Groups (Children of PETS)
+    const renderRequirementGroups = (groups: any[], type: 'enhanced' | 'reduced', petsTotal: number) => {
+        if (!groups || groups.length === 0) return <p className="text-xs text-muted-foreground pl-4 py-1">无细分数据</p>;
 
         const isPositive = type === 'enhanced';
         const colorClass = isPositive ? 'text-green-700' : 'text-red-600';
-        const bgGradient = isPositive
-            ? 'from-green-500 to-emerald-400'
-            : 'from-red-500 to-rose-400';
-        const lightBg = isPositive ? 'bg-green-50' : 'bg-red-50';
+        const bgBarColor = isPositive ? 'bg-green-500' : 'bg-red-500';
 
         return (
-            <div className="space-y-3">
-                {groups.map((group: any, idx: number) => (
-                    <div key={group.categoryName} className="rounded-lg overflow-hidden border border-border">
-                        {/* Requirement Type Header with Score Bar */}
-                        <div className={`relative ${lightBg}`}>
-                            {/* Score Progress Bar Background */}
-                            <div
-                                className={`absolute inset-y-0 left-0 bg-gradient-to-r ${bgGradient} opacity-20`}
-                                style={{ width: `${Math.min((group.totalScore / maxScore) * 100, 100)}%` }}
-                            />
-                            <div className="relative flex items-center justify-between px-3 py-2">
-                                <div className="flex items-center gap-2">
-                                    <span className="text-xs font-bold text-muted-foreground bg-white/80 px-1.5 py-0.5 rounded">
-                                        L{idx + 1}
-                                    </span>
-                                    <span className="font-semibold text-sm text-foreground">{group.categoryName}</span>
-                                </div>
-                                <span className={`text-sm font-bold ${colorClass}`}>
-                                    {isPositive ? '+' : '-'}{group.totalScore.toFixed(1)}
-                                </span>
-                            </div>
+            <div className="space-y-3 pt-2">
+                {groups.map((group: any) => (
+                    <div key={group.categoryName} className="relative pl-3 border-l-2 border-border/40 ml-1">
+                        {/* Level 3: Requirement Type Header */}
+                        <div className="flex items-center justify-between mb-2">
+                            <span className="text-xs font-bold text-gray-700 bg-gray-100 px-2 py-0.5 rounded-sm">
+                                {group.categoryName}
+                            </span>
+                            <span className={`text-xs font-bold ${colorClass}`}>
+                                {isPositive ? '+' : '-'}{group.totalScore.toFixed(1)}
+                            </span>
                         </div>
 
-                        {/* UV L1 List */}
-                        <div className="divide-y divide-border/50">
+                        {/* Level 4: UV L1 List */}
+                        <div className="space-y-2">
                             {group.l1List.map((l1: any) => (
-                                <div key={l1.l1Name} className="bg-white">
-                                    {/* L1 Header */}
-                                    <div className="flex items-center justify-between px-4 py-2 bg-muted/30">
-                                        <span className="text-sm font-medium text-foreground">{l1.l1Name}</span>
-                                        <div className="flex items-center gap-2">
-                                            <div className="w-16 h-1.5 bg-border rounded-full overflow-hidden">
-                                                <div
-                                                    className={`h-full bg-gradient-to-r ${bgGradient}`}
-                                                    style={{ width: `${Math.min((l1.totalScore / group.totalScore) * 100, 100)}%` }}
-                                                />
-                                            </div>
-                                            <span className={`text-xs font-semibold ${colorClass}`}>
-                                                {l1.totalScore.toFixed(1)}
-                                            </span>
-                                        </div>
+                                <div key={l1.l1Name} className="group/l1">
+                                    {/* L1 Info with Progress Bar */}
+                                    <div className="flex items-center justify-between text-xs mb-1">
+                                        <span className="text-gray-600 font-medium">{l1.l1Name}</span>
+                                        <span className={`font-semibold ${colorClass}`}>
+                                            {l1.totalScore.toFixed(1)}
+                                        </span>
+                                    </div>
+                                    <div className="h-1.5 w-full bg-gray-100 rounded-full overflow-hidden mb-1.5">
+                                        <div
+                                            className={`h-full ${bgBarColor} opacity-80`}
+                                            style={{ width: `${Math.min((l1.totalScore / (petsTotal || 1)) * 100, 100)}%` }}
+                                        />
                                     </div>
 
-                                    {/* L2 Details */}
-                                    <div className="px-4 py-2 space-y-1.5">
+                                    {/* Level 5: UV L2 List (Compact) */}
+                                    <div className="pl-2 space-y-1">
                                         {l1.l2List.map((l2: any) => (
-                                            <div key={l2.l2Name} className="flex items-center justify-between text-xs">
-                                                <span className="text-muted-foreground truncate pr-4 max-w-[200px]">{l2.l2Name}</span>
-                                                <span className={`font-medium ${colorClass}`}>
-                                                    {isPositive ? '+' : '-'}{l2.score.toFixed(1)}
-                                                </span>
+                                            <div key={l2.l2Name} className="flex items-center justify-between text-[10px] text-gray-400 hover:text-gray-600 transition-colors">
+                                                <div className="flex items-center gap-1.5 overflow-hidden">
+                                                    <div className="w-1 h-1 rounded-full bg-gray-300 flex-shrink-0" />
+                                                    <span className="truncate max-w-[180px]">{l2.l2Name}</span>
+                                                </div>
+                                                <span>{l2.score.toFixed(1)}</span>
                                             </div>
                                         ))}
                                     </div>
@@ -122,9 +132,52 @@ const VehicleResultPanel: React.FC<VehicleResultPanelProps> = ({
         );
     };
 
+    // Render PETS Groups
+    const renderPetsGroups = (petsList: any[], type: 'enhanced' | 'reduced') => {
+        if (!petsList || petsList.length === 0) return <p className="text-sm text-muted-foreground py-2">无数据</p>;
+
+        const isPositive = type === 'enhanced';
+        const colorClass = isPositive ? 'text-green-700' : 'text-red-600';
+        const bgClass = isPositive ? 'bg-green-50/50' : 'bg-red-50/50';
+        const borderClass = isPositive ? 'border-green-100' : 'border-red-100';
+
+        return (
+            <div className="space-y-3">
+                {petsList.map((pets: any) => {
+                    const isPetsExpanded = expandedPets[pets.petsId];
+                    return (
+                        <div key={pets.petsId} className={`rounded-lg border ${borderClass} ${bgClass} overflow-hidden`}>
+                            {/* Level 2: PETS Header (Collapsible) */}
+                            <div
+                                className="flex items-center justify-between px-3 py-2.5 cursor-pointer hover:bg-white/50 transition-colors"
+                                onClick={(e) => togglePetsExpand(pets.petsId, e)}
+                            >
+                                <div className="flex items-center gap-2">
+                                    {isPetsExpanded ? <ChevronDown size={14} className="text-gray-400" /> : <ChevronRight size={14} className="text-gray-400" />}
+                                    <Diamond size={14} className={isPositive ? 'text-green-600' : 'text-red-500'} />
+                                    <span className="font-bold text-sm text-gray-800">{pets.petsName}</span>
+                                </div>
+                                <span className={`text-sm font-bold ${colorClass}`}>
+                                    {isPositive ? '+' : '-'}{pets.totalScore.toFixed(1)}
+                                </span>
+                            </div>
+
+                            {/* PETS Content */}
+                            {isPetsExpanded && (
+                                <div className="px-3 pb-3 bg-white/40">
+                                    {renderRequirementGroups(pets.requirementGroups, type, pets.totalScore)}
+                                </div>
+                            )}
+                        </div>
+                    );
+                })}
+            </div>
+        );
+    };
+
     return (
         <div className={`bg-white rounded-xl border-2 ${isActive ? 'border-primary/30' : 'border-border'} overflow-hidden shadow-sm`}>
-            {/* Header with Score */}
+            {/* Level 0: Header with Final Score */}
             <div
                 className={`cursor-pointer ${isActive ? 'bg-primary/5' : 'bg-muted/30'}`}
                 onClick={() => setIsExpanded(!isExpanded)}
@@ -146,14 +199,13 @@ const VehicleResultPanel: React.FC<VehicleResultPanelProps> = ({
                 </div>
             </div>
 
-            {/* Expanded Details */}
+            {/* Config & Detailed Results */}
             {isExpanded && (
                 <div className="border-t border-border">
-                    {/* Configuration Summary Cards - PROMINENT */}
+                    {/* Configuration Summary Cards */}
                     {config && (config.kanoType || config.usageRate !== undefined || config.penetrationRate !== undefined) && (
                         <div className="p-4 bg-muted/20 border-b border-border">
                             <div className="grid grid-cols-3 gap-3">
-                                {/* Kano Type Card */}
                                 <div className="bg-white rounded-lg border border-border p-3 text-center">
                                     <div className="flex items-center justify-center gap-1 text-muted-foreground mb-1">
                                         <Tag size={12} />
@@ -163,8 +215,6 @@ const VehicleResultPanel: React.FC<VehicleResultPanelProps> = ({
                                         {getKanoLabel(config.kanoType)}
                                     </div>
                                 </div>
-
-                                {/* Usage Rate Card */}
                                 <div className="bg-white rounded-lg border border-border p-3 text-center">
                                     <div className="flex items-center justify-center gap-1 text-muted-foreground mb-1">
                                         <Gauge size={12} />
@@ -174,8 +224,6 @@ const VehicleResultPanel: React.FC<VehicleResultPanelProps> = ({
                                         {config.usageRate || 0}%
                                     </div>
                                 </div>
-
-                                {/* Penetration Rate Card */}
                                 <div className="bg-white rounded-lg border border-border p-3 text-center">
                                     <div className="flex items-center justify-center gap-1 text-muted-foreground mb-1">
                                         <Users size={12} />
@@ -190,37 +238,37 @@ const VehicleResultPanel: React.FC<VehicleResultPanelProps> = ({
                     )}
 
                     {/* Score Details */}
-                    <div className="p-4 space-y-4">
-                        {/* Enhanced Section */}
+                    <div className="p-4 space-y-6">
+                        {/* Level 1: Enhanced Section */}
                         {totalEnhanced > 0 && (
                             <div>
-                                <div className="flex items-center justify-between mb-3">
-                                    <div className="flex items-center gap-2 text-green-700 font-semibold">
+                                <div className="flex items-center justify-between mb-3 border-b border-green-100 pb-2">
+                                    <div className="flex items-center gap-2 text-green-700 font-bold">
                                         <TrendingUp size={16} />
-                                        <span>增强体验</span>
+                                        <span>提升体验</span>
                                     </div>
                                     <span className="text-lg font-bold text-green-600">+{totalEnhanced.toFixed(1)}</span>
                                 </div>
-                                {enhanced?.requirementGroups
-                                    ? renderRequirementGroups(enhanced.requirementGroups, 'enhanced')
-                                    : <p className="text-xs text-muted-foreground">旧版数据，重新测算以查看详情</p>
+                                {enhanced?.petsList
+                                    ? renderPetsGroups(enhanced.petsList, 'enhanced')
+                                    : <p className="text-xs text-muted-foreground">数据格式不兼容，请重新测算</p>
                                 }
                             </div>
                         )}
 
-                        {/* Reduced Section */}
+                        {/* Level 1: Reduced Section */}
                         {totalReduced > 0 && (
-                            <div className={totalEnhanced > 0 ? 'pt-4 border-t border-border' : ''}>
-                                <div className="flex items-center justify-between mb-3">
-                                    <div className="flex items-center gap-2 text-red-600 font-semibold">
+                            <div>
+                                <div className="flex items-center justify-between mb-3 border-b border-red-100 pb-2">
+                                    <div className="flex items-center gap-2 text-red-600 font-bold">
                                         <TrendingDown size={16} />
                                         <span>降低体验</span>
                                     </div>
                                     <span className="text-lg font-bold text-red-500">-{totalReduced.toFixed(1)}</span>
                                 </div>
-                                {reduced?.requirementGroups
-                                    ? renderRequirementGroups(reduced.requirementGroups, 'reduced')
-                                    : <p className="text-xs text-muted-foreground">旧版数据，重新测算以查看详情</p>
+                                {reduced?.petsList
+                                    ? renderPetsGroups(reduced.petsList, 'reduced')
+                                    : <p className="text-xs text-muted-foreground">数据格式不兼容，请重新测算</p>
                                 }
                             </div>
                         )}

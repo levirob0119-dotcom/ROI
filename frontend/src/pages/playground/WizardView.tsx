@@ -35,8 +35,8 @@ const WizardView: React.FC = () => {
                 <div className="max-w-4xl mx-auto flex items-center justify-between">
                     {[
                         { num: 1, label: '选择车型' },
-                        { num: 2, label: '增强维度' },
-                        { num: 3, label: '减弱维度' },
+                        { num: 2, label: '提升维度' },
+                        { num: 3, label: '降低维度' },
                         { num: 4, label: '查看结果' }
                     ].map((s) => (
                         <div key={s.num} className={`flex items-center gap-2 ${step >= s.num ? 'text-indigo-600' : 'text-gray-400'}`}>
@@ -78,7 +78,7 @@ const WizardView: React.FC = () => {
                     <div>
                         <div className="text-center mb-8">
                             <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-green-100 text-green-700 font-bold mb-2">
-                                <ThumbsUp size={16} /> 增强维度
+                                <ThumbsUp size={16} /> 提升维度
                             </div>
                             <h2 className="text-2xl font-bold">哪些维度的体验优于竞品？</h2>
                         </div>
@@ -104,7 +104,7 @@ const WizardView: React.FC = () => {
                     <div>
                         <div className="text-center mb-8">
                             <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-red-100 text-red-700 font-bold mb-2">
-                                <ThumbsDown size={16} /> 减弱维度
+                                <ThumbsDown size={16} /> 降低维度
                             </div>
                             <h2 className="text-2xl font-bold">哪些维度的体验不如竞品？</h2>
                         </div>

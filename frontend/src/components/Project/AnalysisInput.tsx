@@ -129,7 +129,7 @@ const AnalysisInput: React.FC<AnalysisInputProps> = ({
                         disabled={availablePets.length === 0 || !currentVehicleHasData}
                     >
                         <Plus className="h-4 w-4" />
-                        增强体验
+                        提升体验
                     </button>
                     <button
                         className={cn(
@@ -147,7 +147,7 @@ const AnalysisInput: React.FC<AnalysisInputProps> = ({
                         disabled={availablePets.length === 0 || !currentVehicleHasData}
                     >
                         <Minus className="h-4 w-4" />
-                        减弱体验
+                        降低体验
                     </button>
                 </div>
             </div>
@@ -157,7 +157,7 @@ const AnalysisInput: React.FC<AnalysisInputProps> = ({
                 <div className="px-4 py-3 bg-muted/30 border-b animate-in slide-in-from-top-2 duration-200">
                     <div className="flex items-center justify-between mb-3">
                         <span className="text-sm font-medium text-muted-foreground">
-                            选择要<span className={addMode === 'enhanced' ? "text-success" : "text-destructive"}>{addMode === 'enhanced' ? '增强' : '减弱'}</span>的维度:
+                            选择要<span className={addMode === 'enhanced' ? "text-success" : "text-destructive"}>{addMode === 'enhanced' ? '提升' : '降低'}</span>的维度:
                         </span>
                         <Button variant="ghost" size="icon" className="h-6 w-6 rounded-full" onClick={() => setAddMode(null)}>
                             <X className="h-3.5 w-3.5" />

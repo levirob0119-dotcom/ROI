@@ -99,30 +99,32 @@ router.get('/project/:projectId', authMiddleware, (req, res) => {
 function calculatePetsScores(matrixData, petsSelections) {
     const result = {
         totalScore: 0,
-        petsList: [],
-        requirementGroups: [] // New aggregation: by Requirement Type
+        petsList: []
+        // requirementGroups removed from top level as it's now per-PETS
     };
 
     if (!petsSelections || petsSelections.length === 0) {
         return result;
     }
 
-    // Temporary storage for aggregating across all PETS selections
-    // Structure: { [l1Category]: { totalScore, l1Groups: { [l1Name]: { totalScore, l2List: [] } } } }
-    const categoryAgg = {};
-
+    // Process each PETS selection independently
     for (const petsSelection of petsSelections) {
-        const { petsId, uvL2Names } = petsSelection;
+        const { petsId, petsName, uvL2Names } = petsSelection; // Extract petsName
 
         if (!uvL2Names || uvL2Names.length === 0) continue;
 
         const petsResult = {
             petsId,
+            petsName: petsName || `PETS-${petsId}`, // Fallback name if missing
             totalScore: 0,
-            uvL1List: []
+            uvL1List: [],       // Keep for backward compatibility if needed, or remove if unused
+            requirementGroups: [] // New: Aggregated Requirement Groups specific to this PETS
         };
 
-        // Group by UV L1 WITHIN this PETS selection
+        // Temporary storage for aggregating groups WITHIN this PETS
+        // Structure: { [l1Category]: { totalScore, l1Groups: { [l1Name]: { totalScore, l2List: [] } } } }
+        const categoryAgg = {};
+        // Temporary storage for uvL1List (existing logic within PETS)
         const l1Groups = {};
 
         for (const l2Name of uvL2Names) {
@@ -134,7 +136,7 @@ function calculatePetsScores(matrixData, petsSelections) {
                 const l1Name = l2Data.l1_name;
                 const l1Category = l2Data.l1_category;
 
-                // --- 1. Accumulate for PETS Result (Existing Logic) ---
+                // --- 1. Accumulate for PETS Result (Existing Logic - Flat UV L1 List) ---
                 if (!l1Groups[l1Name]) {
                     l1Groups[l1Name] = {
                         l1Name,
@@ -152,7 +154,7 @@ function calculatePetsScores(matrixData, petsSelections) {
                 l1Groups[l1Name].totalScore += score;
                 petsResult.totalScore += score;
 
-                // --- 2. Accumulate for Requirement Group Aggregation (New Logic) ---
+                // --- 2. Accumulate for Requirement Group Aggregation (New Logic - Per PETS) ---
                 // Initialize Category Group
                 if (!categoryAgg[l1Category]) {
                     categoryAgg[l1Category] = {
@@ -175,7 +177,7 @@ function calculatePetsScores(matrixData, petsSelections) {
                 categoryAgg[l1Category].l1Groups[l1Name].l2List.push({
                     l2Name,
                     score,
-                    fromPetsId: petsId // Optional: trace origin
+                    fromPetsId: petsId
                 });
                 categoryAgg[l1Category].l1Groups[l1Name].totalScore += score;
                 categoryAgg[l1Category].totalScore += score;
@@ -183,46 +185,43 @@ function calculatePetsScores(matrixData, petsSelections) {
         }
 
         // --- Finalize PETS Result ---
-        // Convert to array and sort by score
+
+        // 1. Flatten UV L1 List (Existing)
         petsResult.uvL1List = Object.values(l1Groups).sort((a, b) => b.totalScore - a.totalScore);
+
+        // 2. Process Requirement Groups (New)
+        petsResult.requirementGroups = Object.values(categoryAgg)
+            .map(catGroup => {
+                // Convert l1Groups map to array and sort
+                const l1List = Object.values(catGroup.l1Groups)
+                    .map(l1Group => {
+                        // Sort l2List by score desc
+                        l1Group.l2List.sort((a, b) => b.score - a.score);
+                        return l1Group;
+                    })
+                    .sort((a, b) => b.totalScore - a.totalScore);
+
+                return {
+                    categoryName: catGroup.categoryName,
+                    totalScore: catGroup.totalScore,
+                    l1List
+                };
+            })
+            // Sort Requirement Types (Core Difference -> Baseline -> Weak)
+            .sort((a, b) => {
+                const priority = { "核心差异UV": 3, "基线UV": 2, "弱需求": 1 };
+                const pA = priority[a.categoryName] || 0;
+                const pB = priority[b.categoryName] || 0;
+                if (pA !== pB) return pB - pA;
+                return b.totalScore - a.totalScore;
+            });
 
         result.petsList.push(petsResult);
         result.totalScore += petsResult.totalScore;
     }
 
-    // Sort PETS List
+    // Sort PETS List by Total Score Descending
     result.petsList.sort((a, b) => b.totalScore - a.totalScore);
-
-    // --- Finalize Requirement Groups ---
-    // Convert aggregation map to sorted array
-    result.requirementGroups = Object.values(categoryAgg)
-        .map(catGroup => {
-            // Convert l1Groups map to array and sort
-            const l1List = Object.values(catGroup.l1Groups)
-                .map(l1Group => {
-                    // Sort l2List by score desc
-                    l1Group.l2List.sort((a, b) => b.score - a.score);
-                    return l1Group;
-                })
-                .sort((a, b) => b.totalScore - a.totalScore);
-
-            return {
-                categoryName: catGroup.categoryName,
-                totalScore: catGroup.totalScore,
-                l1List
-            };
-        })
-        // Sort Requirement Types (Custom order: Core Difference -> Baseline -> Weak, or by Score?)
-        // Let's sort by score for now, or maintain a fixed priority if needed.
-        // Given requirements emphasize "Core Difference", we might want a fixed order.
-        // Let's add a priority mapping.
-        .sort((a, b) => {
-            const priority = { "核心差异UV": 3, "基线UV": 2, "弱需求": 1 };
-            const pA = priority[a.categoryName] || 0;
-            const pB = priority[b.categoryName] || 0;
-            if (pA !== pB) return pB - pA; // Higher priority first
-            return b.totalScore - a.totalScore; // Then by score
-        });
 
     return result;
 }
