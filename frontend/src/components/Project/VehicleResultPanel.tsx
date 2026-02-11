@@ -113,7 +113,7 @@ const VehicleResultPanel: React.FC<VehicleResultPanelProps> = ({
 
                                     {/* Level 5: UV L2 List (Compact) */}
                                     <div className="pl-2 space-y-1">
-                                        {l1.l2List.map((l2: any) => (
+                                        {l1.l2List.filter((l2: any) => l2.score !== 0).map((l2: any) => (
                                             <div key={l2.l2Name} className="flex items-center justify-between text-[10px] text-gray-400 hover:text-gray-600 transition-colors">
                                                 <div className="flex items-center gap-1.5 overflow-hidden">
                                                     <div className="w-1 h-1 rounded-full bg-gray-300 flex-shrink-0" />
