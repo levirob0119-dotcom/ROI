@@ -27,6 +27,12 @@ export const transitions = {
     expand: { type: 'spring', stiffness: 200, damping: 25 } as Transition,
 };
 
+// Design system spring presets
+export const microSpring: Transition = { type: 'spring', stiffness: 400, damping: 25 };
+export const componentSpring: Transition = { type: 'spring', stiffness: 260, damping: 20 };
+export const pageSpring: Transition = { type: 'spring', stiffness: 100, damping: 20 };
+export const reducedMotionTransition: Transition = { duration: 0.01, ease: 'linear' };
+
 // ========================================
 // 页面进入动效 - Linear 风格 Stagger
 // ========================================

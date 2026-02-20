@@ -12,6 +12,7 @@ import PathStreamlinedView from '@/pages/playground/PathStreamlinedView';
 import ComponentShowcase from '@/pages/playground/ComponentShowcase';
 import { SidebarLayout } from '@/components/layout/SidebarLayout';
 import WorkflowSettings from '@/pages/settings/WorkflowSettings';
+import DesignSystemShowpage from '@/pages/design-system/DesignSystemShowpage';
 
 // 保护路由组件
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
@@ -32,52 +33,61 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   return children;
 };
 
+function AuthenticatedAppRoutes() {
+  return (
+    <AuthProvider>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route
+          path="/"
+          element={
+            <ProtectedRoute>
+              {/* 暂时保留原Dashboard，后续重构移除Navbar */}
+              <SidebarLayout>
+                <Dashboard />
+              </SidebarLayout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/project/:id"
+          element={
+            <ProtectedRoute>
+              <SidebarLayout>
+                <ProjectDetail />
+              </SidebarLayout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/settings/workflow"
+          element={
+            <ProtectedRoute>
+              <SidebarLayout>
+                <WorkflowSettings />
+              </SidebarLayout>
+            </ProtectedRoute>
+          }
+        />
+        {/* Playground Demos */}
+        <Route path="/demo" element={<ProtectedRoute><UXLanding /></ProtectedRoute>} />
+        <Route path="/demo/wizard" element={<ProtectedRoute><WizardView /></ProtectedRoute>} />
+        <Route path="/demo/matrix" element={<ProtectedRoute><MatrixView /></ProtectedRoute>} />
+        <Route path="/demo/streamlined" element={<ProtectedRoute><StreamlinedView /></ProtectedRoute>} />
+        <Route path="/demo/path" element={<ProtectedRoute><PathStreamlinedView /></ProtectedRoute>} />
+        <Route path="/components" element={<ProtectedRoute><SidebarLayout><ComponentShowcase /></SidebarLayout></ProtectedRoute>} />
+      </Routes>
+    </AuthProvider>
+  );
+}
+
 function App() {
   return (
     <Router>
-      <AuthProvider>
-        <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route
-            path="/"
-            element={
-              <ProtectedRoute>
-                {/* 暂时保留原Dashboard，后续重构移除Navbar */}
-                <SidebarLayout>
-                  <Dashboard />
-                </SidebarLayout>
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/project/:id"
-            element={
-              <ProtectedRoute>
-                <SidebarLayout>
-                  <ProjectDetail />
-                </SidebarLayout>
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/settings/workflow"
-            element={
-              <ProtectedRoute>
-                <SidebarLayout>
-                  <WorkflowSettings />
-                </SidebarLayout>
-              </ProtectedRoute>
-            }
-          />
-          {/* Playground Demos */}
-          <Route path="/demo" element={<ProtectedRoute><UXLanding /></ProtectedRoute>} />
-          <Route path="/demo/wizard" element={<ProtectedRoute><WizardView /></ProtectedRoute>} />
-          <Route path="/demo/matrix" element={<ProtectedRoute><MatrixView /></ProtectedRoute>} />
-          <Route path="/demo/streamlined" element={<ProtectedRoute><StreamlinedView /></ProtectedRoute>} />
-          <Route path="/demo/path" element={<ProtectedRoute><PathStreamlinedView /></ProtectedRoute>} />
-          <Route path="/components" element={<ProtectedRoute><SidebarLayout><ComponentShowcase /></SidebarLayout></ProtectedRoute>} />
-        </Routes>
-      </AuthProvider>
+      <Routes>
+        <Route path="/design-system" element={<DesignSystemShowpage />} />
+        <Route path="*" element={<AuthenticatedAppRoutes />} />
+      </Routes>
     </Router>
   );
 }

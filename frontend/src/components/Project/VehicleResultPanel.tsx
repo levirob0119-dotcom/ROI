@@ -69,7 +69,6 @@ const VehicleResultPanel: React.FC<VehicleResultPanelProps> = ({
     }
 
     const { totalEnhanced, totalReduced, finalScore, enhanced, reduced } = result;
-    const maxScore = Math.max(totalEnhanced, totalReduced, 50); // For progress bar normalization
 
     // Render Requirement Groups (Children of PETS)
     const renderRequirementGroups = (groups: any[], type: 'enhanced' | 'reduced', petsTotal: number) => {

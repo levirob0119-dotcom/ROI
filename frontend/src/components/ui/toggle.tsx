@@ -9,7 +9,7 @@ interface ToggleProps extends React.InputHTMLAttributes<HTMLInputElement> {
 const Toggle = React.forwardRef<HTMLInputElement, ToggleProps>(
     ({ className, checked, onCheckedChange, ...props }, ref) => {
         return (
-            <div className="relative inline-flex items-center">
+            <label className="relative inline-flex cursor-pointer items-center">
                 <input
                     type="checkbox"
                     className="peer sr-only"
@@ -26,7 +26,7 @@ const Toggle = React.forwardRef<HTMLInputElement, ToggleProps>(
                     "absolute left-0.5 top-0.5 block h-5 w-5 rounded-full bg-white shadow-sm transition-transform peer-checked:translate-x-5",
                     "pointer-events-none"
                 )} />
-            </div>
+            </label>
         )
     }
 )

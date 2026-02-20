@@ -10,8 +10,17 @@ export default {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Inter', 'system-ui', 'sans-serif'],
+                sans: ['Inter', 'PingFang SC', 'Noto Sans SC', 'system-ui', 'sans-serif'],
                 mono: ['Roboto Mono', 'monospace'],
+            },
+            fontSize: {
+                'ds-caption': ['0.75rem', { lineHeight: '1.25rem', fontWeight: '400' }], // 12/20
+                'ds-body-sm': ['0.875rem', { lineHeight: '1.25rem', fontWeight: '400' }], // 14/20
+                'ds-body': ['1rem', { lineHeight: '1.5rem', fontWeight: '400' }], // 16/24
+                'ds-title-sm': ['1.25rem', { lineHeight: '1.75rem', fontWeight: '600' }], // 20/28
+                'ds-title': ['1.5625rem', { lineHeight: '2rem', fontWeight: '600' }], // 25/32
+                'ds-h2': ['1.9375rem', { lineHeight: '2.5rem', fontWeight: '700' }], // 31/40
+                'ds-h1': ['2.4375rem', { lineHeight: '3rem', fontWeight: '700' }], // 39/48
             },
             borderRadius: {
                 'sm': '4px',
@@ -19,6 +28,8 @@ export default {
                 'md': '8px',
                 'lg': '12px',
                 'xl': '16px',
+                'control': '8px',
+                'card': '12px',
                 'full': '9999px',
             },
             colors: {
@@ -27,6 +38,11 @@ export default {
                 ring: 'hsl(var(--ring))',
                 background: 'hsl(var(--background))',
                 foreground: 'hsl(var(--foreground))',
+                surface: '#F8FAFC',
+                text: {
+                    primary: '#0F172A',
+                    secondary: '#475569',
+                },
 
                 // Primary - Brand Blue
                 primary: {
@@ -77,17 +93,25 @@ export default {
 
                 // Feedback
                 success: {
-                    DEFAULT: '#22C55E',
+                    DEFAULT: '#16A34A',
                     foreground: '#FFFFFF'
                 },
                 warning: {
-                    DEFAULT: '#F59E0B',
+                    DEFAULT: '#D97706',
                     foreground: '#FFFFFF'
                 },
                 error: {
-                    DEFAULT: '#EF4444',
+                    DEFAULT: '#DC2626',
+                    foreground: '#FFFFFF'
+                },
+                info: {
+                    DEFAULT: '#0EA5E9',
                     foreground: '#FFFFFF'
                 }
+            },
+            boxShadow: {
+                'ds-sm': '0 1px 2px rgba(15, 23, 42, 0.06)',
+                'ds-md': '0 4px 12px rgba(15, 23, 42, 0.08)',
             },
             keyframes: {
                 "accordion-down": {
