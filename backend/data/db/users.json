@@ -294,5 +294,13 @@
     "displayName": "Test User 1769881897255 ",
     "createdAt": "2026-01-31T17:51:37.424Z",
     "updatedAt": "2026-01-31T17:51:37.424Z"
+  },
+  {
+    "id": "c63a8e7e-f803-4c33-9b9f-100ab83cde6e",
+    "username": "rob",
+    "passwordHash": "$2a$10$sj8CmrodXoJOkx1B.4FZvO7dnMftKR3Q5gMDv9n6XVHAhsXoS7bgu",
+    "displayName": "rob",
+    "createdAt": "2026-02-21T07:05:00.149Z",
+    "updatedAt": "2026-02-21T07:05:00.149Z"
   }
 ]

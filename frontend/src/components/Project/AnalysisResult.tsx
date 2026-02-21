@@ -1,5 +1,6 @@
 import React from 'react';
 import { TrendingUp, TrendingDown, Car } from 'lucide-react';
+import { formatEnglishLabel } from '@/lib/utils';
 import './AnalysisInput.css'; // 共用样式
 
 interface AnalysisResultProps {
@@ -66,7 +67,7 @@ const VehicleResultCard: React.FC<VehicleResultCardProps> = ({ vehicle, result, 
                 <div className="vehicle-result-header">
                     <div className="vehicle-result-header-left">
                         <Car size={16} className={iconClass} />
-                        <span className="vehicle-result-name">{vehicle.toUpperCase()}</span>
+                        <span className="vehicle-result-name">{formatEnglishLabel(vehicle)}</span>
                         {isActive && (
                             <span className="vehicle-result-badge">当前</span>
                         )}
@@ -85,7 +86,7 @@ const VehicleResultCard: React.FC<VehicleResultCardProps> = ({ vehicle, result, 
             <div className="vehicle-result-header">
                 <div className="vehicle-result-header-left">
                     <Car size={16} className={iconClass} />
-                    <span className="vehicle-result-name">{vehicle.toUpperCase()}</span>
+                    <span className="vehicle-result-name">{formatEnglishLabel(vehicle)}</span>
                     {isActive && (
                         <span className="vehicle-result-badge">当前</span>
                     )}

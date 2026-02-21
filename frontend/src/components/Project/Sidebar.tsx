@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Project } from '@/types/models';
 import type { Pets } from '@/services/data';
+import { formatEnglishLabel } from '@/lib/utils';
 import './Sidebar.css';
 
 interface SidebarProps {
@@ -35,7 +36,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                 >
                     {project.vehicles.map(v => (
                         <option key={v} value={v}>
-                            {v.toUpperCase()}
+                            {formatEnglishLabel(v)}
                         </option>
                     ))}
                 </select>
@@ -43,7 +44,7 @@ const Sidebar: React.FC<SidebarProps> = ({
 
             <div className="flex-1 overflow-y-auto">
                 <div className="section-title">
-                    <span>PETS 维度 ({selectedPets.length})</span>
+                    <span>Pets 维度 ({selectedPets.length})</span>
                 </div>
 
                 <div className="pets-list">

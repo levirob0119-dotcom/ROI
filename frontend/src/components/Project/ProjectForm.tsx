@@ -18,6 +18,7 @@ interface ProjectFormProps {
     onCancel: () => void;
     submitLabel: string;
     isSubmitting?: boolean;
+    defaultSelectAllVehicles?: boolean;
 }
 
 const AVAILABLE_VEHICLES = [
@@ -28,21 +29,33 @@ const AVAILABLE_VEHICLES = [
     { id: 'hercules', name: 'Hercules' },
     { id: 'pisces', name: 'Pisces' },
 ];
+const ALL_VEHICLE_IDS = AVAILABLE_VEHICLES.map((vehicle) => vehicle.id);
 
 const ProjectForm: React.FC<ProjectFormProps> = ({
     initialData,
     onSubmit,
     onCancel,
     submitLabel,
-    isSubmitting: externalIsSubmitting = false
+    isSubmitting: externalIsSubmitting = false,
+    defaultSelectAllVehicles = false
 }) => {
     const [name, setName] = useState(initialData?.name || '');
     const [description, setDescription] = useState(initialData?.description || '');
-    const [selectedVehicles, setSelectedVehicles] = useState<string[]>(initialData?.vehicles || []);
-    const [error, setError] = useState('');
+    const [selectedVehicles, setSelectedVehicles] = useState<string[]>(
+        initialData?.vehicles || (defaultSelectAllVehicles ? ALL_VEHICLE_IDS : [])
+    );
+    const [errorField, setErrorField] = useState<'name' | 'vehicles' | null>(null);
+    const [errorMessage, setErrorMessage] = useState('');
     const [isInternalSubmitting, setIsInternalSubmitting] = useState(false);
 
     const isSubmitting = externalIsSubmitting || isInternalSubmitting;
+    const nameHasError = errorField === 'name';
+    const vehiclesHasError = errorField === 'vehicles';
+    const namePlaceholder = nameHasError ? errorMessage : '例如：2026Q1 满意度优化';
+    const fieldSurfaceClassName = cn(
+        'h-12 rounded-control border-0 bg-slate-100/90 px-4 text-base text-slate-900 shadow-none placeholder:text-slate-400 focus-visible:bg-white focus-visible:shadow-[inset_0_0_0_2px_rgba(59,130,246,0.32)]',
+        nameHasError && 'text-red-600 placeholder:text-red-500 focus-visible:shadow-[inset_0_0_0_2px_rgba(220,38,38,0.28)]'
+    );
 
     // Update state when initialData changes
     useEffect(() => {
@@ -50,8 +63,10 @@ const ProjectForm: React.FC<ProjectFormProps> = ({
             setName(initialData.name || '');
             setDescription(initialData.description || '');
             setSelectedVehicles(initialData.vehicles || []);
+        } else if (defaultSelectAllVehicles) {
+            setSelectedVehicles(ALL_VEHICLE_IDS);
         }
-    }, [initialData]);
+    }, [defaultSelectAllVehicles, initialData]);
 
     const handleVehicleToggle = (vehicleId: string) => {
         setSelectedVehicles(prev =>
@@ -61,12 +76,28 @@ const ProjectForm: React.FC<ProjectFormProps> = ({
         );
     };
 
+    const handleToggleAllVehicles = () => {
+        setSelectedVehicles((previous) =>
+            previous.length === ALL_VEHICLE_IDS.length ? [] : ALL_VEHICLE_IDS
+        );
+    };
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        setError('');
+        setErrorField(null);
+        setErrorMessage('');
+
+        const cleanName = name.trim();
+
+        if (!cleanName) {
+            setErrorField('name');
+            setErrorMessage('请输入项目名称');
+            return;
+        }
 
         if (selectedVehicles.length === 0) {
-            setError('请至少选择一个车型。');
+            setErrorField('vehicles');
+            setErrorMessage('请至少选择一个车型');
             return;
         }
 
@@ -74,35 +105,36 @@ const ProjectForm: React.FC<ProjectFormProps> = ({
 
         try {
             await onSubmit({
-                name,
-                description,
+                name: cleanName,
+                description: description.trim(),
                 vehicles: selectedVehicles
             });
         } catch (err: any) {
-            setError(err.response?.data?.error || err.message || '操作失败');
+            setErrorField('name');
+            setErrorMessage(err.response?.data?.error || err.message || '操作失败');
         } finally {
             setIsInternalSubmitting(false);
         }
     };
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} noValidate>
             <div className="p-6 space-y-4">
-                {error && (
-                    <div className="bg-red-50 text-red-600 text-sm px-3 py-2 rounded-md ring-1 ring-red-200/70 shadow-[0_6px_16px_rgba(220,38,38,0.12)]">
-                        {error}
-                    </div>
-                )}
-
                 <div className="space-y-2">
                     <label className="text-sm font-medium text-slate-700">项目名称</label>
                     <Input
-                        required
                         value={name}
-                        onChange={(e) => setName(e.target.value)}
-                        placeholder="例如：2024 Q1 智能座舱优化"
+                        onChange={(e) => {
+                            setName(e.target.value);
+                            if (errorField === 'name') {
+                                setErrorField(null);
+                                setErrorMessage('');
+                            }
+                        }}
+                        placeholder={namePlaceholder}
                         disabled={isSubmitting}
                         autoFocus
+                        className={fieldSurfaceClassName}
                     />
                 </div>
 
@@ -111,56 +143,72 @@ const ProjectForm: React.FC<ProjectFormProps> = ({
                     <textarea
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
-                        className="flex min-h-[92px] w-full rounded-lg bg-white px-3 py-2 text-sm shadow-[inset_0_0_0_1px_rgba(148,163,184,0.35),0_1px_2px_rgba(15,23,42,0.04)] placeholder:text-slate-400 transition-all focus-visible:outline-none focus-visible:shadow-[inset_0_0_0_2px_rgba(19,127,236,0.45),0_8px_20px_rgba(19,127,236,0.1)] disabled:cursor-not-allowed disabled:opacity-50"
+                        className="flex h-24 w-full resize-none rounded-control border-0 bg-slate-100/90 px-4 py-3 text-base text-slate-900 placeholder:text-slate-400 shadow-none transition-all focus-visible:outline-none focus-visible:bg-white focus-visible:shadow-[inset_0_0_0_2px_rgba(59,130,246,0.32)] disabled:cursor-not-allowed disabled:opacity-50"
                         placeholder="简要描述背景和目标..."
                         disabled={isSubmitting}
                     />
                 </div>
 
                 <div className="space-y-2">
-                    <label className="text-sm font-medium text-slate-700">关联车型</label>
+                    <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                            <label className="text-sm font-medium text-slate-700">车型</label>
+                            {vehiclesHasError ? <span className="text-xs text-red-600">{errorMessage}</span> : null}
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <span className="text-xs text-slate-500">
+                                已选 {selectedVehicles.length}/{ALL_VEHICLE_IDS.length}
+                            </span>
+                            <button
+                                type="button"
+                                className="rounded-control bg-slate-100 px-3 py-1.5 text-xs font-medium text-slate-700 transition-colors hover:bg-slate-200 disabled:opacity-50"
+                                onClick={handleToggleAllVehicles}
+                                disabled={isSubmitting}
+                            >
+                                {selectedVehicles.length === ALL_VEHICLE_IDS.length ? '全不选' : '全选'}
+                            </button>
+                        </div>
+                    </div>
                     <div className="grid grid-cols-2 gap-3">
                         {AVAILABLE_VEHICLES.map(v => (
-                            <label
+                            <button
                                 key={v.id}
+                                type="button"
+                                onClick={() => handleVehicleToggle(v.id)}
+                                disabled={isSubmitting}
+                                aria-pressed={selectedVehicles.includes(v.id)}
                                 className={cn(
-                                    "flex items-center gap-2 p-2.5 rounded-lg cursor-pointer transition-all ring-1",
+                                    'flex items-center justify-start rounded-control px-4 py-3 text-left transition-colors disabled:cursor-not-allowed disabled:opacity-60',
                                     selectedVehicles.includes(v.id)
-                                        ? "bg-blue-50/90 text-primary ring-primary/35 shadow-[0_10px_22px_rgba(19,127,236,0.14)]"
-                                        : "bg-white text-slate-700 ring-slate-900/8 hover:bg-slate-50 hover:shadow-[0_8px_18px_rgba(15,23,42,0.08)]"
+                                        ? 'bg-blue-100/90 text-slate-900'
+                                        : 'bg-slate-100/90 text-slate-700 hover:bg-slate-200/80'
                                 )}
                             >
-                                <input
-                                    type="checkbox"
-                                    className="sr-only"
-                                    checked={selectedVehicles.includes(v.id)}
-                                    onChange={() => handleVehicleToggle(v.id)}
-                                    disabled={isSubmitting}
-                                />
-                                <div className={cn(
-                                    "w-4 h-4 rounded-md flex items-center justify-center flex-shrink-0 transition-colors ring-1",
-                                    selectedVehicles.includes(v.id)
-                                        ? "bg-primary ring-primary"
-                                        : "bg-white ring-slate-300"
-                                )}>
-                                    {selectedVehicles.includes(v.id) && (
-                                        <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                                        </svg>
-                                    )}
-                                </div>
-                                <span className="text-sm font-medium">{v.name}</span>
-                            </label>
+                                <span className="text-ds-body font-medium leading-none">{v.name}</span>
+                            </button>
                         ))}
                     </div>
                 </div>
             </div>
 
-            <div className="flex justify-end gap-3 px-6 py-4 bg-slate-50/70">
-                <Button type="button" variant="outline" onClick={onCancel} disabled={isSubmitting}>
+            <div className="grid grid-cols-2 gap-3 px-6 pb-6 pt-4">
+                <Button
+                    type="button"
+                    variant="outline"
+                    size="lg"
+                    className="w-full bg-slate-300/70 text-slate-800 hover:bg-slate-300 text-base font-medium shadow-none hover:shadow-none"
+                    onClick={onCancel}
+                    disabled={isSubmitting}
+                >
                     取消
                 </Button>
-                <Button type="submit" variant="action" disabled={isSubmitting}>
+                <Button
+                    type="submit"
+                    variant="action"
+                    size="lg"
+                    className="w-full text-base font-semibold shadow-none hover:shadow-none"
+                    disabled={isSubmitting}
+                >
                     {isSubmitting ? (
                         <>
                             <Loader2 className="mr-2 h-4 w-4 animate-spin" />

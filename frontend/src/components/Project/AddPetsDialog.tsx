@@ -40,7 +40,7 @@ const AddPetsDialog: React.FC<AddPetsDialogProps> = ({ petsList, existingPetsIds
             <Card className="w-full max-w-xl hover:translate-y-0" onClick={(event) => event.stopPropagation()}>
                 <CardHeader className="flex flex-row items-start justify-between space-y-0">
                     <div>
-                        <CardTitle>添加体验维度 (PETS)</CardTitle>
+                        <CardTitle>添加体验维度 (Pets)</CardTitle>
                         <p className="mt-1 text-ds-body-sm text-text-secondary">为当前车型新增提升或降低体验维度。</p>
                     </div>
                     <Button type="button" variant="ghost" size="icon" onClick={onClose} aria-label="关闭">

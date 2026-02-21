@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Edit3, Save, Calculator, Loader2, Car } from 'lucide-react';
 import type { Project } from '@/types/models';
 import { Button } from '@/components/ui/button';
+import { formatEnglishLabel } from '@/lib/utils';
 
 interface ProjectHeaderProps {
     project: Project;
@@ -62,7 +63,7 @@ const ProjectHeader: React.FC<ProjectHeaderProps> = ({
                     {/* Read-only vehicle display */}
                     <div className="flex items-center gap-2 px-3 py-1.5 bg-slate-100 rounded-full text-sm font-medium text-slate-600">
                         <Car className="h-4 w-4 text-slate-500" />
-                        <span>Vehicle: {currentVehicle.toUpperCase()}</span>
+                        <span>Vehicle: {formatEnglishLabel(currentVehicle)}</span>
                     </div>
 
                     <div className="flex items-center gap-2">

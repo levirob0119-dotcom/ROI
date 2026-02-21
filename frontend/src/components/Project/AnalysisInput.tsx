@@ -3,7 +3,7 @@ import { Plus, Minus, Monitor, Car, AlertTriangle, X } from 'lucide-react';
 import type { Pets, UVL1, VehicleDataStatus } from '@/services/data';
 import PetsEntryCard from './PetsEntryCard';
 import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
+import { cn, formatEnglishLabel } from '@/lib/utils';
 // import './AnalysisInput.css'; // Legacy styles removed
 
 // PETS 卡片条目
@@ -92,7 +92,7 @@ const AnalysisInput: React.FC<AnalysisInputProps> = ({
                                 title={hasData ? '' : '暂无 UVA 数据'}
                             >
                                 <Car className="h-3.5 w-3.5" />
-                                {v.toUpperCase()}
+                                {formatEnglishLabel(v)}
                                 {!hasData && (
                                     <span className="w-1.5 h-1.5 rounded-full bg-warning ml-0.5" />
                                 )}
@@ -106,7 +106,7 @@ const AnalysisInput: React.FC<AnalysisInputProps> = ({
             {!currentVehicleHasData && (
                 <div className="w-full bg-warning/10 border-b border-warning/20 text-warning-foreground px-4 py-2 flex items-center justify-center gap-2 text-sm font-medium animate-in fade-in slide-in-from-top-1">
                     <AlertTriangle className="h-4 w-4 text-warning" />
-                    <span>{currentVehicle.toUpperCase()} 暂无 UVA 数据，无法进行测算</span>
+                    <span>{formatEnglishLabel(currentVehicle)} 暂无 UVA 数据，无法进行测算</span>
                 </div>
             )}
 
@@ -186,7 +186,7 @@ const AnalysisInput: React.FC<AnalysisInputProps> = ({
                         </div>
                         <h3 className="text-base font-semibold text-warning-foreground">该车型暂无数据</h3>
                         <p className="mt-1 text-sm text-muted-foreground max-w-[280px]">
-                            请切换至有数据的车型（如 CETUS）或联系管理员导入数据
+                            请切换至有数据的车型（如 Cetus）或联系管理员导入数据
                         </p>
                     </div>
                 ) : petsEntries.length === 0 ? (

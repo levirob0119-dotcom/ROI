@@ -4,6 +4,7 @@ import { Car, ChevronDown, ChevronRight, Gauge, Tag, Users } from 'lucide-react'
 import ResultHierarchyTree from '@/components/patterns/ResultHierarchyTree';
 import ScoreSummary from '@/components/patterns/ScoreSummary';
 import { Badge } from '@/components/ui/badge';
+import { formatEnglishLabel } from '@/lib/utils';
 import type { CalculateUvaResponse } from '@/services/data';
 import type { VehicleAnalysis } from '@/types/analysis';
 
@@ -35,7 +36,7 @@ const VehicleResultPanel: React.FC<VehicleResultPanelProps> = ({ vehicle, result
             <section className={`rounded-card bg-white p-4 shadow-[0_14px_30px_rgba(15,23,42,0.1)] ${isActive ? 'bg-primary/5' : ''}`}>
                 <div className="mb-2 flex items-center gap-2">
                     <Car size={16} className={isActive ? 'text-primary' : 'text-text-secondary'} />
-                    <h3 className="text-ds-body font-semibold text-text-primary">{vehicle.toUpperCase()}</h3>
+                    <h3 className="text-ds-body font-semibold text-text-primary">{formatEnglishLabel(vehicle)}</h3>
                     {isActive ? <Badge>当前车型</Badge> : null}
                 </div>
                 <p className="text-ds-body-sm text-text-secondary">尚未录入数据或尚未测算。</p>
@@ -55,7 +56,7 @@ const VehicleResultPanel: React.FC<VehicleResultPanelProps> = ({ vehicle, result
                 <span className="inline-flex items-center gap-2 text-ds-body font-semibold text-text-primary">
                     {isExpanded ? <ChevronDown className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />}
                     <Car className="h-4 w-4" />
-                    {vehicle.toUpperCase()}
+                    {formatEnglishLabel(vehicle)}
                 </span>
                 {isActive ? <Badge>当前车型</Badge> : null}
             </button>

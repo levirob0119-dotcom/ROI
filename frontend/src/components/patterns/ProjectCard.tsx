@@ -3,6 +3,7 @@ import { Clock, Pencil, Trash2 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { formatEnglishLabel } from '@/lib/utils';
 
 interface ProjectCardProps {
   project: {
@@ -59,7 +60,7 @@ export default function ProjectCard({ project, onOpen, onEdit, onDelete }: Proje
         <div className="flex min-h-12 flex-wrap items-start gap-2">
           {project.vehicles.map((vehicle) => (
             <Badge key={vehicle} variant="outline" className="rounded-control bg-white/85 px-2 py-1 text-ds-caption ring-1 ring-slate-900/8">
-              {vehicle.toUpperCase()}
+              {formatEnglishLabel(vehicle)}
             </Badge>
           ))}
         </div>

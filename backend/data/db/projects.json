@@ -253,5 +253,21 @@
     ],
     "createdAt": "2026-01-31T17:51:39.666Z",
     "updatedAt": "2026-01-31T17:51:39.666Z"
+  },
+  {
+    "id": "2bcdd969-bfb6-455f-9812-8241afdbc3f8",
+    "userId": "c63a8e7e-f803-4c33-9b9f-100ab83cde6e",
+    "name": "2026 Q1 满意度优化",
+    "description": "",
+    "vehicles": [
+      "leo",
+      "draco",
+      "cetus",
+      "cygnus",
+      "pisces",
+      "hercules"
+    ],
+    "createdAt": "2026-02-21T07:26:27.326Z",
+    "updatedAt": "2026-02-21T07:55:56.407Z"
   }
 ]

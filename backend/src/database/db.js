@@ -28,6 +28,33 @@ initFile(USERS_FILE, []);
 initFile(PROJECTS_FILE, []);
 initFile(UVA_FILE, []);
 
+// 为历史 UVA 记录补齐 userId，确保后续可以按用户维度强隔离
+function backfillUvaAnalysisUserId() {
+    const analyses = readData(UVA_FILE);
+    const allProjects = readData(PROJECTS_FILE);
+    const projectById = new Map(allProjects.map((project) => [project.id, project]));
+    let changed = false;
+
+    const nextAnalyses = analyses.map((analysis) => {
+        if (analysis.userId) return analysis;
+
+        const project = projectById.get(analysis.projectId);
+        if (!project?.userId) return analysis;
+
+        changed = true;
+        return {
+            ...analysis,
+            userId: project.userId
+        };
+    });
+
+    if (changed) {
+        writeData(UVA_FILE, nextAnalyses);
+    }
+}
+
+backfillUvaAnalysisUserId();
+
 // 读取数据
 function readData(filePath) {
     return JSON.parse(fs.readFileSync(filePath, 'utf-8'));
@@ -133,19 +160,30 @@ export const projects = {
 
 // UVA 分析操作
 export const uvaAnalyses = {
-    findByProjectId: (projectId) => {
+    findByProjectId: (projectId, userId) => {
         const data = readData(UVA_FILE);
-        return data.filter(a => a.projectId === projectId);
+        return data.filter((analysis) =>
+            analysis.projectId === projectId &&
+            (userId ? analysis.userId === userId : true)
+        );
     },
 
-    findByProjectAndVehicle: (projectId, vehicle) => {
+    findByProjectAndVehicle: (projectId, vehicle, userId) => {
         const data = readData(UVA_FILE);
-        return data.find(a => a.projectId === projectId && a.vehicle === vehicle);
+        return data.find((analysis) =>
+            analysis.projectId === projectId &&
+            analysis.vehicle === vehicle &&
+            (userId ? analysis.userId === userId : true)
+        );
     },
 
-    upsert: (projectId, vehicle, analysis) => {
+    upsert: (projectId, vehicle, userId, analysis) => {
         const data = readData(UVA_FILE);
-        const index = data.findIndex(a => a.projectId === projectId && a.vehicle === vehicle);
+        const index = data.findIndex((item) =>
+            item.projectId === projectId &&
+            item.vehicle === vehicle &&
+            item.userId === userId
+        );
 
         const now = new Date().toISOString();
 
@@ -155,6 +193,7 @@ export const uvaAnalyses = {
                 id: uuidv4(),
                 projectId,
                 vehicle,
+                userId,
                 ...analysis,
                 createdAt: now,
                 updatedAt: now

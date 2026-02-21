@@ -80,7 +80,7 @@ export default function ComponentShowcase() {
                     <CardContent>
                         <EmptyStateBlock
                             title="暂无测算结果"
-                            description="请先添加 PETS 并选择 UV 指标，然后执行测算。"
+                            description="请先添加 Pets 并选择 UV 指标，然后执行测算。"
                             actionLabel="开始录入"
                             onAction={() => undefined}
                             icon={Database}

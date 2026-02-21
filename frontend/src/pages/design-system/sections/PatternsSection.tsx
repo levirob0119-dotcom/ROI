@@ -82,7 +82,7 @@ export default function PatternsSection() {
           <CardContent>
             <EmptyStateBlock
               title="暂无可展示结果"
-              description="请先补齐 PETS、UV 与配置参数，随后执行测算。"
+              description="请先补齐 Pets、UV 与配置参数，随后执行测算。"
               actionLabel="开始录入"
               onAction={() => showToast('开始录入（演示）', 'info')}
               icon={Database}

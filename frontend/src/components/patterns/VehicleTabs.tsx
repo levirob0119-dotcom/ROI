@@ -1,7 +1,7 @@
 import { AlertTriangle, Car } from 'lucide-react';
 
 import { Badge } from '@/components/ui/badge';
-import { cn } from '@/lib/utils';
+import { cn, formatEnglishLabel } from '@/lib/utils';
 
 export interface VehicleTabItem {
   id: string;
@@ -47,7 +47,7 @@ export default function VehicleTabs({ items, value, onChange, onBlockedSelection
               title={hasData ? undefined : '当前车型暂无 UVA 数据'}
             >
               <Car className="h-3.5 w-3.5" />
-              {item.label.toUpperCase()}
+              {formatEnglishLabel(item.label)}
               {!hasData ? (
                 <Badge variant="warning" className="inline-flex items-center gap-1 px-1.5 py-0">
                   <AlertTriangle className="h-3 w-3" />

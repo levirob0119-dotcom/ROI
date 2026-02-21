@@ -92,7 +92,7 @@ router.post('/save', authMiddleware, (req, res) => {
     }
 
     // 插入或更新分析结果
-    const analysis = uvaAnalyses.upsert(projectId, vehicle, {
+    const analysis = uvaAnalyses.upsert(projectId, vehicle, req.user.id, {
         enhancedPets,
         reducedPets,
         kanoType,
@@ -115,7 +115,7 @@ router.get('/project/:projectId', authMiddleware, (req, res) => {
         return res.status(404).json({ error: '方案不存在' });
     }
 
-    const analyses = uvaAnalyses.findByProjectId(project.id).map((analysis) => ({
+    const analyses = uvaAnalyses.findByProjectId(project.id, req.user.id).map((analysis) => ({
         ...analysis,
         isDraft: !!analysis.isDraft || !!analysis.draft,
         analysisMeta: {

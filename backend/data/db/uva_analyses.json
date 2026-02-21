@@ -75,7 +75,8 @@
       "finalScore": 1.1899999999999995
     },
     "createdAt": "2026-01-30T03:40:44.755Z",
-    "updatedAt": "2026-01-30T03:40:44.755Z"
+    "updatedAt": "2026-01-30T03:40:44.755Z",
+    "userId": "1ccc547c-b119-47ed-bde7-b34aee0b4abc"
   },
   {
     "id": "84827426-7883-4c41-8cf9-9583e55d7311",
@@ -153,7 +154,8 @@
       "finalScore": 1.1899999999999995
     },
     "createdAt": "2026-01-30T03:40:44.821Z",
-    "updatedAt": "2026-01-30T03:40:44.821Z"
+    "updatedAt": "2026-01-30T03:40:44.821Z",
+    "userId": "786a0802-8eef-400f-93d2-83560e5a03f7"
   },
   {
     "id": "2cd6f272-2055-40f0-8a64-77f8ddea5dc8",
@@ -168,9 +170,9 @@
       }
     ],
     "reducedPets": [],
-    "kanoType": "Performance",
+    "kanoType": "performance",
     "usageRate": 50,
-    "penetrationRate": 30,
+    "penetrationRate": 34,
     "result": {
       "vehicle": "cetus",
       "enhanced": {
@@ -239,10 +241,11 @@
       }
     },
     "createdAt": "2026-01-31T13:37:53.810Z",
-    "updatedAt": "2026-02-21T06:44:28.467Z",
+    "updatedAt": "2026-02-21T06:46:30.336Z",
     "draft": true,
     "isDraft": true,
-    "clientUpdatedAt": "2026-02-21T06:44:28.460Z"
+    "clientUpdatedAt": "2026-02-21T06:46:30.319Z",
+    "userId": "b0e241d1-e8e9-482a-9f51-430bb33cb519"
   },
   {
     "id": "bfaf6bda-1681-46bd-bf61-12548183a43a",
@@ -320,7 +323,8 @@
       "finalScore": 1.1899999999999995
     },
     "createdAt": "2026-01-31T13:43:38.046Z",
-    "updatedAt": "2026-01-31T13:43:38.046Z"
+    "updatedAt": "2026-01-31T13:43:38.046Z",
+    "userId": "164ca20f-c872-4ffe-a15c-9d7e31b08590"
   },
   {
     "id": "e87c2c89-72e7-425d-9492-81039ff199e0",
@@ -398,7 +402,8 @@
       "finalScore": 1.1899999999999995
     },
     "createdAt": "2026-01-31T13:43:38.248Z",
-    "updatedAt": "2026-01-31T13:43:38.248Z"
+    "updatedAt": "2026-01-31T13:43:38.248Z",
+    "userId": "37abd4ba-6acc-4c9e-a4a8-659fe48641b9"
   },
   {
     "id": "3081e65b-be33-49e9-888b-2dc787eb45a1",
@@ -476,7 +481,8 @@
       "finalScore": 1.1899999999999995
     },
     "createdAt": "2026-01-31T13:45:57.812Z",
-    "updatedAt": "2026-01-31T13:45:57.812Z"
+    "updatedAt": "2026-01-31T13:45:57.812Z",
+    "userId": "f56ece3e-9a1a-45dd-ae29-502eb5b5951a"
   },
   {
     "id": "0b33d633-2d81-492a-8b18-7f1a651eca23",
@@ -554,7 +560,8 @@
       "finalScore": 1.1899999999999995
     },
     "createdAt": "2026-01-31T13:45:58.026Z",
-    "updatedAt": "2026-01-31T13:45:58.026Z"
+    "updatedAt": "2026-01-31T13:45:58.026Z",
+    "userId": "57dd0a70-5197-4f9e-a7a4-cf718ed9d0e2"
   },
   {
     "id": "7adb2a67-b016-4f25-a29e-10bdb49a9d06",
@@ -632,7 +639,8 @@
       "finalScore": 1.1899999999999995
     },
     "createdAt": "2026-01-31T13:48:41.749Z",
-    "updatedAt": "2026-01-31T13:48:41.749Z"
+    "updatedAt": "2026-01-31T13:48:41.749Z",
+    "userId": "4f0d1394-bb15-4364-a923-87617f5324aa"
   },
   {
     "id": "c9cc3c58-df27-47f3-b53a-8045486db1e0",
@@ -710,7 +718,8 @@
       "finalScore": 1.1899999999999995
     },
     "createdAt": "2026-01-31T13:48:42.136Z",
-    "updatedAt": "2026-01-31T13:48:42.136Z"
+    "updatedAt": "2026-01-31T13:48:42.136Z",
+    "userId": "7708185d-50be-4237-a867-b11a5e491d66"
   },
   {
     "id": "d8956cc3-1d62-4f02-809c-cf6d823b89d6",
@@ -731,7 +740,8 @@
     "penetrationRate": 30,
     "result": {},
     "createdAt": "2026-01-31T15:29:44.609Z",
-    "updatedAt": "2026-01-31T15:38:30.622Z"
+    "updatedAt": "2026-01-31T15:38:30.622Z",
+    "userId": "b0e241d1-e8e9-482a-9f51-430bb33cb519"
   },
   {
     "id": "4ad521a5-833d-4ddb-ba1d-0b0442b00e49",
@@ -752,6 +762,85 @@
     "penetrationRate": 30,
     "result": {},
     "createdAt": "2026-01-31T15:31:06.548Z",
-    "updatedAt": "2026-01-31T15:31:06.548Z"
+    "updatedAt": "2026-01-31T15:31:06.548Z",
+    "userId": "b0e241d1-e8e9-482a-9f51-430bb33cb519"
+  },
+  {
+    "id": "8d74bff4-89f4-403c-9167-b277700393ae",
+    "projectId": "2bcdd969-bfb6-455f-9812-8241afdbc3f8",
+    "vehicle": "leo",
+    "userId": "c63a8e7e-f803-4c33-9b9f-100ab83cde6e",
+    "enhancedPets": [],
+    "reducedPets": [],
+    "draft": false,
+    "isDraft": false,
+    "clientUpdatedAt": "2026-02-21T07:28:10.425Z",
+    "createdAt": "2026-02-21T07:28:10.436Z",
+    "updatedAt": "2026-02-21T07:28:10.436Z"
+  },
+  {
+    "id": "1accfed1-306b-4f08-97d7-bd10fa7c6eed",
+    "projectId": "2bcdd969-bfb6-455f-9812-8241afdbc3f8",
+    "vehicle": "draco",
+    "userId": "c63a8e7e-f803-4c33-9b9f-100ab83cde6e",
+    "enhancedPets": [],
+    "reducedPets": [],
+    "draft": false,
+    "isDraft": false,
+    "clientUpdatedAt": "2026-02-21T07:28:10.438Z",
+    "createdAt": "2026-02-21T07:28:10.449Z",
+    "updatedAt": "2026-02-21T07:28:10.449Z"
+  },
+  {
+    "id": "0aa3a9a5-0cea-4515-9d68-86a94d674ea4",
+    "projectId": "2bcdd969-bfb6-455f-9812-8241afdbc3f8",
+    "vehicle": "cetus",
+    "userId": "c63a8e7e-f803-4c33-9b9f-100ab83cde6e",
+    "enhancedPets": [],
+    "reducedPets": [],
+    "draft": false,
+    "isDraft": false,
+    "clientUpdatedAt": "2026-02-21T07:28:10.452Z",
+    "createdAt": "2026-02-21T07:28:10.462Z",
+    "updatedAt": "2026-02-21T07:28:10.462Z"
+  },
+  {
+    "id": "f2dbd376-d19f-4a94-b464-bde06c975af0",
+    "projectId": "2bcdd969-bfb6-455f-9812-8241afdbc3f8",
+    "vehicle": "cygnus",
+    "userId": "c63a8e7e-f803-4c33-9b9f-100ab83cde6e",
+    "enhancedPets": [],
+    "reducedPets": [],
+    "draft": false,
+    "isDraft": false,
+    "clientUpdatedAt": "2026-02-21T07:28:10.465Z",
+    "createdAt": "2026-02-21T07:28:10.491Z",
+    "updatedAt": "2026-02-21T07:28:10.491Z"
+  },
+  {
+    "id": "3be845fb-0b58-4bed-aeff-734290d3e7a0",
+    "projectId": "2bcdd969-bfb6-455f-9812-8241afdbc3f8",
+    "vehicle": "hercules",
+    "userId": "c63a8e7e-f803-4c33-9b9f-100ab83cde6e",
+    "enhancedPets": [],
+    "reducedPets": [],
+    "draft": false,
+    "isDraft": false,
+    "clientUpdatedAt": "2026-02-21T07:28:10.495Z",
+    "createdAt": "2026-02-21T07:28:10.509Z",
+    "updatedAt": "2026-02-21T07:28:10.509Z"
+  },
+  {
+    "id": "6c65eaff-3047-46f0-bb1f-39c4c4c26e53",
+    "projectId": "2bcdd969-bfb6-455f-9812-8241afdbc3f8",
+    "vehicle": "pisces",
+    "userId": "c63a8e7e-f803-4c33-9b9f-100ab83cde6e",
+    "enhancedPets": [],
+    "reducedPets": [],
+    "draft": false,
+    "isDraft": false,
+    "clientUpdatedAt": "2026-02-21T07:28:10.512Z",
+    "createdAt": "2026-02-21T07:28:10.525Z",
+    "updatedAt": "2026-02-21T07:28:10.525Z"
   }
 ]

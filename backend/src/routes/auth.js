@@ -4,10 +4,16 @@ import { users } from '../database/db.js';
 import { generateToken, authMiddleware } from '../middleware/auth.js';
 
 const router = express.Router();
+const MIN_PASSWORD_LENGTH = 6;
+
+function normalizeUsername(value) {
+    return typeof value === 'string' ? value.trim() : '';
+}
 
 // 登录
 router.post('/login', (req, res) => {
-    const { username, password } = req.body;
+    const username = normalizeUsername(req.body?.username);
+    const password = typeof req.body?.password === 'string' ? req.body.password : '';
 
     if (!username || !password) {
         return res.status(400).json({ error: '用户名和密码不能为空' });
@@ -39,10 +45,16 @@ router.post('/login', (req, res) => {
 
 // 注册
 router.post('/register', (req, res) => {
-    const { username, password, displayName } = req.body;
+    const username = normalizeUsername(req.body?.username);
+    const password = typeof req.body?.password === 'string' ? req.body.password : '';
+    const displayName = typeof req.body?.displayName === 'string' ? req.body.displayName.trim() : '';
 
     if (!username || !password) {
         return res.status(400).json({ error: '用户名和密码不能为空' });
+    }
+
+    if (password.length < MIN_PASSWORD_LENGTH) {
+        return res.status(400).json({ error: `密码长度不能少于 ${MIN_PASSWORD_LENGTH} 位` });
     }
 
     const existing = users.findByUsername(username);

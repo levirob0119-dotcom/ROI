@@ -1,14 +1,22 @@
 import type { LucideIcon } from 'lucide-react';
 import { Database } from 'lucide-react';
 
-import { Button } from '@/components/ui/button';
+import { Button, type ButtonProps } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 
 interface EmptyStateBlockProps {
-  title: string;
-  description: string;
+  title?: string;
+  description?: string;
   actionLabel?: string;
   onAction?: () => void;
   icon?: LucideIcon;
+  iconStrokeWidth?: number;
+  iconClassName?: string;
+  iconWrapperClassName?: string;
+  containerClassName?: string;
+  actionVariant?: ButtonProps['variant'];
+  actionSize?: ButtonProps['size'];
+  actionClassName?: string;
 }
 
 export default function EmptyStateBlock({
@@ -16,17 +24,30 @@ export default function EmptyStateBlock({
   description,
   actionLabel,
   onAction,
-  icon: Icon = Database
+  icon: Icon = Database,
+  iconStrokeWidth = 2,
+  iconClassName,
+  iconWrapperClassName,
+  containerClassName,
+  actionVariant = 'outline',
+  actionSize = 'default',
+  actionClassName
 }: EmptyStateBlockProps) {
   return (
-    <div className="flex flex-col items-center gap-3 rounded-control bg-surface/70 px-6 py-8 text-center ring-1 ring-slate-900/6 shadow-[0_12px_28px_rgba(15,23,42,0.08)]">
-      <div className="rounded-full bg-white p-3 shadow-[0_8px_18px_rgba(15,23,42,0.12)]">
-        <Icon className="h-6 w-6 text-text-secondary" />
+    <div className={cn(
+      'flex flex-col items-center gap-3 rounded-control bg-surface/70 px-6 py-8 text-center shadow-[0_12px_28px_rgba(15,23,42,0.08)]',
+      containerClassName
+    )}>
+      <div className={cn(
+        'rounded-full bg-white p-4 shadow-[0_8px_18px_rgba(15,23,42,0.12)]',
+        iconWrapperClassName
+      )}>
+        <Icon className={cn('h-7 w-7 text-text-secondary', iconClassName)} strokeWidth={iconStrokeWidth} />
       </div>
-      <h3 className="text-ds-body font-semibold text-text-primary">{title}</h3>
-      <p className="max-w-md text-ds-body-sm text-text-secondary">{description}</p>
+      {title ? <h3 className="text-ds-body font-semibold text-text-primary">{title}</h3> : null}
+      {description ? <p className="max-w-md text-ds-body-sm text-text-secondary">{description}</p> : null}
       {actionLabel && onAction ? (
-        <Button type="button" variant="outline" onClick={onAction}>
+        <Button type="button" variant={actionVariant} size={actionSize} className={actionClassName} onClick={onAction}>
           {actionLabel}
         </Button>
       ) : null}

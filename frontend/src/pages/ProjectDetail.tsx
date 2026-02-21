@@ -14,6 +14,7 @@ import { Button } from '@/components/ui/button';
 import { RadioGroup } from '@/components/ui/radio-group';
 import { Slider } from '@/components/ui/slider';
 import { useToast } from '@/components/ui/toast';
+import { formatEnglishLabel } from '@/lib/utils';
 import { projectService } from '@/services/projects';
 import {
     dataService,
@@ -33,7 +34,7 @@ function buildValidationState(analysis: VehicleAnalysis, hasVehicleData: boolean
     const blockers: string[] = [];
 
     if (!hasVehicleData) blockers.push('当前车型暂无 UVA 数据');
-    if (selectedPetsCount === 0) blockers.push('至少添加一个 PETS 维度');
+    if (selectedPetsCount === 0) blockers.push('至少添加一个 Pets 维度');
     if (selectedUvCount === 0) blockers.push('至少选择一个 UV 指标');
     if (!analysis.kanoType) blockers.push('请选择 Kano 需求属性');
     if (analysis.usageRate === undefined) blockers.push('请设置使用率');
@@ -407,7 +408,7 @@ const ProjectDetail: React.FC = () => {
                 title={project.name}
                 description={project.description || '暂无描述'}
                 status={{ label: currentSaveState, tone: currentAnalysis.dirty ? 'warning' : 'success' }}
-                meta={`项目车型: ${project.vehicles.map((vehicle) => vehicle.toUpperCase()).join(' · ')}`}
+                meta={`项目车型: ${project.vehicles.map((vehicle) => formatEnglishLabel(vehicle)).join(' · ')}`}
                 actions={
                     <>
                         <Button type="button" variant="outline" size="icon" onClick={() => setIsEditModalOpen(true)} title="编辑项目信息">
@@ -440,7 +441,7 @@ const ProjectDetail: React.FC = () => {
                 <InlineStatusBar
                     tone="success"
                     title="当前车型可直接测算"
-                    description={`已选择 ${currentValidation.selectedPetsCount} 个 PETS，${currentValidation.selectedUvCount} 个 UV。`}
+                    description={`已选择 ${currentValidation.selectedPetsCount} 个 Pets，${currentValidation.selectedUvCount} 个 UV。`}
                 />
             ) : (
                 <InlineStatusBar
@@ -453,7 +454,7 @@ const ProjectDetail: React.FC = () => {
             <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
                 <section className="space-y-4 rounded-card bg-white p-4 shadow-[0_18px_38px_rgba(15,23,42,0.11)]">
                     <div className="flex items-center justify-between">
-                        <h2 className="text-ds-title-sm text-text-primary">体验维度录入 · {currentVehicle.toUpperCase()}</h2>
+                        <h2 className="text-ds-title-sm text-text-primary">体验维度录入 · {formatEnglishLabel(currentVehicle)}</h2>
                         <Button
                             type="button"
                             variant="outline"
@@ -466,7 +467,7 @@ const ProjectDetail: React.FC = () => {
                             }}
                         >
                             <Plus className="h-4 w-4" />
-                            添加 PETS
+                            添加 Pets
                         </Button>
                     </div>
 

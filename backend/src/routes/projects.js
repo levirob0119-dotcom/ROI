@@ -44,7 +44,7 @@ router.get('/:id', (req, res) => {
     }
 
     // 获取该方案的所有 UVA 分析
-    const analyses = uvaAnalyses.findByProjectId(project.id);
+    const analyses = uvaAnalyses.findByProjectId(project.id, req.user.id);
 
     res.json({
         ...project,
