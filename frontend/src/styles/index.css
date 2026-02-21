@@ -52,9 +52,9 @@
     --info: 199 89% 48%;
 
     /* Borders */
-    --border: 214 32% 91%;
-    /* Slate 200 #E2E8F0 */
-    --input: 214 32% 91%;
+    --border: 214 28% 94%;
+    /* Softer border to reduce wireframe look */
+    --input: 214 24% 92%;
     --ring: 214 94% 64%;
     /* Primary */
 

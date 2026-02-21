@@ -1,192 +1,344 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Loader2, Plus, Calculator, Save, Settings } from 'lucide-react';
-import { projectService } from '@/services/projects';
-import { dataService, type Pets, type UVL1, type VehicleDataStatus } from '@/services/data';
-import type { Project } from '@/types/models';
-import type { ProjectAnalysisData } from '@/types/analysis';
-import PetsEntryCard from '@/components/Project/PetsEntryCard';
-import AddPetsDialog from '@/components/Project/AddPetsDialog';
-import VehicleResultPanel from '@/components/Project/VehicleResultPanel';
+import { Calculator, Loader2, Plus, Save, Settings } from 'lucide-react';
+
 import EditProjectModal from '@/components/EditProjectModal';
-import { Slider } from '@/components/ui/slider';
+import AddPetsDialog from '@/components/Project/AddPetsDialog';
+import PetsEntryCard from '@/components/Project/PetsEntryCard';
+import VehicleResultPanel from '@/components/Project/VehicleResultPanel';
+import EmptyStateBlock from '@/components/patterns/EmptyStateBlock';
+import InlineStatusBar from '@/components/patterns/InlineStatusBar';
+import PageHeader from '@/components/patterns/PageHeader';
+import VehicleTabs from '@/components/patterns/VehicleTabs';
+import { Button } from '@/components/ui/button';
 import { RadioGroup } from '@/components/ui/radio-group';
+import { Slider } from '@/components/ui/slider';
 import { useToast } from '@/components/ui/toast';
+import { projectService } from '@/services/projects';
+import {
+    dataService,
+    type CalculateUvaResponse,
+    type Pets,
+    type ProjectAnalysisRecord,
+    type SelectedPetsPayload,
+    type UVL1,
+    type VehicleDataStatus
+} from '@/services/data';
+import type { Project } from '@/types/models';
+import type { AnalysisValidationState, ProjectAnalysisData, VehicleAnalysis } from '@/types/analysis';
+
+function buildValidationState(analysis: VehicleAnalysis, hasVehicleData: boolean): AnalysisValidationState {
+    const selectedPetsCount = analysis.petsEntries.length;
+    const selectedUvCount = analysis.petsEntries.reduce((count, entry) => count + entry.uvL2Names.length, 0);
+    const blockers: string[] = [];
+
+    if (!hasVehicleData) blockers.push('当前车型暂无 UVA 数据');
+    if (selectedPetsCount === 0) blockers.push('至少添加一个 PETS 维度');
+    if (selectedUvCount === 0) blockers.push('至少选择一个 UV 指标');
+    if (!analysis.kanoType) blockers.push('请选择 Kano 需求属性');
+    if (analysis.usageRate === undefined) blockers.push('请设置使用率');
+    if (analysis.penetrationRate === undefined) blockers.push('请设置渗透率');
+
+    return {
+        canCalculate: blockers.length === 0,
+        blockers,
+        selectedPetsCount,
+        selectedUvCount,
+        hasVehicleData
+    };
+}
+
+function buildPetsPayload(entries: VehicleAnalysis['petsEntries']) {
+    const enhancedPets: SelectedPetsPayload[] = entries
+        .filter((entry) => entry.type === 'enhanced' && entry.uvL2Names.length > 0)
+        .map((entry) => ({ petsId: entry.petsId, petsName: entry.petsName, uvL2Names: entry.uvL2Names }));
+
+    const reducedPets: SelectedPetsPayload[] = entries
+        .filter((entry) => entry.type === 'reduced' && entry.uvL2Names.length > 0)
+        .map((entry) => ({ petsId: entry.petsId, petsName: entry.petsName, uvL2Names: entry.uvL2Names }));
+
+    return { enhancedPets, reducedPets };
+}
+
+function mapAnalysisRecordToVehicleAnalysis(record: ProjectAnalysisRecord | undefined, hasVehicleData: boolean): VehicleAnalysis {
+    const enhancedEntries = (record?.enhancedPets || []).map((entry) => ({
+        petsId: entry.petsId,
+        petsName: entry.petsName,
+        type: 'enhanced' as const,
+        uvL2Names: entry.uvL2Names || [],
+        isExpanded: false
+    }));
+
+    const reducedEntries = (record?.reducedPets || []).map((entry) => ({
+        petsId: entry.petsId,
+        petsName: entry.petsName,
+        type: 'reduced' as const,
+        uvL2Names: entry.uvL2Names || [],
+        isExpanded: false
+    }));
+
+    const base: VehicleAnalysis = {
+        petsEntries: [...enhancedEntries, ...reducedEntries],
+        kanoType: record?.kanoType,
+        usageRate: record?.usageRate,
+        penetrationRate: record?.penetrationRate,
+        dirty: false,
+        lastCalculatedAt: record?.updatedAt
+    };
+
+    return {
+        ...base,
+        validationState: buildValidationState(base, hasVehicleData)
+    };
+}
 
 const ProjectDetail: React.FC = () => {
     const { id } = useParams<{ id: string }>();
 
-    // Data State
     const [project, setProject] = useState<Project | null>(null);
     const [petsList, setPetsList] = useState<Pets[]>([]);
     const [uvData, setUVData] = useState<UVL1[]>([]);
+    const [vehicleDataStatus, setVehicleDataStatus] = useState<VehicleDataStatus[]>([]);
+
     const [isLoading, setIsLoading] = useState(true);
     const [isCalculating, setIsCalculating] = useState(false);
+    const [isSavingManual, setIsSavingManual] = useState(false);
+    const [isSavingDraft, setIsSavingDraft] = useState(false);
 
-    // Analysis State (new structure)
     const [analysisData, setAnalysisData] = useState<ProjectAnalysisData>({});
-    const [calculationResults, setCalculationResults] = useState<Record<string, any>>({});
+    const [calculationResults, setCalculationResults] = useState<Record<string, CalculateUvaResponse>>({});
+    const [currentVehicle, setCurrentVehicle] = useState('');
+    const [lastSavedAt, setLastSavedAt] = useState<string | null>(null);
 
-    // UX State
-    const [currentVehicle, setCurrentVehicle] = useState<string>('');
     const [isAddPetsOpen, setIsAddPetsOpen] = useState(false);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-    const [vehicleDataStatus, setVehicleDataStatus] = useState<VehicleDataStatus[]>([]);
+
     const { showToast, ToastComponent } = useToast();
 
+    const vehicleHasData = useCallback(
+        (vehicleId: string) => {
+            const status = vehicleDataStatus.find((item) => item.id.toLowerCase() === vehicleId.toLowerCase());
+            return status?.hasData !== false;
+        },
+        [vehicleDataStatus]
+    );
+
     useEffect(() => {
-        if (id) {
-            initData(id);
-        }
-    }, [id]);
+        if (!id) return;
 
-    const initData = async (projectId: string) => {
-        try {
-            const [projectData, petsData, uvDataResponse, vehicleStatus] = await Promise.all([
-                projectService.getById(projectId),
-                dataService.getPets(),
-                dataService.getUVData(),
-                dataService.getVehiclesDataStatus()
-            ]);
+        const init = async () => {
+            setIsLoading(true);
+            try {
+                const [projectData, petsData, uvDataResponse, vehicleStatus, savedAnalyses] = await Promise.all([
+                    projectService.getById(id),
+                    dataService.getPets(),
+                    dataService.getUVData(),
+                    dataService.getVehiclesDataStatus(),
+                    dataService.getProjectAnalysis(id)
+                ]);
 
-            setProject(projectData);
-            setPetsList(petsData);
-            setUVData(uvDataResponse);
-            setVehicleDataStatus(vehicleStatus);
+                const analysesByVehicle = new Map(savedAnalyses.map((record) => [record.vehicle.toLowerCase(), record]));
 
-            // Initialize analysis state for each vehicle
-            const initialAnalysis: ProjectAnalysisData = {};
-            projectData.vehicles.forEach(v => {
-                initialAnalysis[v] = { petsEntries: [] };
-            });
-            setAnalysisData(initialAnalysis);
+                const nextAnalysis: ProjectAnalysisData = {};
+                const nextResults: Record<string, CalculateUvaResponse> = {};
 
-            // Default select first vehicle that has data
-            const firstVehicleWithData = projectData.vehicles.find(v => {
-                const status = vehicleStatus.find(s => s.id.toLowerCase() === v.toLowerCase());
-                return status?.hasData !== false;
-            }) || projectData.vehicles[0];
+                projectData.vehicles.forEach((vehicle) => {
+                    const record = analysesByVehicle.get(vehicle.toLowerCase());
+                    const hasData = vehicleStatus.find((item) => item.id.toLowerCase() === vehicle.toLowerCase())?.hasData !== false;
+                    nextAnalysis[vehicle] = mapAnalysisRecordToVehicleAnalysis(record, hasData);
+                    if (record?.result) {
+                        nextResults[vehicle] = record.result;
+                    }
+                });
 
-            if (firstVehicleWithData) {
-                setCurrentVehicle(firstVehicleWithData);
+                const firstVehicleWithData =
+                    projectData.vehicles.find((vehicle) => {
+                        const status = vehicleStatus.find((item) => item.id.toLowerCase() === vehicle.toLowerCase());
+                        return status?.hasData !== false;
+                    }) || projectData.vehicles[0];
+
+                setProject(projectData);
+                setPetsList(petsData);
+                setUVData(uvDataResponse);
+                setVehicleDataStatus(vehicleStatus);
+                setAnalysisData(nextAnalysis);
+                setCalculationResults(nextResults);
+                setCurrentVehicle(firstVehicleWithData || '');
+            } catch (error) {
+                console.error('Failed to init project data', error);
+                showToast('项目加载失败，请稍后重试', 'error');
+            } finally {
+                setIsLoading(false);
             }
-        } catch (error) {
-            console.error('Failed to init project data', error);
-        } finally {
-            setIsLoading(false);
-        }
-    };
+        };
 
-    // Check if a vehicle has UVA data
-    const vehicleHasData = (vehicleId: string): boolean => {
-        const status = vehicleDataStatus.find(s => s.id.toLowerCase() === vehicleId.toLowerCase());
-        return status?.hasData !== false;
-    };
+        void init();
+    }, [id, showToast]);
 
-    // Current vehicle's analysis data
-    const currentAnalysis = useMemo(() => {
-        return analysisData[currentVehicle] || { petsEntries: [] };
-    }, [analysisData, currentVehicle]);
+    const currentAnalysis = useMemo<VehicleAnalysis>(
+        () =>
+            analysisData[currentVehicle] || {
+                petsEntries: [],
+                dirty: false,
+                validationState: buildValidationState({ petsEntries: [] }, vehicleHasData(currentVehicle))
+            },
+        [analysisData, currentVehicle, vehicleHasData]
+    );
 
-    // Existing PETS IDs for current vehicle
-    const existingPetsIds = useMemo(() => {
-        return currentAnalysis.petsEntries.map(e => e.petsId);
-    }, [currentAnalysis]);
+    const existingPetsIds = useMemo(() => currentAnalysis.petsEntries.map((entry) => entry.petsId), [currentAnalysis]);
 
-    // Handlers
-    const handleAddPets = (petsId: string, petsName: string, type: 'enhanced' | 'reduced') => {
-        setAnalysisData(prev => {
-            const vehicleData = prev[currentVehicle] || { petsEntries: [] };
-            return {
-                ...prev,
-                [currentVehicle]: {
-                    ...vehicleData,
-                    petsEntries: [
-                        ...vehicleData.petsEntries,
-                        { petsId, petsName, type, uvL2Names: [], isExpanded: true }
-                    ]
+    const currentSaveState = useMemo(() => {
+        if (isSavingManual) return '保存中...';
+        if (isSavingDraft) return '草稿保存中...';
+        if (currentAnalysis.dirty) return '未保存';
+        if (lastSavedAt) return `已保存 · ${new Date(lastSavedAt).toLocaleTimeString()}`;
+        return '已同步';
+    }, [currentAnalysis.dirty, isSavingDraft, isSavingManual, lastSavedAt]);
+
+    const updateVehicleAnalysis = useCallback(
+        (vehicle: string, updater: (previous: VehicleAnalysis) => VehicleAnalysis) => {
+            setAnalysisData((previous) => {
+                const fallback: VehicleAnalysis = { petsEntries: [] };
+                const current = previous[vehicle] || fallback;
+                const updated = updater(current);
+                const withMeta: VehicleAnalysis = {
+                    ...updated,
+                    dirty: true
+                };
+                withMeta.validationState = buildValidationState(withMeta, vehicleHasData(vehicle));
+                return {
+                    ...previous,
+                    [vehicle]: withMeta
+                };
+            });
+        },
+        [vehicleHasData]
+    );
+
+    const persistVehicle = useCallback(
+        async (vehicle: string, draft: boolean) => {
+            if (!project?.id) return;
+
+            const snapshot = analysisData[vehicle];
+            if (!snapshot) return;
+
+            const { enhancedPets, reducedPets } = buildPetsPayload(snapshot.petsEntries);
+
+            if (draft) setIsSavingDraft(true);
+            else setIsSavingManual(true);
+
+            try {
+                const saved = await dataService.saveAnalysis({
+                    projectId: project.id,
+                    vehicle,
+                    enhancedPets,
+                    reducedPets,
+                    kanoType: snapshot.kanoType,
+                    usageRate: snapshot.usageRate,
+                    penetrationRate: snapshot.penetrationRate,
+                    result: calculationResults[vehicle],
+                    draft,
+                    clientUpdatedAt: new Date().toISOString()
+                });
+
+                setAnalysisData((previous) => ({
+                    ...previous,
+                    [vehicle]: {
+                        ...(previous[vehicle] || snapshot),
+                        dirty: false,
+                        validationState: buildValidationState(previous[vehicle] || snapshot, vehicleHasData(vehicle))
+                    }
+                }));
+                setLastSavedAt(saved.updatedAt);
+
+                if (!draft) {
+                    showToast('项目已保存', 'success');
                 }
-            };
-        });
+            } catch (error) {
+                console.error('Save failed', error);
+                showToast(draft ? '草稿保存失败' : '保存失败，请重试', 'error');
+            } finally {
+                if (draft) setIsSavingDraft(false);
+                else setIsSavingManual(false);
+            }
+        },
+        [analysisData, calculationResults, project?.id, showToast, vehicleHasData]
+    );
+
+    useEffect(() => {
+        if (!project?.id || !currentVehicle) return;
+        if (!analysisData[currentVehicle]?.dirty) return;
+
+        const timer = setTimeout(() => {
+            void persistVehicle(currentVehicle, true);
+        }, 1200);
+
+        return () => clearTimeout(timer);
+    }, [analysisData, currentVehicle, persistVehicle, project?.id]);
+
+    const handleAddPets = (petsId: string, petsName: string, type: 'enhanced' | 'reduced') => {
+        updateVehicleAnalysis(currentVehicle, (previous) => ({
+            ...previous,
+            petsEntries: [...previous.petsEntries, { petsId, petsName, type, uvL2Names: [], isExpanded: true }]
+        }));
     };
 
     const handleDeletePets = (petsId: string) => {
-        setAnalysisData(prev => {
-            const vehicleData = prev[currentVehicle] || { petsEntries: [] };
-            return {
-                ...prev,
-                [currentVehicle]: {
-                    ...vehicleData,
-                    petsEntries: vehicleData.petsEntries.filter(e => e.petsId !== petsId)
-                }
-            };
-        });
+        updateVehicleAnalysis(currentVehicle, (previous) => ({
+            ...previous,
+            petsEntries: previous.petsEntries.filter((entry) => entry.petsId !== petsId)
+        }));
     };
 
     const handleToggleExpand = (petsId: string) => {
-        setAnalysisData(prev => {
-            const vehicleData = prev[currentVehicle] || { petsEntries: [] };
-            return {
-                ...prev,
-                [currentVehicle]: {
-                    ...vehicleData,
-                    petsEntries: vehicleData.petsEntries.map(e =>
-                        e.petsId === petsId ? { ...e, isExpanded: !e.isExpanded } : e
-                    )
-                }
-            };
-        });
+        updateVehicleAnalysis(currentVehicle, (previous) => ({
+            ...previous,
+            petsEntries: previous.petsEntries.map((entry) =>
+                entry.petsId === petsId ? { ...entry, isExpanded: !entry.isExpanded } : entry
+            )
+        }));
     };
 
     const handleToggleUV = (petsId: string, uvL2Name: string) => {
-        setAnalysisData(prev => {
-            const vehicleData = prev[currentVehicle] || { petsEntries: [] };
-            return {
-                ...prev,
-                [currentVehicle]: {
-                    ...vehicleData,
-                    petsEntries: vehicleData.petsEntries.map(e => {
-                        if (e.petsId !== petsId) return e;
-                        const exists = e.uvL2Names.includes(uvL2Name);
-                        return {
-                            ...e,
-                            uvL2Names: exists
-                                ? e.uvL2Names.filter(name => name !== uvL2Name)
-                                : [...e.uvL2Names, uvL2Name]
-                        };
-                    })
-                }
-            };
-        });
+        updateVehicleAnalysis(currentVehicle, (previous) => ({
+            ...previous,
+            petsEntries: previous.petsEntries.map((entry) => {
+                if (entry.petsId !== petsId) return entry;
+
+                const exists = entry.uvL2Names.includes(uvL2Name);
+                return {
+                    ...entry,
+                    uvL2Names: exists
+                        ? entry.uvL2Names.filter((name) => name !== uvL2Name)
+                        : [...entry.uvL2Names, uvL2Name]
+                };
+            })
+        }));
     };
 
-    const handleUpdateConfig = (field: 'kanoType' | 'usageRate' | 'penetrationRate', value: any) => {
-        setAnalysisData(prev => {
-            const vehicleData = prev[currentVehicle] || { petsEntries: [] };
-            return {
-                ...prev,
-                [currentVehicle]: {
-                    ...vehicleData,
-                    [field]: value
-                }
-            };
-        });
+    const handleUpdateConfig = (
+        field: 'kanoType' | 'usageRate' | 'penetrationRate',
+        value: VehicleAnalysis['kanoType'] | number
+    ) => {
+        updateVehicleAnalysis(currentVehicle, (previous) => ({
+            ...previous,
+            [field]: value
+        }));
     };
 
     const handleCalculate = async () => {
         if (!currentVehicle) return;
 
+        const validationState = currentAnalysis.validationState || buildValidationState(currentAnalysis, vehicleHasData(currentVehicle));
+        if (!validationState.canCalculate) {
+            showToast(validationState.blockers[0] || '请先补齐配置', 'warning');
+            return;
+        }
+
+        const { enhancedPets, reducedPets } = buildPetsPayload(currentAnalysis.petsEntries);
+
         setIsCalculating(true);
         try {
-            // Build API payload from petsEntries
-            const entries = currentAnalysis.petsEntries;
-            const enhancedPets = entries
-                .filter(e => e.type === 'enhanced' && e.uvL2Names.length > 0)
-                .map(e => ({ petsId: e.petsId, petsName: e.petsName, uvL2Names: e.uvL2Names }));
-            const reducedPets = entries
-                .filter(e => e.type === 'reduced' && e.uvL2Names.length > 0)
-                .map(e => ({ petsId: e.petsId, petsName: e.petsName, uvL2Names: e.uvL2Names }));
-
             const result = await dataService.calculateUVA({
                 vehicle: currentVehicle,
                 enhancedPets,
@@ -196,228 +348,232 @@ const ProjectDetail: React.FC = () => {
                 penetrationRate: currentAnalysis.penetrationRate
             });
 
-            setCalculationResults(prev => ({
-                ...prev,
+            setCalculationResults((previous) => ({
+                ...previous,
                 [currentVehicle]: result
             }));
+            setAnalysisData((previous) => {
+                const nextVehicle = previous[currentVehicle] || currentAnalysis;
+                const withMeta: VehicleAnalysis = {
+                    ...nextVehicle,
+                    dirty: true,
+                    lastCalculatedAt: new Date().toISOString()
+                };
+                withMeta.validationState = buildValidationState(withMeta, vehicleHasData(currentVehicle));
+                return {
+                    ...previous,
+                    [currentVehicle]: withMeta
+                };
+            });
+            showToast('测算完成', 'success');
         } catch (error) {
             console.error('Calculate failed', error);
+            showToast('测算失败，请检查配置后重试', 'error');
         } finally {
             setIsCalculating(false);
         }
     };
 
-    const handleEditSuccess = (updatedProject: Project) => {
-        setProject(updatedProject);
+    const handleSaveAll = async () => {
+        if (!project) return;
+
+        for (const vehicle of project.vehicles) {
+            // sequential save to avoid request storm and keep deterministic ordering
+            await persistVehicle(vehicle, false);
+        }
     };
 
     if (isLoading) {
         return (
-            <div className="flex items-center justify-center min-h-screen">
-                <Loader2 className="animate-spin text-indigo-600" size={32} />
+            <div className="flex min-h-screen items-center justify-center">
+                <Loader2 className="h-8 w-8 animate-spin text-primary" />
             </div>
         );
     }
 
     if (!project) return null;
 
+    const orderedVehicles = [...project.vehicles].sort((first, second) => {
+        if (first === currentVehicle) return -1;
+        if (second === currentVehicle) return 1;
+        return 0;
+    });
+
+    const currentValidation = currentAnalysis.validationState || buildValidationState(currentAnalysis, vehicleHasData(currentVehicle));
+
     return (
-        <div className="h-screen flex flex-col bg-gray-100 overflow-hidden">
-            {/* T 区: 顶部 - 方案信息 + 车型选择 */}
-            <header className="bg-white border-b border-gray-200 px-6 py-4">
-                <div className="flex items-center justify-between">
-                    {/* 左侧: 方案信息 */}
-                    <div>
-                        <h1 className="text-xl font-bold text-gray-900">{project.name}</h1>
-                        <p className="text-sm text-gray-500 mt-0.5">{project.description || '暂无描述'}</p>
-                    </div>
-
-                    {/* 中间: 车型 Tabs */}
-                    <div className="flex items-center gap-2 bg-gray-100 p-1 rounded-lg">
-                        {project.vehicles.map(v => {
-                            const hasData = vehicleHasData(v);
-                            return (
-                                <button
-                                    key={v}
-                                    onClick={() => {
-                                        if (hasData) {
-                                            setCurrentVehicle(v);
-                                        } else {
-                                            showToast('当前车型暂无数据', 'warning');
-                                        }
-                                    }}
-                                    className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${currentVehicle === v
-                                        ? 'bg-white text-indigo-700 shadow-sm'
-                                        : 'text-gray-600 hover:text-gray-900'
-                                        }`}
-                                >
-                                    {v.toUpperCase()}
-                                </button>
-                            );
-                        })}
-                    </div>
-
-                    {/* 右侧: 操作按钮 */}
-                    <div className="flex items-center gap-3">
-                        <button
-                            onClick={() => setIsEditModalOpen(true)}
-                            className="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg"
-                        >
-                            <Settings size={18} />
-                        </button>
-                        <button
-                            onClick={handleCalculate}
-                            disabled={isCalculating}
-                            className="flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded-lg font-medium hover:bg-indigo-700 disabled:opacity-50 transition-colors"
-                        >
-                            <Calculator size={16} />
-                            {isCalculating ? '计算中...' : '测算'}
-                        </button>
-                        <button className="flex items-center gap-2 px-4 py-2 bg-gray-800 text-white rounded-lg font-medium hover:bg-gray-900 transition-colors">
-                            <Save size={16} />
+        <div className="mx-auto flex w-full max-w-[1600px] flex-col gap-4 px-4 py-4 sm:px-6 lg:px-8">
+            <PageHeader
+                title={project.name}
+                description={project.description || '暂无描述'}
+                status={{ label: currentSaveState, tone: currentAnalysis.dirty ? 'warning' : 'success' }}
+                meta={`项目车型: ${project.vehicles.map((vehicle) => vehicle.toUpperCase()).join(' · ')}`}
+                actions={
+                    <>
+                        <Button type="button" variant="outline" size="icon" onClick={() => setIsEditModalOpen(true)} title="编辑项目信息">
+                            <Settings className="h-4 w-4" />
+                        </Button>
+                        <Button type="button" variant="outline" onClick={handleSaveAll} disabled={isSavingManual}>
+                            <Save className="h-4 w-4" />
                             保存
-                        </button>
+                        </Button>
+                        <Button type="button" variant="action" onClick={handleCalculate} disabled={isCalculating || !currentValidation.canCalculate}>
+                            {isCalculating ? <Loader2 className="h-4 w-4 animate-spin" /> : <Calculator className="h-4 w-4" />}
+                            {isCalculating ? '测算中...' : '测算'}
+                        </Button>
+                    </>
+                }
+            />
+
+            <VehicleTabs
+                items={project.vehicles.map((vehicle) => ({
+                    id: vehicle,
+                    label: vehicle,
+                    hasData: vehicleHasData(vehicle)
+                }))}
+                value={currentVehicle}
+                onChange={setCurrentVehicle}
+                onBlockedSelection={() => showToast('当前车型暂无 UVA 数据', 'warning')}
+            />
+
+            {currentValidation.canCalculate ? (
+                <InlineStatusBar
+                    tone="success"
+                    title="当前车型可直接测算"
+                    description={`已选择 ${currentValidation.selectedPetsCount} 个 PETS，${currentValidation.selectedUvCount} 个 UV。`}
+                />
+            ) : (
+                <InlineStatusBar
+                    tone="warning"
+                    title="还有配置项未完成"
+                    description={currentValidation.blockers.join('；')}
+                />
+            )}
+
+            <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
+                <section className="space-y-4 rounded-card bg-white p-4 shadow-[0_18px_38px_rgba(15,23,42,0.11)]">
+                    <div className="flex items-center justify-between">
+                        <h2 className="text-ds-title-sm text-text-primary">体验维度录入 · {currentVehicle.toUpperCase()}</h2>
+                        <Button
+                            type="button"
+                            variant="outline"
+                            onClick={() => {
+                                if (!vehicleHasData(currentVehicle)) {
+                                    showToast('当前车型暂无数据，请先切换车型', 'warning');
+                                    return;
+                                }
+                                setIsAddPetsOpen(true);
+                            }}
+                        >
+                            <Plus className="h-4 w-4" />
+                            添加 PETS
+                        </Button>
                     </div>
-                </div>
-            </header>
 
-            {/* 主区域: L + R */}
-            <div className="flex-1 flex min-h-0">
-                {/* L 区: 录入区 */}
-                <div className="w-1/2 border-r border-gray-200 bg-white overflow-y-auto">
-                    <div className="p-6">
-                        <div className="flex items-center justify-between mb-4">
-                            <h2 className="text-lg font-bold text-gray-900">
-                                体验维度录入 · {currentVehicle.toUpperCase()}
-                            </h2>
-                            <button
-                                onClick={() => setIsAddPetsOpen(true)}
-                                className="flex items-center gap-2 px-3 py-2 bg-indigo-600 text-white rounded-lg text-sm font-medium hover:bg-indigo-700 transition-colors"
-                            >
-                                <Plus size={16} />
-                                添加 PETS
-                            </button>
-                        </div>
+                    {!vehicleHasData(currentVehicle) ? (
+                        <InlineStatusBar
+                            tone="warning"
+                            title="该车型暂无 UVA 数据"
+                            description="请切换到已导入数据的车型后再进行录入。"
+                        />
+                    ) : null}
 
-                        {/* PETS Entry Cards */}
-                        {currentAnalysis.petsEntries.length === 0 ? (
-                            <div className="border-2 border-dashed border-gray-200 rounded-xl p-10 text-center">
-                                <p className="text-gray-500 mb-4">暂无录入数据</p>
-                                <button
-                                    onClick={() => setIsAddPetsOpen(true)}
-                                    className="text-indigo-600 hover:text-indigo-700 font-medium"
-                                >
-                                    点击添加第一个体验维度
-                                </button>
-                            </div>
-                        ) : (
-                            <div className="space-y-4">
-                                {currentAnalysis.petsEntries.map(entry => (
-                                    <PetsEntryCard
-                                        key={entry.petsId}
-                                        entry={entry}
-                                        uvData={uvData}
-                                        onToggleExpand={() => handleToggleExpand(entry.petsId)}
-                                        onDelete={() => handleDeletePets(entry.petsId)}
-                                        onToggleUV={(uvName) => handleToggleUV(entry.petsId, uvName)}
-                                    />
-                                ))}
-                            </div>
-                        )}
-
-                        {/* Kano & Frequency Configuration */}
-                        {currentAnalysis.petsEntries.length > 0 && (
-                            <div className="mt-6 pt-6 border-t border-border">
-                                <h3 className="text-sm font-semibold text-foreground mb-4">附加配置</h3>
-                                <div className="space-y-6">
-                                    {/* Kano Type */}
-                                    <div>
-                                        <label className="text-xs text-muted-foreground block mb-3 font-medium">Kano 需求属性</label>
-                                        <RadioGroup
-                                            name={`kano-${currentVehicle}`}
-                                            value={currentAnalysis.kanoType}
-                                            onChange={(value) => handleUpdateConfig('kanoType', value)}
-                                            options={[
-                                                { value: 'must-be', label: '必备型' },
-                                                { value: 'performance', label: '期望型' },
-                                                { value: 'attractive', label: '魅力型' }
-                                            ]}
-                                        />
-                                    </div>
-
-                                    {/* Frequency Sliders */}
-                                    <div className="grid grid-cols-2 gap-6">
-                                        <div className="bg-card rounded-xl border border-border p-4">
-                                            <label className="text-xs text-muted-foreground font-medium block mb-4">
-                                                使用率
-                                                <span className="font-normal text-muted-foreground/60 ml-2">该功能在对应车型上一定周期内的使用概率</span>
-                                            </label>
-                                            <Slider
-                                                value={currentAnalysis.usageRate || 0}
-                                                min={0}
-                                                max={100}
-                                                unit="%"
-                                                onChange={(value) => handleUpdateConfig('usageRate', value)}
-                                            />
-                                        </div>
-                                        <div className="bg-card rounded-xl border border-border p-4">
-                                            <label className="text-xs text-muted-foreground font-medium block mb-4">
-                                                渗透率
-                                                <span className="font-normal text-muted-foreground/60 ml-2">激活并使用过该功能的车辆占比「全生命周期，一次就算」</span>
-                                            </label>
-                                            <Slider
-                                                value={currentAnalysis.penetrationRate || 0}
-                                                min={0}
-                                                max={100}
-                                                unit="%"
-                                                onChange={(value) => handleUpdateConfig('penetrationRate', value)}
-                                            />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        )}
-                    </div>
-                </div>
-
-                {/* R 区: 结果区 */}
-                <div className="w-1/2 bg-gray-50 overflow-y-auto">
-                    <div className="p-6">
-                        <h2 className="text-lg font-bold text-gray-900 mb-4">UVA 测算结果</h2>
-
-                        <div className="space-y-4">
-                            {project.vehicles.map(v => (
-                                <VehicleResultPanel
-                                    key={v}
-                                    vehicle={v}
-                                    result={calculationResults[v]}
-                                    config={analysisData[v]}
-                                    isActive={currentVehicle === v}
+                    {currentAnalysis.petsEntries.length === 0 ? (
+                        <EmptyStateBlock
+                            title="暂无录入数据"
+                            description="请先添加体验维度，再展开勾选具体 UV 指标。"
+                            actionLabel="添加第一个维度"
+                            onAction={() => setIsAddPetsOpen(true)}
+                        />
+                    ) : (
+                        <div className="space-y-3">
+                            {currentAnalysis.petsEntries.map((entry) => (
+                                <PetsEntryCard
+                                    key={entry.petsId}
+                                    entry={entry}
+                                    uvData={uvData}
+                                    onToggleExpand={() => handleToggleExpand(entry.petsId)}
+                                    onDelete={() => handleDeletePets(entry.petsId)}
+                                    onToggleUV={(uvName) => handleToggleUV(entry.petsId, uvName)}
                                 />
                             ))}
                         </div>
-                    </div>
-                </div>
+                    )}
+
+                    {currentAnalysis.petsEntries.length > 0 ? (
+                        <div className="space-y-4 rounded-control bg-surface/88 p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.85)]">
+                            <h3 className="text-ds-body-sm font-semibold text-text-primary">附加配置</h3>
+
+                            <div className="space-y-2">
+                                <label className="text-ds-caption text-text-secondary">Kano 需求属性</label>
+                                <RadioGroup
+                                    name={`kano-${currentVehicle}`}
+                                    value={currentAnalysis.kanoType}
+                                    onChange={(value) => handleUpdateConfig('kanoType', value as VehicleAnalysis['kanoType'])}
+                                    options={[
+                                        { value: 'must-be', label: '必备型' },
+                                        { value: 'performance', label: '期望型' },
+                                        { value: 'attractive', label: '魅力型' }
+                                    ]}
+                                />
+                            </div>
+
+                            <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+                                <div className="rounded-control bg-white p-3 shadow-[0_8px_18px_rgba(15,23,42,0.08)]">
+                                    <label className="mb-3 block text-ds-caption text-text-secondary">使用率</label>
+                                    <Slider
+                                        value={currentAnalysis.usageRate ?? 0}
+                                        min={0}
+                                        max={100}
+                                        unit="%"
+                                        onChange={(value) => handleUpdateConfig('usageRate', value)}
+                                    />
+                                </div>
+                                <div className="rounded-control bg-white p-3 shadow-[0_8px_18px_rgba(15,23,42,0.08)]">
+                                    <label className="mb-3 block text-ds-caption text-text-secondary">渗透率</label>
+                                    <Slider
+                                        value={currentAnalysis.penetrationRate ?? 0}
+                                        min={0}
+                                        max={100}
+                                        unit="%"
+                                        onChange={(value) => handleUpdateConfig('penetrationRate', value)}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    ) : null}
+                </section>
+
+                <section className="space-y-3 rounded-card bg-white p-4 shadow-[0_18px_38px_rgba(15,23,42,0.11)]">
+                    <h2 className="text-ds-title-sm text-text-primary">UVA 测算结果</h2>
+                    {orderedVehicles.map((vehicle) => (
+                        <VehicleResultPanel
+                            key={vehicle}
+                            vehicle={vehicle}
+                            result={calculationResults[vehicle] || null}
+                            config={analysisData[vehicle]}
+                            isActive={vehicle === currentVehicle}
+                        />
+                    ))}
+                </section>
             </div>
 
-            {/* Dialogs */}
-            {isAddPetsOpen && (
+            {isAddPetsOpen ? (
                 <AddPetsDialog
                     petsList={petsList}
                     existingPetsIds={existingPetsIds}
                     onAdd={handleAddPets}
                     onClose={() => setIsAddPetsOpen(false)}
                 />
-            )}
+            ) : null}
 
             <EditProjectModal
                 isOpen={isEditModalOpen}
                 project={project}
                 onClose={() => setIsEditModalOpen(false)}
-                onSuccess={handleEditSuccess}
+                onSuccess={(updatedProject) => setProject(updatedProject)}
             />
 
-            {/* Toast Notifications */}
             <ToastComponent />
         </div>
     );

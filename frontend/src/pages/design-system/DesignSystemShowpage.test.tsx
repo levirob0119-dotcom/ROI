@@ -41,6 +41,6 @@ describe('DesignSystemShowpage', () => {
     inputDefault.focus();
     expect(inputDefault).toHaveFocus();
 
-    expect(screen.getByRole('button', { name: 'Trigger toast' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: '保存草稿' })).toBeInTheDocument();
   });
 });

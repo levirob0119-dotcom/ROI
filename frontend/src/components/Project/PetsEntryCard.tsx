@@ -56,8 +56,8 @@ const PetsEntryCard: React.FC<PetsEntryCardProps> = ({
         >
             <Card
                 className={cn(
-                    "border-l-4 overflow-hidden",
-                    isEnhanced ? "border-l-success" : "border-l-destructive"
+                    "overflow-hidden",
+                    isEnhanced ? "ring-2 ring-success/20" : "ring-2 ring-destructive/20"
                 )}
             >
                 {/* Header */}
@@ -106,7 +106,7 @@ const PetsEntryCard: React.FC<PetsEntryCardProps> = ({
                             transition={transitions.expand}
                             className="overflow-hidden"
                         >
-                            <div className="border-t bg-secondary/30">
+                            <div className="bg-secondary/25">
                                 <CardContent className="p-0">
                                     {uvData.map(l1 => {
                                         const isL1Expanded = expandedL1s.has(l1.l1_id);
@@ -114,7 +114,7 @@ const PetsEntryCard: React.FC<PetsEntryCardProps> = ({
                                         const hasSelection = selected > 0;
 
                                         return (
-                                            <div key={l1.l1_id} className="border-b last:border-b-0">
+                                            <div key={l1.l1_id} className="mb-1 last:mb-0">
                                                 {/* L1 Header */}
                                                 <motion.div
                                                     className={cn(
@@ -161,21 +161,21 @@ const PetsEntryCard: React.FC<PetsEntryCardProps> = ({
                                                                         <motion.div
                                                                             key={l2.id}
                                                                             className={cn(
-                                                                                "flex items-center gap-2 p-2 rounded cursor-pointer border transition-all",
+                                                                                "flex items-center gap-2 p-2 rounded cursor-pointer ring-1 transition-all",
                                                                                 isSelected
                                                                                     ? (isEnhanced
-                                                                                        ? "bg-success/10 border-success/30 text-success"
-                                                                                        : "bg-destructive/10 border-destructive/30 text-destructive")
-                                                                                    : "border-transparent text-muted-foreground hover:bg-elevated hover:text-foreground"
+                                                                                        ? "bg-success/10 ring-success/35 text-success shadow-[0_6px_14px_rgba(22,163,74,0.12)]"
+                                                                                        : "bg-destructive/10 ring-destructive/35 text-destructive shadow-[0_6px_14px_rgba(220,38,38,0.12)]")
+                                                                                    : "ring-slate-900/8 text-muted-foreground hover:bg-elevated hover:text-foreground"
                                                                             )}
                                                                             onClick={() => onToggleUV(l2.name)}
                                                                             whileTap={{ scale: 0.98 }}
                                                                         >
                                                                             <div className={cn(
-                                                                                "flex items-center justify-center w-4 h-4 rounded border transition-colors",
+                                                                                "flex items-center justify-center w-4 h-4 rounded ring-1 transition-colors",
                                                                                 isSelected
-                                                                                    ? (isEnhanced ? "bg-success border-success" : "bg-destructive border-destructive")
-                                                                                    : "border-muted-foreground/30 bg-background"
+                                                                                    ? (isEnhanced ? "bg-success ring-success" : "bg-destructive ring-destructive")
+                                                                                    : "ring-muted-foreground/30 bg-background"
                                                                             )}>
                                                                                 {isSelected && <Check className="h-3 w-3 text-white" />}
                                                                             </div>

@@ -12,13 +12,18 @@ vi.mock('./api', () => ({
 }));
 
 describe('dataService', () => {
+    const mockedApi = api as unknown as {
+        get: ReturnType<typeof vi.fn>;
+        post: ReturnType<typeof vi.fn>;
+    };
+
     beforeEach(() => {
         vi.clearAllMocks();
     });
 
     it('getVehicles fetches data correctly', async () => {
         const mockVehicles = [{ id: 'v1', name: 'Vehicle 1' }];
-        (api.get as any).mockResolvedValue({ data: mockVehicles });
+        mockedApi.get.mockResolvedValue({ data: mockVehicles });
 
         const result = await dataService.getVehicles();
 
@@ -28,7 +33,7 @@ describe('dataService', () => {
 
     it('getPets fetches data correctly', async () => {
         const mockPets = [{ id: 'p1', name: 'Pet 1' }];
-        (api.get as any).mockResolvedValue({ data: mockPets });
+        mockedApi.get.mockResolvedValue({ data: mockPets });
 
         const result = await dataService.getPets();
 
@@ -38,7 +43,7 @@ describe('dataService', () => {
 
     it('getUVData fetches data correctly', async () => {
         const mockUVData = [{ l1_id: 1, l1_name: 'L1', l2_items: [] }];
-        (api.get as any).mockResolvedValue({ data: mockUVData });
+        mockedApi.get.mockResolvedValue({ data: mockUVData });
 
         const result = await dataService.getUVData();
 
@@ -47,9 +52,9 @@ describe('dataService', () => {
     });
 
     it('calculateUVA sends correct payload', async () => {
-        const payload = { projectId: '123', vehicle: 'leo' };
+        const payload = { vehicle: 'leo', enhancedPets: [], reducedPets: [] };
         const mockResponse = { result: 100 };
-        (api.post as any).mockResolvedValue({ data: mockResponse });
+        mockedApi.post.mockResolvedValue({ data: mockResponse });
 
         const result = await dataService.calculateUVA(payload);
 

@@ -34,11 +34,11 @@ const RadioGroup: React.FC<RadioGroupProps> = ({
                 <label
                     key={option.value}
                     className={cn(
-                        "relative flex items-center gap-3 rounded-lg border-2 px-4 py-3 cursor-pointer transition-all",
-                        "hover:border-primary/50 hover:bg-primary/5",
+                        "relative flex items-center gap-3 rounded-lg px-4 py-3 cursor-pointer transition-all",
+                        "ring-1 ring-slate-900/8 hover:bg-primary/5 hover:ring-primary/30",
                         value === option.value
-                            ? "border-primary bg-primary/10 shadow-sm"
-                            : "border-border bg-card"
+                            ? "bg-primary/10 text-primary shadow-[0_8px_20px_rgba(19,127,236,0.16)] ring-primary/35"
+                            : "bg-white text-foreground"
                     )}
                 >
                     <input

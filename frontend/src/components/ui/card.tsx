@@ -13,17 +13,17 @@ const Card = React.forwardRef<
         ref={ref}
         className={cn(
             // 基础样式
-            "rounded-[12px] bg-white/90 backdrop-blur-sm text-card-foreground",
-            // 边框 - 微妙
-            "border border-black/[0.06]",
+            "rounded-[12px] bg-white/95 backdrop-blur-sm text-card-foreground",
+            // 柔和边界：弱 ring 代替明显边框
+            "ring-1 ring-slate-900/5",
             // 阴影 - 多层次
-            "shadow-[0_1px_3px_rgba(0,0,0,0.06),0_1px_2px_rgba(0,0,0,0.04)]",
+            "shadow-[0_6px_24px_rgba(15,23,42,0.06),0_2px_8px_rgba(15,23,42,0.04)]",
             // 过渡
             "transition-all duration-200 ease-[cubic-bezier(0.16,1,0.3,1)]",
-            // Hover - 上浮 + 发光边框
-            "hover:translate-y-[-4px]",
-            "hover:border-[hsl(214_94%_64%_/_0.2)]",
-            "hover:shadow-[0_0_0_1px_hsl(214_94%_64%_/_0.1),0_12px_32px_rgba(0,0,0,0.1)]",
+            // Hover - 上浮 + 阴影层次增强
+            "hover:translate-y-[-3px]",
+            "hover:ring-primary/15",
+            "hover:shadow-[0_10px_30px_rgba(15,23,42,0.1),0_4px_12px_rgba(15,23,42,0.06)]",
             className
         )}
         {...props}

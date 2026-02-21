@@ -25,10 +25,10 @@ test('UVA Analysis Full Flow', async ({ page, request }) => {
     await page.getByRole('button', { name: '登录' }).click();
 
     // Wait for dashboard page after successful login
-    await expect(page.getByRole('heading', { name: 'Dashboard' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: '项目工作台' })).toBeVisible();
 
     // 3. Create a new project for testing
-    await page.getByRole('button', { name: 'New Project' }).click();
+    await page.getByRole('button', { name: '新建项目' }).click();
     await expect(page.getByRole('heading', { name: '新建分析项目' })).toBeVisible();
 
     const projectTimestamp = new Date().getTime();

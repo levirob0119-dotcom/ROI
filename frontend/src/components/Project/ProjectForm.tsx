@@ -89,7 +89,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({
         <form onSubmit={handleSubmit}>
             <div className="p-6 space-y-4">
                 {error && (
-                    <div className="bg-red-50 text-red-600 text-sm px-3 py-2 rounded-md border border-red-100">
+                    <div className="bg-red-50 text-red-600 text-sm px-3 py-2 rounded-md ring-1 ring-red-200/70 shadow-[0_6px_16px_rgba(220,38,38,0.12)]">
                         {error}
                     </div>
                 )}
@@ -111,7 +111,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({
                     <textarea
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
-                        className="flex min-h-[80px] w-full rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-sm shadow-sm placeholder:text-slate-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                        className="flex min-h-[92px] w-full rounded-lg bg-white px-3 py-2 text-sm shadow-[inset_0_0_0_1px_rgba(148,163,184,0.35),0_1px_2px_rgba(15,23,42,0.04)] placeholder:text-slate-400 transition-all focus-visible:outline-none focus-visible:shadow-[inset_0_0_0_2px_rgba(19,127,236,0.45),0_8px_20px_rgba(19,127,236,0.1)] disabled:cursor-not-allowed disabled:opacity-50"
                         placeholder="简要描述背景和目标..."
                         disabled={isSubmitting}
                     />
@@ -124,10 +124,10 @@ const ProjectForm: React.FC<ProjectFormProps> = ({
                             <label
                                 key={v.id}
                                 className={cn(
-                                    "flex items-center gap-2 p-2 rounded-md border cursor-pointer transition-colors",
+                                    "flex items-center gap-2 p-2.5 rounded-lg cursor-pointer transition-all ring-1",
                                     selectedVehicles.includes(v.id)
-                                        ? "bg-blue-50 border-primary text-primary"
-                                        : "bg-white border-slate-200 text-slate-700 hover:bg-slate-50"
+                                        ? "bg-blue-50/90 text-primary ring-primary/35 shadow-[0_10px_22px_rgba(19,127,236,0.14)]"
+                                        : "bg-white text-slate-700 ring-slate-900/8 hover:bg-slate-50 hover:shadow-[0_8px_18px_rgba(15,23,42,0.08)]"
                                 )}
                             >
                                 <input
@@ -138,10 +138,10 @@ const ProjectForm: React.FC<ProjectFormProps> = ({
                                     disabled={isSubmitting}
                                 />
                                 <div className={cn(
-                                    "w-4 h-4 rounded border flex items-center justify-center flex-shrink-0 transition-colors",
+                                    "w-4 h-4 rounded-md flex items-center justify-center flex-shrink-0 transition-colors ring-1",
                                     selectedVehicles.includes(v.id)
-                                        ? "bg-primary border-primary"
-                                        : "bg-white border-slate-300"
+                                        ? "bg-primary ring-primary"
+                                        : "bg-white ring-slate-300"
                                 )}>
                                     {selectedVehicles.includes(v.id) && (
                                         <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -156,11 +156,11 @@ const ProjectForm: React.FC<ProjectFormProps> = ({
                 </div>
             </div>
 
-            <div className="flex justify-end gap-3 px-6 py-4 bg-slate-50 border-t border-slate-100">
+            <div className="flex justify-end gap-3 px-6 py-4 bg-slate-50/70">
                 <Button type="button" variant="outline" onClick={onCancel} disabled={isSubmitting}>
                     取消
                 </Button>
-                <Button type="submit" disabled={isSubmitting}>
+                <Button type="submit" variant="action" disabled={isSubmitting}>
                     {isSubmitting ? (
                         <>
                             <Loader2 className="mr-2 h-4 w-4 animate-spin" />

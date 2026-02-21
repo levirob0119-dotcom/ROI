@@ -2,6 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Plus, Trash2, Edit3, ArrowLeft, Calculator, MapPin } from 'lucide-react';
 import UVSelectionTable from '@/components/Project/UVSelectionTable';
+import { Badge } from '@/components/ui/badge';
 import { type UVL1 } from '@/services/data';
 
 // Mock Data
@@ -115,7 +116,7 @@ const PathStreamlinedView: React.FC = () => {
     }, [paths]);
 
     return (
-        <div className="bg-gray-50 flex flex-col h-screen overflow-hidden">
+        <div className="ds-page-bg flex h-screen flex-col overflow-hidden">
             {/* Header */}
             <div className="bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between shadow-sm z-10">
                 <div className="flex items-center gap-4">
@@ -129,6 +130,7 @@ const PathStreamlinedView: React.FC = () => {
                         </h1>
                         <div className="text-xs text-gray-500 mt-1">方案 D: Path 核心模式 (Scenario Based)</div>
                     </div>
+                    <Badge variant="warning">实验态</Badge>
                 </div>
                 <div className="flex items-center gap-4">
                     <div className="bg-indigo-50 px-4 py-2 rounded-lg border border-indigo-100">

@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import ProjectHeader from '@/components/Project/ProjectHeader';
 import AnalysisInput from '@/components/Project/AnalysisInput';
 import AnalysisResult from '@/components/Project/AnalysisResult';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { type Pets, type UVL1 } from '@/services/data';
 
 // Mock Data for Demo
@@ -51,7 +53,7 @@ const StreamlinedView: React.FC = () => {
     const handleBack = () => navigate('/demo');
 
     return (
-        <div className="bg-gray-50 flex flex-col h-screen overflow-hidden">
+        <div className="ds-page-bg flex h-screen flex-col overflow-hidden">
             {/* Header override for demo back navigation */}
             <div className="relative">
                 <ProjectHeader
@@ -62,12 +64,17 @@ const StreamlinedView: React.FC = () => {
                     onSave={() => alert('Demo Saved!')}
                     onCalculate={() => alert('Calculating...')}
                 />
-                <button
+                <Button
                     onClick={handleBack}
-                    className="absolute left-20 top-5 bg-black/5 text-xs px-2 py-1 rounded hover:bg-black/10 transition-colors z-20"
+                    variant="outline"
+                    size="sm"
+                    className="absolute left-20 top-5 z-20"
                 >
-                    Back to Demos
-                </button>
+                    返回实验场
+                </Button>
+                <Badge variant="warning" className="absolute right-6 top-5 z-20">
+                    实验态
+                </Badge>
             </div>
 
             <div className="flex-1 flex min-h-0">

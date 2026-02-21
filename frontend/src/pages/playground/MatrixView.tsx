@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { ArrowLeft, Grip } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import PageHeader from '@/components/patterns/PageHeader';
+import { Badge } from '@/components/ui/badge';
 import { dataService, type Pets } from '@/services/data';
 
 const MatrixView: React.FC = () => {
@@ -32,16 +34,20 @@ const MatrixView: React.FC = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gray-50 flex flex-col h-screen overflow-hidden">
-            <header className="bg-white border-b border-gray-200 px-6 py-3 flex items-center justify-between">
-                <div className="flex items-center gap-4">
-                    <button onClick={() => navigate('/demo')} className="p-2 hover:bg-gray-100 rounded-full">
-                        <ArrowLeft size={20} />
-                    </button>
-                    <h1 className="text-lg font-bold">全景矩阵模式 (Matrix)</h1>
-                    <span className="bg-emerald-100 text-emerald-800 text-xs px-2 py-0.5 rounded">Power User</span>
-                </div>
-            </header>
+        <div className="ds-page-bg flex min-h-screen h-screen flex-col overflow-hidden">
+            <div className="px-6 pt-6">
+                <PageHeader
+                    title="全景矩阵模式 (Matrix)"
+                    description="专家用户批量录入实验页。"
+                    status={{ label: '实验态', tone: 'warning' }}
+                    actions={(
+                        <button onClick={() => navigate('/demo')} className="inline-flex items-center gap-1 rounded-control border border-border px-3 py-1.5 text-ds-body-sm text-text-secondary hover:bg-surface">
+                            <ArrowLeft size={16} />
+                            返回
+                        </button>
+                    )}
+                />
+            </div>
 
             <div className="flex-1 overflow-auto p-6">
                 <div className="bg-white border border-gray-300 shadow-sm rounded-lg overflow-hidden">
@@ -91,6 +97,7 @@ const MatrixView: React.FC = () => {
                 </div>
 
                 <div className="mt-4 text-xs text-gray-500">
+                    <Badge variant="warning" className="mr-2">实验态</Badge>
                     操作提示：单击循环切换状态 (空 → 提升 → 降低 → 空)。右键可查看详细 UV 指标。
                 </div>
             </div>

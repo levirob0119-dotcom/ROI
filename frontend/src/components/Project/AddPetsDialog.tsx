@@ -1,6 +1,11 @@
-import React, { useState } from 'react';
-import { X, Plus, Minus } from 'lucide-react';
+import React, { useMemo, useState } from 'react';
+import { Minus, Plus, X } from 'lucide-react';
+
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import type { Pets } from '@/services/data';
+import { cn } from '@/lib/utils';
 
 interface AddPetsDialogProps {
     petsList: Pets[];
@@ -9,17 +14,19 @@ interface AddPetsDialogProps {
     onClose: () => void;
 }
 
-const AddPetsDialog: React.FC<AddPetsDialogProps> = ({
-    petsList,
-    existingPetsIds,
-    onAdd,
-    onClose
-}) => {
+const AddPetsDialog: React.FC<AddPetsDialogProps> = ({ petsList, existingPetsIds, onAdd, onClose }) => {
     const [selectedPetsId, setSelectedPetsId] = useState<string | null>(null);
     const [selectedType, setSelectedType] = useState<'enhanced' | 'reduced'>('enhanced');
 
-    const availablePets = petsList.filter(p => !existingPetsIds.includes(p.id));
-    const selectedPets = petsList.find(p => p.id === selectedPetsId);
+    const availablePets = useMemo(
+        () => petsList.filter((pets) => !existingPetsIds.includes(pets.id)),
+        [petsList, existingPetsIds]
+    );
+
+    const selectedPets = useMemo(
+        () => petsList.find((pets) => pets.id === selectedPetsId),
+        [petsList, selectedPetsId]
+    );
 
     const handleConfirm = () => {
         if (selectedPetsId && selectedPets) {
@@ -29,97 +36,103 @@ const AddPetsDialog: React.FC<AddPetsDialogProps> = ({
     };
 
     return (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50" onClick={onClose}>
-            <div
-                className="bg-white rounded-2xl shadow-2xl w-full max-w-md mx-4 overflow-hidden"
-                onClick={(e) => e.stopPropagation()}
-            >
-                {/* Header */}
-                <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100">
-                    <h3 className="text-lg font-bold text-gray-900">添加体验维度 (PETS)</h3>
-                    <button onClick={onClose} className="text-gray-400 hover:text-gray-600">
-                        <X size={20} />
-                    </button>
-                </div>
-
-                {/* Content */}
-                <div className="p-5 space-y-5">
-                    {/* Step 1: Select PETS */}
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/55 px-4 backdrop-blur-sm" onClick={onClose}>
+            <Card className="w-full max-w-xl hover:translate-y-0" onClick={(event) => event.stopPropagation()}>
+                <CardHeader className="flex flex-row items-start justify-between space-y-0">
                     <div>
-                        <label className="text-sm font-medium text-gray-700 mb-2 block">
-                            1. 选择维度
-                        </label>
+                        <CardTitle>添加体验维度 (PETS)</CardTitle>
+                        <p className="mt-1 text-ds-body-sm text-text-secondary">为当前车型新增提升或降低体验维度。</p>
+                    </div>
+                    <Button type="button" variant="ghost" size="icon" onClick={onClose} aria-label="关闭">
+                        <X className="h-4 w-4" />
+                    </Button>
+                </CardHeader>
+
+                <CardContent className="space-y-5">
+                    <div className="space-y-2">
+                        <p className="text-ds-body-sm font-semibold text-text-primary">1. 选择维度</p>
                         {availablePets.length === 0 ? (
-                            <div className="text-sm text-gray-500 bg-gray-50 rounded-lg p-4 text-center">
-                                所有维度已添加
+                            <div className="rounded-control bg-surface px-3 py-4 text-ds-body-sm text-text-secondary ring-1 ring-slate-900/8">
+                                全部维度已添加。
                             </div>
                         ) : (
-                            <div className="grid grid-cols-2 gap-2">
-                                {availablePets.map(pets => (
-                                    <button
-                                        key={pets.id}
-                                        onClick={() => setSelectedPetsId(pets.id)}
-                                        className={`px-3 py-2.5 text-sm rounded-lg border-2 text-left transition-all ${selectedPetsId === pets.id
-                                            ? 'border-indigo-500 bg-indigo-50 text-indigo-700'
-                                            : 'border-gray-200 text-gray-700 hover:border-gray-300'
-                                            }`}
-                                    >
-                                        {pets.name}
-                                    </button>
-                                ))}
+                            <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+                                {availablePets.map((pets) => {
+                                    const active = selectedPetsId === pets.id;
+                                    return (
+                                        <button
+                                            key={pets.id}
+                                            type="button"
+                                            onClick={() => setSelectedPetsId(pets.id)}
+                                            className={cn(
+                                                'rounded-control px-3 py-2 text-left text-ds-body-sm transition-all ring-1',
+                                                active
+                                                    ? 'bg-primary/10 text-primary ring-primary/35 shadow-[0_8px_18px_rgba(19,127,236,0.14)]'
+                                                    : 'bg-white text-text-primary ring-slate-900/10 hover:ring-primary/25 hover:shadow-[0_8px_18px_rgba(15,23,42,0.08)]'
+                                            )}
+                                        >
+                                            {pets.name}
+                                        </button>
+                                    );
+                                })}
                             </div>
                         )}
                     </div>
 
-                    {/* Step 2: Select Type */}
-                    {selectedPetsId && (
-                        <div>
-                            <label className="text-sm font-medium text-gray-700 mb-2 block">
-                                2. 选择影响方向
-                            </label>
-                            <div className="grid grid-cols-2 gap-3">
-                                <button
-                                    onClick={() => setSelectedType('enhanced')}
-                                    className={`flex items-center justify-center gap-2 py-3 rounded-xl border-2 font-medium transition-all ${selectedType === 'enhanced'
-                                        ? 'border-green-500 bg-green-50 text-green-700'
-                                        : 'border-gray-200 text-gray-600 hover:border-gray-300'
-                                        }`}
-                                >
-                                    <Plus size={18} />
-                                    提升
-                                </button>
-                                <button
-                                    onClick={() => setSelectedType('reduced')}
-                                    className={`flex items-center justify-center gap-2 py-3 rounded-xl border-2 font-medium transition-all ${selectedType === 'reduced'
-                                        ? 'border-red-500 bg-red-50 text-red-700'
-                                        : 'border-gray-200 text-gray-600 hover:border-gray-300'
-                                        }`}
-                                >
-                                    <Minus size={18} />
-                                    降低
-                                </button>
-                            </div>
+                    <div className="space-y-2">
+                        <p className="text-ds-body-sm font-semibold text-text-primary">2. 选择影响方向</p>
+                        <div className="grid grid-cols-2 gap-3">
+                            <button
+                                type="button"
+                                onClick={() => setSelectedType('enhanced')}
+                                className={cn(
+                                    'inline-flex items-center justify-center gap-2 rounded-control px-3 py-2 text-ds-body-sm font-medium transition-all ring-1',
+                                    selectedType === 'enhanced'
+                                        ? 'bg-success/10 text-success ring-success/35 shadow-[0_8px_18px_rgba(22,163,74,0.14)]'
+                                        : 'bg-white text-text-secondary ring-slate-900/10 hover:ring-success/25'
+                                )}
+                            >
+                                <Plus className="h-4 w-4" />
+                                提升
+                            </button>
+                            <button
+                                type="button"
+                                onClick={() => setSelectedType('reduced')}
+                                className={cn(
+                                    'inline-flex items-center justify-center gap-2 rounded-control px-3 py-2 text-ds-body-sm font-medium transition-all ring-1',
+                                    selectedType === 'reduced'
+                                        ? 'bg-error/10 text-error ring-error/35 shadow-[0_8px_18px_rgba(220,38,38,0.14)]'
+                                        : 'bg-white text-text-secondary ring-slate-900/10 hover:ring-error/25'
+                                )}
+                            >
+                                <Minus className="h-4 w-4" />
+                                降低
+                            </button>
                         </div>
-                    )}
-                </div>
+                    </div>
 
-                {/* Footer */}
-                <div className="flex gap-3 px-5 py-4 border-t border-gray-100 bg-gray-50">
-                    <button
-                        onClick={onClose}
-                        className="flex-1 py-2.5 text-gray-600 hover:text-gray-800 font-medium"
-                    >
-                        取消
-                    </button>
-                    <button
-                        onClick={handleConfirm}
-                        disabled={!selectedPetsId}
-                        className="flex-1 py-2.5 bg-indigo-600 text-white rounded-lg font-medium hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                    >
-                        确认添加
-                    </button>
-                </div>
-            </div>
+                    {selectedPets ? (
+                        <div className="rounded-control bg-surface px-3 py-2 ring-1 ring-slate-900/8">
+                            <p className="text-ds-caption text-text-secondary">即将添加</p>
+                            <p className="mt-1 text-ds-body-sm text-text-primary">
+                                {selectedPets.name}
+                                <Badge variant={selectedType === 'enhanced' ? 'success' : 'destructive'} className="ml-2">
+                                    {selectedType === 'enhanced' ? '提升' : '降低'}
+                                </Badge>
+                            </p>
+                        </div>
+                    ) : null}
+
+                    <div className="flex justify-end gap-2 pt-4">
+                        <Button type="button" variant="outline" onClick={onClose}>
+                            取消
+                        </Button>
+                        <Button type="button" variant="action" disabled={!selectedPetsId} onClick={handleConfirm}>
+                            确认添加
+                        </Button>
+                    </div>
+                </CardContent>
+            </Card>
         </div>
     );
 };

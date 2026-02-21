@@ -174,21 +174,41 @@
     "result": {
       "vehicle": "cetus",
       "enhanced": {
-        "totalScore": 5.97,
+        "totalScore": 0,
         "petsList": [
           {
             "petsId": "intelligent_driving",
-            "totalScore": 5.97,
+            "petsName": "PETS-intelligent_driving",
+            "totalScore": 0,
             "uvL1List": [
               {
                 "l1Name": "愉悦享受",
                 "l1Category": "核心差异UV",
                 "l1Weight": 0.0652,
-                "totalScore": 5.97,
+                "totalScore": 0,
                 "l2List": [
                   {
                     "l2Name": "氛围感带来的愉悦享受",
-                    "score": 5.97
+                    "score": 0
+                  }
+                ]
+              }
+            ],
+            "requirementGroups": [
+              {
+                "categoryName": "核心差异UV",
+                "totalScore": 0,
+                "l1List": [
+                  {
+                    "l1Name": "愉悦享受",
+                    "totalScore": 0,
+                    "l2List": [
+                      {
+                        "l2Name": "氛围感带来的愉悦享受",
+                        "score": 0,
+                        "fromPetsId": "intelligent_driving"
+                      }
+                    ]
                   }
                 ]
               }
@@ -200,12 +220,29 @@
         "totalScore": 0,
         "petsList": []
       },
-      "totalEnhanced": 5.97,
+      "totalEnhanced": 0,
       "totalReduced": 0,
-      "finalScore": 5.97
+      "finalScore": 0,
+      "meta": {
+        "validationSummary": {
+          "hasSelections": true,
+          "missingKanoType": false,
+          "missingUsageRate": false,
+          "missingPenetrationRate": false
+        },
+        "selectionCount": {
+          "pets": 1,
+          "uv": 1,
+          "enhanced": 1,
+          "reduced": 0
+        }
+      }
     },
     "createdAt": "2026-01-31T13:37:53.810Z",
-    "updatedAt": "2026-02-01T08:33:29.208Z"
+    "updatedAt": "2026-02-21T06:44:28.467Z",
+    "draft": true,
+    "isDraft": true,
+    "clientUpdatedAt": "2026-02-21T06:44:28.460Z"
   },
   {
     "id": "bfaf6bda-1681-46bd-bf61-12548183a43a",

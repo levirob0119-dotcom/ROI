@@ -27,6 +27,109 @@ export interface VehicleDataStatus {
     hasData: boolean;
 }
 
+export interface SelectedPetsPayload {
+    petsId: string;
+    petsName: string;
+    uvL2Names: string[];
+}
+
+export interface CalculateUvaPayload {
+    vehicle: string;
+    enhancedPets: SelectedPetsPayload[];
+    reducedPets: SelectedPetsPayload[];
+    kanoType?: 'must-be' | 'performance' | 'attractive';
+    usageRate?: number;
+    penetrationRate?: number;
+}
+
+interface ResultL2 {
+    l2Name: string;
+    score: number;
+}
+
+interface ResultL1 {
+    l1Name: string;
+    totalScore: number;
+    l2List: ResultL2[];
+}
+
+interface RequirementGroup {
+    categoryName: string;
+    totalScore: number;
+    l1List: ResultL1[];
+}
+
+export interface ResultPetsNode {
+    petsId: string;
+    petsName: string;
+    totalScore: number;
+    requirementGroups: RequirementGroup[];
+}
+
+interface CalculateSectionResult {
+    totalScore: number;
+    petsList: ResultPetsNode[];
+}
+
+export interface CalculateMeta {
+    validationSummary: {
+        hasSelections: boolean;
+        missingKanoType: boolean;
+        missingUsageRate: boolean;
+        missingPenetrationRate: boolean;
+    };
+    selectionCount: {
+        pets: number;
+        uv: number;
+        enhanced: number;
+        reduced: number;
+    };
+}
+
+export interface CalculateUvaResponse {
+    vehicle: string;
+    enhanced: CalculateSectionResult;
+    reduced: CalculateSectionResult;
+    totalEnhanced: number;
+    totalReduced: number;
+    finalScore: number;
+    meta: CalculateMeta;
+}
+
+export interface SaveAnalysisPayload {
+    projectId: string;
+    vehicle: string;
+    enhancedPets: SelectedPetsPayload[];
+    reducedPets: SelectedPetsPayload[];
+    kanoType?: 'must-be' | 'performance' | 'attractive';
+    usageRate?: number;
+    penetrationRate?: number;
+    result?: CalculateUvaResponse;
+    draft?: boolean;
+    clientUpdatedAt?: string;
+}
+
+export interface ProjectAnalysisRecord {
+    id: string;
+    projectId: string;
+    vehicle: string;
+    enhancedPets: SelectedPetsPayload[];
+    reducedPets: SelectedPetsPayload[];
+    kanoType?: 'must-be' | 'performance' | 'attractive';
+    usageRate?: number;
+    penetrationRate?: number;
+    result?: CalculateUvaResponse;
+    draft?: boolean;
+    clientUpdatedAt?: string;
+    isDraft: boolean;
+    analysisMeta: {
+        isDraft: boolean;
+        updatedAt: string;
+    };
+    createdAt: string;
+    updatedAt: string;
+}
+
 export const dataService = {
     getVehicles: async (): Promise<Vehicle[]> => {
         const response = await api.get<Vehicle[]>('/data/vehicles');
@@ -48,18 +151,18 @@ export const dataService = {
         return response.data;
     },
 
-    calculateUVA: async (payload: any): Promise<any> => {
-        const response = await api.post('/uva/calculate', payload);
+    calculateUVA: async (payload: CalculateUvaPayload): Promise<CalculateUvaResponse> => {
+        const response = await api.post<CalculateUvaResponse>('/uva/calculate', payload);
         return response.data;
     },
 
-    saveAnalysis: async (payload: any): Promise<any> => {
-        const response = await api.post('/uva/save', payload);
+    saveAnalysis: async (payload: SaveAnalysisPayload): Promise<ProjectAnalysisRecord> => {
+        const response = await api.post<ProjectAnalysisRecord>('/uva/save', payload);
         return response.data;
     },
 
-    getProjectAnalysis: async (projectId: string): Promise<any[]> => {
-        const response = await api.get(`/uva/project/${projectId}`);
+    getProjectAnalysis: async (projectId: string): Promise<ProjectAnalysisRecord[]> => {
+        const response = await api.get<ProjectAnalysisRecord[]>(`/uva/project/${projectId}`);
         return response.data;
     }
 };

@@ -1,74 +1,87 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Layout, ArrowRight, MousePointer2, ListOrdered, Grid3X3 } from 'lucide-react';
-import Navbar from '@/components/layout/Navbar';
+import { ArrowRight, Grid3X3, Layout, ListOrdered, MousePointer2 } from 'lucide-react';
 
-const DemoCard = ({ title, desc, icon: Icon, path, color }: any) => {
-    const navigate = useNavigate();
-    return (
-        <div
-            onClick={() => navigate(path)}
-            className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-md hover:border-indigo-300 transition-all cursor-pointer group"
-        >
-            <div className={`w-12 h-12 rounded-lg ${color} flex items-center justify-center mb-4 text-white`}>
-                <Icon size={24} />
-            </div>
-            <h3 className="text-lg font-bold text-gray-900 mb-2 group-hover:text-indigo-600 transition-colors">
-                {title}
-            </h3>
-            <p className="text-gray-500 text-sm mb-4 leading-relaxed">
-                {desc}
-            </p>
-            <div className="flex items-center text-indigo-600 font-medium text-sm opacity-0 group-hover:opacity-100 transition-opacity">
-                <span>立即体验</span>
-                <ArrowRight size={16} className="ml-1" />
-            </div>
-        </div>
-    );
-};
+import PageHeader from '@/components/patterns/PageHeader';
+import { Badge } from '@/components/ui/badge';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+
+interface DemoEntry {
+    title: string;
+    desc: string;
+    path: string;
+    icon: React.ComponentType<{ className?: string }>;
+    status?: string;
+}
+
+const demos: DemoEntry[] = [
+    {
+        title: '方案 A: 流式布局',
+        desc: '左侧录入、右侧结果联动，强调高频效率与连续操作。',
+        path: '/demo/streamlined',
+        icon: Layout,
+        status: '推荐'
+    },
+    {
+        title: '方案 B: 向导模式',
+        desc: '按步骤引导用户完成录入，适用于培训和演示。',
+        path: '/demo/wizard',
+        icon: ListOrdered
+    },
+    {
+        title: '方案 C: 矩阵模式',
+        desc: '以矩阵视图批量处理多车型，适合专家用户。',
+        path: '/demo/matrix',
+        icon: Grid3X3
+    },
+    {
+        title: '方案 D: Path 模式',
+        desc: '以 Path 为核心定义影响方向与指标映射。',
+        path: '/demo/path',
+        icon: MousePointer2
+    }
+];
 
 const UXLanding: React.FC = () => {
-    return (
-        <div className="min-h-screen bg-gray-50">
-            <Navbar />
-            <div className="max-w-5xl mx-auto px-6 py-12">
-                <div className="text-center mb-12">
-                    <h1 className="text-3xl font-bold text-gray-900 mb-3">UX 交互体验场</h1>
-                    <p className="text-gray-600 max-w-2xl mx-auto">
-                        我们为您构建了三种不同理念的交互原型。请点击下方卡片，亲自上手体验录入流程，选择最适合现有工作流的方案。
-                    </p>
-                </div>
+    const navigate = useNavigate();
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <DemoCard
-                        title="方案 A: 流式布局"
-                        desc="【推荐】左侧切维度，中间选指标，右侧看结果。强调“心流”和效率，适合高频操作。"
-                        icon={Layout}
-                        path="/demo/streamlined"
-                        color="bg-blue-500"
-                    />
-                    <DemoCard
-                        title="方案 B: 向导模式"
-                        desc="分步引导，先选提升再选降低。降低认知负载，适合演示和新手引导。"
-                        icon={ListOrdered}
-                        path="/demo/wizard"
-                        color="bg-purple-500"
-                    />
-                    <DemoCard
-                        title="方案 C: 矩阵模式"
-                        desc="上帝视角，类 Excel 表格体验。适合专家用户进行多车型快速批量勾选。"
-                        icon={Grid3X3}
-                        path="/demo/matrix"
-                        color="bg-emerald-500"
-                    />
-                    <DemoCard
-                        title="方案 D: Path 核心模式"
-                        desc="【用户定制】严格遵循 Path 配置流程：定义方向 -> 选维度 -> 选 UV。逻辑最严谨。"
-                        icon={MousePointer2}
-                        path="/demo/path"
-                        color="bg-pink-500"
-                    />
-                </div>
+    return (
+        <div className="mx-auto flex w-full max-w-6xl flex-col gap-4 px-4 py-6 sm:px-6 lg:px-8">
+            <PageHeader
+                title="UX 交互实验场"
+                description="用于评审交互方案，不直接代表生产页面。"
+                status={{ label: '实验态', tone: 'warning' }}
+            />
+
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                {demos.map((demo) => {
+                    const Icon = demo.icon;
+                    return (
+                        <Card
+                            key={demo.path}
+                            className="cursor-pointer"
+                            onClick={() => navigate(demo.path)}
+                        >
+                            <CardHeader>
+                                <div className="mb-2 flex items-center gap-2">
+                                    <span className="inline-flex rounded-control bg-primary/10 p-2 text-primary">
+                                        <Icon className="h-4 w-4" />
+                                    </span>
+                                    {demo.status ? <Badge variant="success">{demo.status}</Badge> : null}
+                                    <Badge variant="warning">实验态</Badge>
+                                </div>
+                                <CardTitle>{demo.title}</CardTitle>
+                            </CardHeader>
+                            <CardContent>
+                                <p className="mb-4 text-ds-body-sm text-text-secondary">{demo.desc}</p>
+                                <p className="inline-flex items-center gap-1 text-ds-body-sm font-semibold text-primary">
+                                    进入体验
+                                    <ArrowRight className="h-4 w-4" />
+                                </p>
+                            </CardContent>
+                        </Card>
+                    );
+                })}
             </div>
         </div>
     );

@@ -13,7 +13,7 @@ const router = express.Router();
 
 // 计算 UVA 分值（公开接口，无需认证）
 router.post('/calculate', (req, res) => {
-    const { vehicle, enhancedPets, reducedPets } = req.body;
+    const { vehicle, enhancedPets, reducedPets, kanoType, usageRate, penetrationRate } = req.body;
 
     if (!vehicle) {
         return res.status(400).json({ error: '车型不能为空' });
@@ -42,6 +42,13 @@ router.post('/calculate', (req, res) => {
     const totalEnhanced = enhancedResult.totalScore;
     const totalReduced = reducedResult.totalScore;
     const finalScore = totalEnhanced - totalReduced;
+    const selectionCount = getSelectionCount(enhancedPets || [], reducedPets || []);
+    const validationSummary = {
+        hasSelections: selectionCount.uv > 0,
+        missingKanoType: kanoType === undefined || kanoType === null || kanoType === '',
+        missingUsageRate: usageRate === undefined || usageRate === null,
+        missingPenetrationRate: penetrationRate === undefined || penetrationRate === null
+    };
 
     res.json({
         vehicle,
@@ -49,13 +56,28 @@ router.post('/calculate', (req, res) => {
         reduced: reducedResult,
         totalEnhanced,
         totalReduced,
-        finalScore
+        finalScore,
+        meta: {
+            validationSummary,
+            selectionCount
+        }
     });
 });
 
 // 保存 UVA 分析结果
 router.post('/save', authMiddleware, (req, res) => {
-    const { projectId, vehicle, enhancedPets, reducedPets, kanoType, usageRate, penetrationRate, result } = req.body;
+    const {
+        projectId,
+        vehicle,
+        enhancedPets,
+        reducedPets,
+        kanoType,
+        usageRate,
+        penetrationRate,
+        result,
+        draft,
+        clientUpdatedAt
+    } = req.body;
 
     // 检查项目是否属于当前用户
     const project = projects.findByIdAndUserId(projectId, req.user.id);
@@ -76,7 +98,10 @@ router.post('/save', authMiddleware, (req, res) => {
         kanoType,
         usageRate,
         penetrationRate,
-        result
+        result,
+        draft: !!draft,
+        isDraft: !!draft,
+        clientUpdatedAt: clientUpdatedAt || null
     });
 
     res.json(analysis);
@@ -90,10 +115,32 @@ router.get('/project/:projectId', authMiddleware, (req, res) => {
         return res.status(404).json({ error: '方案不存在' });
     }
 
-    const analyses = uvaAnalyses.findByProjectId(project.id);
+    const analyses = uvaAnalyses.findByProjectId(project.id).map((analysis) => ({
+        ...analysis,
+        isDraft: !!analysis.isDraft || !!analysis.draft,
+        analysisMeta: {
+            isDraft: !!analysis.isDraft || !!analysis.draft,
+            updatedAt: analysis.updatedAt
+        }
+    }));
 
     res.json(analyses);
 });
+
+function getSelectionCount(enhancedPets, reducedPets) {
+    const enhanced = Array.isArray(enhancedPets) ? enhancedPets : [];
+    const reduced = Array.isArray(reducedPets) ? reducedPets : [];
+    const pets = enhanced.length + reduced.length;
+    const enhancedUv = enhanced.reduce((count, petsItem) => count + (petsItem.uvL2Names?.length || 0), 0);
+    const reducedUv = reduced.reduce((count, petsItem) => count + (petsItem.uvL2Names?.length || 0), 0);
+
+    return {
+        pets,
+        uv: enhancedUv + reducedUv,
+        enhanced: enhancedUv,
+        reduced: reducedUv
+    };
+}
 
 // 辅助函数：计算 PETS 下的 UV 分值
 function calculatePetsScores(matrixData, petsSelections) {

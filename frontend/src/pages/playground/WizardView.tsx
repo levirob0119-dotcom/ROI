@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { ArrowRight, Check, Car, ThumbsUp, ThumbsDown } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import Navbar from '@/components/layout/Navbar';
+import PageHeader from '@/components/patterns/PageHeader';
+import { Badge } from '@/components/ui/badge';
 import { dataService, type Pets } from '@/services/data';
 
 // Simplified Wizard for Demo
@@ -27,11 +28,17 @@ const WizardView: React.FC = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gray-50 flex flex-col">
-            <Navbar />
+        <div className="ds-page-bg min-h-screen flex flex-col">
+            <div className="px-6 pt-6">
+                <PageHeader
+                    title="向导模式演示"
+                    description="分步引导流程，仅用于实验评审。"
+                    status={{ label: '实验态', tone: 'warning' }}
+                />
+            </div>
 
             {/* Progress Bar */}
-            <div className="bg-white border-b border-gray-200 px-8 py-4">
+            <div className="mt-4 bg-white border-y border-gray-200 px-8 py-4">
                 <div className="max-w-4xl mx-auto flex items-center justify-between">
                     {[
                         { num: 1, label: '选择车型' },
@@ -128,6 +135,9 @@ const WizardView: React.FC = () => {
 
                 {step === 4 && (
                     <div className="text-center py-12">
+                        <div className="mb-4">
+                            <Badge variant="warning">实验态结果</Badge>
+                        </div>
                         <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
                             <Check size={40} className="text-green-600" />
                         </div>
