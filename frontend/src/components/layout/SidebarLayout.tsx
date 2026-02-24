@@ -1,8 +1,9 @@
 import { ChevronDown, LogOut, Plus, User } from 'lucide-react';
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuth } from '@/contexts/useAuth';
 import { Button } from '@/components/ui/button';
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 
 
 interface SidebarLayoutProps {
@@ -14,35 +15,13 @@ export function SidebarLayout({ children }: SidebarLayoutProps) {
     const navigate = useNavigate();
     const location = useLocation();
     const isDashboard = location.pathname === '/';
-    const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
-    const userMenuRef = useRef<HTMLDivElement | null>(null);
+    const [isAccountDialogOpen, setIsAccountDialogOpen] = useState(false);
 
     const handleLogout = () => {
+        setIsAccountDialogOpen(false);
         logout();
         navigate('/login');
     };
-
-    useEffect(() => {
-        const handleClickOutside = (event: MouseEvent) => {
-            if (!userMenuRef.current) return;
-            if (userMenuRef.current.contains(event.target as Node)) return;
-            setIsUserMenuOpen(false);
-        };
-
-        const handleEscape = (event: KeyboardEvent) => {
-            if (event.key === 'Escape') {
-                setIsUserMenuOpen(false);
-            }
-        };
-
-        document.addEventListener('mousedown', handleClickOutside);
-        document.addEventListener('keydown', handleEscape);
-
-        return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
-            document.removeEventListener('keydown', handleEscape);
-        };
-    }, []);
 
     return (
         <div className="flex h-screen w-full overflow-hidden bg-white text-slate-900 font-sans">
@@ -65,30 +44,48 @@ export function SidebarLayout({ children }: SidebarLayoutProps) {
                                     新建项目
                                 </Button>
                             ) : null}
-                            <div className="relative" ref={userMenuRef}>
-                                <button
-                                    type="button"
-                                    className="inline-flex items-center gap-1.5 rounded-control border border-slate-200 bg-white px-2.5 py-1.5 text-sm text-slate-700 hover:bg-slate-50"
-                                    onClick={() => setIsUserMenuOpen((previous) => !previous)}
-                                >
-                                    <User className="h-4 w-4" />
-                                    <span>{user?.username || '用户'}</span>
-                                    <ChevronDown className="h-3.5 w-3.5 text-slate-500" />
-                                </button>
+                            <Button
+                                type="button"
+                                variant="outline"
+                                size="sm"
+                                className="gap-1.5 border-slate-200 bg-white px-2.5 py-1.5 text-slate-700 hover:bg-slate-50"
+                                onClick={() => setIsAccountDialogOpen(true)}
+                            >
+                                <User className="h-4 w-4" />
+                                <span>{user?.username || '用户'}</span>
+                                <ChevronDown className="h-3.5 w-3.5 text-slate-500" />
+                            </Button>
 
-                                {isUserMenuOpen ? (
-                                    <div className="absolute right-0 top-[calc(100%+8px)] min-w-[148px] rounded-card border border-slate-200 bg-white p-1.5 shadow-[0_10px_22px_rgba(15,23,42,0.12)]">
-                                        <button
+                            <Dialog open={isAccountDialogOpen} onOpenChange={setIsAccountDialogOpen}>
+                                <DialogContent className="max-w-sm">
+                                    <DialogHeader>
+                                        <DialogTitle className="inline-flex items-center gap-2">
+                                            <User className="h-4 w-4" />
+                                            账号操作
+                                        </DialogTitle>
+                                        <DialogDescription>
+                                            当前账号：{user?.username || '用户'}
+                                        </DialogDescription>
+                                    </DialogHeader>
+                                    <DialogFooter>
+                                        <Button
                                             type="button"
-                                            className="flex w-full items-center gap-2 rounded-control px-2.5 py-2 text-left text-sm text-slate-700 hover:bg-slate-50"
+                                            variant="outline"
+                                            onClick={() => setIsAccountDialogOpen(false)}
+                                        >
+                                            取消
+                                        </Button>
+                                        <Button
+                                            type="button"
+                                            variant="destructive"
                                             onClick={handleLogout}
                                         >
                                             <LogOut className="h-4 w-4" />
                                             退出登录
-                                        </button>
-                                    </div>
-                                ) : null}
-                            </div>
+                                        </Button>
+                                    </DialogFooter>
+                                </DialogContent>
+                            </Dialog>
                         </div>
                     </div>
                 </header>

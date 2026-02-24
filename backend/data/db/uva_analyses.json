@@ -796,13 +796,165 @@
     "projectId": "2bcdd969-bfb6-455f-9812-8241afdbc3f8",
     "vehicle": "cetus",
     "userId": "c63a8e7e-f803-4c33-9b9f-100ab83cde6e",
-    "enhancedPets": [],
+    "enhancedPets": [
+      {
+        "petsId": "riding_experience",
+        "petsName": "乘坐体验",
+        "uvL2Names": [
+          "高级感，彰显高级的设计审美品味",
+          "风格鲜明，彰显不同风格的设计审美品味",
+          "有内涵，展现不同的文化内涵",
+          "氛围感带来的愉悦享受",
+          "设计审美带来的愉悦享受",
+          "与家人朋友互动带来的愉悦享受",
+          "影音娱乐体验的愉悦享受"
+        ]
+      }
+    ],
     "reducedPets": [],
-    "draft": false,
-    "isDraft": false,
-    "clientUpdatedAt": "2026-02-21T07:28:10.452Z",
+    "draft": true,
+    "isDraft": true,
+    "clientUpdatedAt": "2026-02-24T06:16:00.872Z",
     "createdAt": "2026-02-21T07:28:10.462Z",
-    "updatedAt": "2026-02-21T07:28:10.462Z"
+    "updatedAt": "2026-02-24T06:16:00.886Z",
+    "kanoType": "attractive",
+    "usageRate": 63,
+    "penetrationRate": 25,
+    "result": {
+      "vehicle": "cetus",
+      "enhanced": {
+        "totalScore": 222.74,
+        "petsList": [
+          {
+            "petsId": "riding_experience",
+            "petsName": "乘坐体验",
+            "totalScore": 222.74,
+            "uvL1List": [
+              {
+                "l1Name": "愉悦享受",
+                "l1Category": "核心差异UV",
+                "l1Weight": 0.0652,
+                "totalScore": 192.61,
+                "l2List": [
+                  {
+                    "l2Name": "氛围感带来的愉悦享受",
+                    "score": 53.72
+                  },
+                  {
+                    "l2Name": "设计审美带来的愉悦享受",
+                    "score": 49.79
+                  },
+                  {
+                    "l2Name": "与家人朋友互动带来的愉悦享受",
+                    "score": 45.86
+                  },
+                  {
+                    "l2Name": "影音娱乐体验的愉悦享受",
+                    "score": 43.24
+                  }
+                ]
+              },
+              {
+                "l1Name": "彰显品味",
+                "l1Category": "核心差异UV",
+                "l1Weight": 0.0518,
+                "totalScore": 30.129999999999995,
+                "l2List": [
+                  {
+                    "l2Name": "高级感，彰显高级的设计审美品味",
+                    "score": 12.75
+                  },
+                  {
+                    "l2Name": "风格鲜明，彰显不同风格的设计审美品味",
+                    "score": 8.69
+                  },
+                  {
+                    "l2Name": "有内涵，展现不同的文化内涵",
+                    "score": 8.69
+                  }
+                ]
+              }
+            ],
+            "requirementGroups": [
+              {
+                "categoryName": "核心差异UV",
+                "totalScore": 222.74,
+                "l1List": [
+                  {
+                    "l1Name": "愉悦享受",
+                    "totalScore": 192.61,
+                    "l2List": [
+                      {
+                        "l2Name": "氛围感带来的愉悦享受",
+                        "score": 53.72,
+                        "fromPetsId": "riding_experience"
+                      },
+                      {
+                        "l2Name": "设计审美带来的愉悦享受",
+                        "score": 49.79,
+                        "fromPetsId": "riding_experience"
+                      },
+                      {
+                        "l2Name": "与家人朋友互动带来的愉悦享受",
+                        "score": 45.86,
+                        "fromPetsId": "riding_experience"
+                      },
+                      {
+                        "l2Name": "影音娱乐体验的愉悦享受",
+                        "score": 43.24,
+                        "fromPetsId": "riding_experience"
+                      }
+                    ]
+                  },
+                  {
+                    "l1Name": "彰显品味",
+                    "totalScore": 30.129999999999995,
+                    "l2List": [
+                      {
+                        "l2Name": "高级感，彰显高级的设计审美品味",
+                        "score": 12.75,
+                        "fromPetsId": "riding_experience"
+                      },
+                      {
+                        "l2Name": "风格鲜明，彰显不同风格的设计审美品味",
+                        "score": 8.69,
+                        "fromPetsId": "riding_experience"
+                      },
+                      {
+                        "l2Name": "有内涵，展现不同的文化内涵",
+                        "score": 8.69,
+                        "fromPetsId": "riding_experience"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "reduced": {
+        "totalScore": 0,
+        "petsList": []
+      },
+      "totalEnhanced": 222.74,
+      "totalReduced": 0,
+      "finalScore": 222.74,
+      "meta": {
+        "validationSummary": {
+          "hasSelections": true,
+          "missingKanoType": false,
+          "missingUsageRate": false,
+          "missingPenetrationRate": false
+        },
+        "selectionCount": {
+          "pets": 1,
+          "uv": 7,
+          "enhanced": 7,
+          "reduced": 0
+        }
+      }
+    }
   },
   {
     "id": "f2dbd376-d19f-4a94-b464-bde06c975af0",

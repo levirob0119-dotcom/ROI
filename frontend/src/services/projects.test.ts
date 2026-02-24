@@ -14,13 +14,20 @@ vi.mock('./api', () => ({
 }));
 
 describe('projectService', () => {
+    const mockedApi = {
+        get: api.get as unknown as ReturnType<typeof vi.fn>,
+        post: api.post as unknown as ReturnType<typeof vi.fn>,
+        put: api.put as unknown as ReturnType<typeof vi.fn>,
+        delete: api.delete as unknown as ReturnType<typeof vi.fn>,
+    };
+
     beforeEach(() => {
         vi.clearAllMocks();
     });
 
     it('getAll fetches projects correctly', async () => {
         const mockProjects = [{ id: 'p1', name: 'Project 1' }];
-        (api.get as any).mockResolvedValue({ data: mockProjects });
+        mockedApi.get.mockResolvedValue({ data: mockProjects });
 
         const result = await projectService.getAll();
 
@@ -30,7 +37,7 @@ describe('projectService', () => {
 
     it('getById fetches a single project correctly', async () => {
         const mockProject = { id: 'p1', name: 'Project 1' };
-        (api.get as any).mockResolvedValue({ data: mockProject });
+        mockedApi.get.mockResolvedValue({ data: mockProject });
 
         const result = await projectService.getById('p1');
 
@@ -41,7 +48,7 @@ describe('projectService', () => {
     it('create sends correct payload', async () => {
         const newProject = { name: 'New Project', vehicles: [] };
         const mockResponse = { id: 'p2', ...newProject };
-        (api.post as any).mockResolvedValue({ data: mockResponse });
+        mockedApi.post.mockResolvedValue({ data: mockResponse });
 
         const result = await projectService.create(newProject);
 
@@ -52,7 +59,7 @@ describe('projectService', () => {
     it('update sends correct payload', async () => {
         const updateData = { name: 'Updated Project' };
         const mockResponse = { id: 'p1', ...updateData };
-        (api.put as any).mockResolvedValue({ data: mockResponse });
+        mockedApi.put.mockResolvedValue({ data: mockResponse });
 
         const result = await projectService.update('p1', updateData);
 
@@ -61,7 +68,7 @@ describe('projectService', () => {
     });
 
     it('delete calls correct endpoint', async () => {
-        (api.delete as any).mockResolvedValue({});
+        mockedApi.delete.mockResolvedValue({});
 
         await projectService.delete('p1');
 

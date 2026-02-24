@@ -1,4 +1,5 @@
 import type { ComponentReadinessItem } from '../types';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { componentReadiness } from '../designTokens';
 import { SectionShell } from './SectionShell';
 
@@ -15,32 +16,30 @@ export default function ReadinessMatrixSection() {
       title="Readiness Matrix"
       description="Current component readiness for next-phase migration planning."
     >
-      <div className="overflow-x-auto rounded-control border border-border">
-        <table className="w-full border-collapse">
-          <thead className="bg-surface">
-            <tr>
-              <th className="border-b border-border px-3 py-2 text-left text-ds-caption font-semibold text-text-secondary">Component</th>
-              <th className="border-b border-border px-3 py-2 text-left text-ds-caption font-semibold text-text-secondary">Category</th>
-              <th className="border-b border-border px-3 py-2 text-left text-ds-caption font-semibold text-text-secondary">Status</th>
-              <th className="border-b border-border px-3 py-2 text-left text-ds-caption font-semibold text-text-secondary">Notes</th>
-            </tr>
-          </thead>
-          <tbody>
-            {componentReadiness.map((item) => (
-              <tr key={item.component}>
-                <td className="border-b border-border px-3 py-2 text-ds-body-sm text-text-primary">{item.component}</td>
-                <td className="border-b border-border px-3 py-2 text-ds-body-sm text-text-secondary">{item.category}</td>
-                <td className="border-b border-border px-3 py-2 text-ds-body-sm">
-                  <span className={`rounded-control border px-2 py-1 text-ds-caption font-semibold ${statusClassMap[item.status]}`}>
-                    {item.status}
-                  </span>
-                </td>
-                <td className="border-b border-border px-3 py-2 text-ds-body-sm text-text-secondary">{item.notes}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead>Component</TableHead>
+            <TableHead>Category</TableHead>
+            <TableHead>Status</TableHead>
+            <TableHead>Notes</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {componentReadiness.map((item) => (
+            <TableRow key={item.component}>
+              <TableCell>{item.component}</TableCell>
+              <TableCell className="text-text-secondary">{item.category}</TableCell>
+              <TableCell>
+                <span className={`rounded-control border px-2 py-1 text-ds-caption font-semibold ${statusClassMap[item.status]}`}>
+                  {item.status}
+                </span>
+              </TableCell>
+              <TableCell className="text-text-secondary">{item.notes}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
     </SectionShell>
   );
 }

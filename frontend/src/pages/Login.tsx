@@ -5,7 +5,8 @@ import { ArrowRight, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import { useAuth } from '@/contexts/AuthContext';
+import { Label } from '@/components/ui/label';
+import { useAuth } from '@/contexts/useAuth';
 import { authService } from '@/services/auth';
 
 type AuthMode = 'login' | 'register';
@@ -88,9 +89,9 @@ const Login: React.FC = () => {
                         ) : null}
 
                         <div className="space-y-2">
-                            <label className="text-ds-body-sm font-semibold text-text-primary" htmlFor="login-username">
+                            <Label className="text-ds-body-sm font-semibold text-text-primary" htmlFor="login-username">
                                 用户名
-                            </label>
+                            </Label>
                             <Input
                                 id="login-username"
                                 type="text"
@@ -103,9 +104,9 @@ const Login: React.FC = () => {
                         </div>
 
                         <div className="space-y-2">
-                            <label className="text-ds-body-sm font-semibold text-text-primary" htmlFor="login-password">
+                            <Label className="text-ds-body-sm font-semibold text-text-primary" htmlFor="login-password">
                                 密码
-                            </label>
+                            </Label>
                             <Input
                                 id="login-password"
                                 type="password"
@@ -135,9 +136,11 @@ const Login: React.FC = () => {
 
                     <div className="mt-5 text-center text-ds-caption text-text-secondary">
                         {isRegisterMode ? '已有账号？' : '还没有账号？'}
-                        <button
+                        <Button
                             type="button"
-                            className="ml-1 text-primary hover:underline"
+                            variant="link"
+                            size="sm"
+                            className="ml-1 h-auto px-0 py-0 text-ds-caption"
                             onClick={() => {
                                 setMode((previous) => (previous === 'login' ? 'register' : 'login'));
                                 setError('');
@@ -145,7 +148,7 @@ const Login: React.FC = () => {
                             disabled={isSubmitting}
                         >
                             {isRegisterMode ? '去登录' : '去注册'}
-                        </button>
+                        </Button>
                     </div>
                 </CardContent>
             </Card>

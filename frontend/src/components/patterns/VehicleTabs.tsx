@@ -1,6 +1,7 @@
 import { AlertTriangle, Car } from 'lucide-react';
 
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { cn, formatEnglishLabel } from '@/lib/utils';
 
 export interface VehicleTabItem {
@@ -26,9 +27,11 @@ export default function VehicleTabs({ items, value, onChange, onBlockedSelection
           const active = item.id === value;
 
           return (
-            <button
+            <Button
               key={item.id}
               type="button"
+              variant="ghost"
+              size="sm"
               onClick={() => {
                 if (hasData) {
                   onChange(item.id);
@@ -53,8 +56,8 @@ export default function VehicleTabs({ items, value, onChange, onBlockedSelection
                   <AlertTriangle className="h-3 w-3" />
                   无数据
                 </Badge>
-              ) : null}
-            </button>
+                ) : null}
+            </Button>
           );
         })}
       </div>

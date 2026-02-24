@@ -58,37 +58,5 @@ const Toast: React.FC<ToastProps> = ({
         </div>
     )
 }
-
-// Hook for easier toast management
-export const useToast = () => {
-    const [toast, setToast] = React.useState<{
-        message: string
-        type: ToastProps['type']
-        isVisible: boolean
-    }>({
-        message: '',
-        type: 'info',
-        isVisible: false
-    })
-
-    const showToast = React.useCallback((message: string, type: ToastProps['type'] = 'info') => {
-        setToast({ message, type, isVisible: true })
-    }, [])
-
-    const hideToast = React.useCallback(() => {
-        setToast(prev => ({ ...prev, isVisible: false }))
-    }, [])
-
-    const ToastComponent = React.useCallback(() => (
-        <Toast
-            message={toast.message}
-            type={toast.type}
-            isVisible={toast.isVisible}
-            onClose={hideToast}
-        />
-    ), [toast, hideToast])
-
-    return { showToast, hideToast, ToastComponent }
-}
-
 export { Toast }
+export type { ToastProps }

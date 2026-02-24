@@ -4,6 +4,7 @@ import { Car, ChevronDown, ChevronRight, Gauge, Tag, Users } from 'lucide-react'
 import ResultHierarchyTree from '@/components/patterns/ResultHierarchyTree';
 import ScoreSummary from '@/components/patterns/ScoreSummary';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { formatEnglishLabel } from '@/lib/utils';
 import type { CalculateUvaResponse } from '@/services/data';
 import type { VehicleAnalysis } from '@/types/analysis';
@@ -48,9 +49,10 @@ const VehicleResultPanel: React.FC<VehicleResultPanelProps> = ({ vehicle, result
 
     return (
         <section className={`overflow-hidden rounded-card bg-white shadow-[0_14px_30px_rgba(15,23,42,0.1)] ${isActive ? 'bg-primary/[0.02]' : ''}`}>
-            <button
+            <Button
                 type="button"
-                className={`flex w-full items-center justify-between px-4 py-3 text-left ${isActive ? 'bg-primary/5' : 'bg-surface'}`}
+                variant="ghost"
+                className={`h-auto w-full justify-between rounded-none px-4 py-3 text-left hover:bg-surface ${isActive ? 'bg-primary/5 hover:bg-primary/5' : 'bg-surface'}`}
                 onClick={() => setIsExpanded((prev) => !prev)}
             >
                 <span className="inline-flex items-center gap-2 text-ds-body font-semibold text-text-primary">
@@ -59,7 +61,7 @@ const VehicleResultPanel: React.FC<VehicleResultPanelProps> = ({ vehicle, result
                     {formatEnglishLabel(vehicle)}
                 </span>
                 {isActive ? <Badge>当前车型</Badge> : null}
-            </button>
+            </Button>
 
             {isExpanded ? (
                 <div className="space-y-4 p-4">

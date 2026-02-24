@@ -1,8 +1,10 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { AuthProvider, useAuth } from '@/contexts/AuthContext';
+import { BrowserRouter as Router, Routes, Route, Navigate, useParams } from 'react-router-dom';
+import { AuthProvider } from '@/contexts/AuthContext';
+import { useAuth } from '@/contexts/useAuth';
 import Login from '@/pages/Login';
 import Dashboard from '@/pages/Dashboard';
 import ProjectDetail from '@/pages/ProjectDetail';
+import UV1000Workspace from '@/pages/UV1000Workspace';
 import { Loader2 } from 'lucide-react';
 import UXLanding from '@/pages/playground/UXLanding';
 import WizardView from '@/pages/playground/WizardView';
@@ -10,7 +12,7 @@ import MatrixView from '@/pages/playground/MatrixView';
 import StreamlinedView from '@/pages/playground/StreamlinedView';
 import PathStreamlinedView from '@/pages/playground/PathStreamlinedView';
 import ComponentShowcase from '@/pages/playground/ComponentShowcase';
-import { SidebarLayout } from '@/components/layout/SidebarLayout';
+import { AppShell } from '@/components/layout/AppShell';
 import WorkflowSettings from '@/pages/settings/WorkflowSettings';
 import DesignSystemShowpage from '@/pages/design-system/DesignSystemShowpage';
 
@@ -33,6 +35,17 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   return children;
 };
 
+const LegacyProjectRedirect = () => {
+  const { id, projectId } = useParams<{ id?: string; projectId?: string }>();
+  const resolvedProjectId = id || projectId;
+
+  if (!resolvedProjectId) {
+    return <Navigate to="/workspace" replace />;
+  }
+
+  return <Navigate to={`/workspace/${resolvedProjectId}/uva`} replace />;
+};
+
 function AuthenticatedAppRoutes() {
   return (
     <AuthProvider>
@@ -42,10 +55,45 @@ function AuthenticatedAppRoutes() {
           path="/"
           element={
             <ProtectedRoute>
-              {/* 暂时保留原Dashboard，后续重构移除Navbar */}
-              <SidebarLayout>
+              <Navigate to="/workspace" replace />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/workspace"
+          element={
+            <ProtectedRoute>
+              <AppShell>
                 <Dashboard />
-              </SidebarLayout>
+              </AppShell>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/workspace/:projectId/uva"
+          element={
+            <ProtectedRoute>
+              <AppShell>
+                <ProjectDetail />
+              </AppShell>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/workspace/:projectId/uv1000"
+          element={
+            <ProtectedRoute>
+              <AppShell>
+                <UV1000Workspace />
+              </AppShell>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/workspace/:projectId"
+          element={
+            <ProtectedRoute>
+              <LegacyProjectRedirect />
             </ProtectedRoute>
           }
         />
@@ -53,9 +101,7 @@ function AuthenticatedAppRoutes() {
           path="/project/:id"
           element={
             <ProtectedRoute>
-              <SidebarLayout>
-                <ProjectDetail />
-              </SidebarLayout>
+              <LegacyProjectRedirect />
             </ProtectedRoute>
           }
         />
@@ -63,9 +109,9 @@ function AuthenticatedAppRoutes() {
           path="/settings/workflow"
           element={
             <ProtectedRoute>
-              <SidebarLayout>
+              <AppShell>
                 <WorkflowSettings />
-              </SidebarLayout>
+              </AppShell>
             </ProtectedRoute>
           }
         />
@@ -75,7 +121,7 @@ function AuthenticatedAppRoutes() {
         <Route path="/demo/matrix" element={<ProtectedRoute><MatrixView /></ProtectedRoute>} />
         <Route path="/demo/streamlined" element={<ProtectedRoute><StreamlinedView /></ProtectedRoute>} />
         <Route path="/demo/path" element={<ProtectedRoute><PathStreamlinedView /></ProtectedRoute>} />
-        <Route path="/components" element={<ProtectedRoute><SidebarLayout><ComponentShowcase /></SidebarLayout></ProtectedRoute>} />
+        <Route path="/components" element={<ProtectedRoute><AppShell><ComponentShowcase /></AppShell></ProtectedRoute>} />
       </Routes>
     </AuthProvider>
   );

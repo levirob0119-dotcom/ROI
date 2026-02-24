@@ -1,12 +1,20 @@
 import React from 'react';
 import { TrendingUp, TrendingDown, Car } from 'lucide-react';
 import { formatEnglishLabel } from '@/lib/utils';
+import type { CalculateUvaResponse } from '@/services/data';
 import './AnalysisInput.css'; // 共用样式
+
+type AnalysisResultValue = Partial<CalculateUvaResponse> & {
+    finalScore?: number;
+    totalEnhanced?: number;
+    totalReduced?: number;
+    [key: string]: unknown;
+};
 
 interface AnalysisResultProps {
     vehicles: string[];
     currentVehicle: string;
-    results: Record<string, any>;
+    results: Record<string, AnalysisResultValue | undefined>;
 }
 
 const AnalysisResult: React.FC<AnalysisResultProps> = ({
@@ -53,7 +61,7 @@ const formatNumber = (num: number | undefined): string => {
 // 单个车型结果卡片
 interface VehicleResultCardProps {
     vehicle: string;
-    result: any;
+    result: AnalysisResultValue | undefined;
     isActive: boolean;
 }
 

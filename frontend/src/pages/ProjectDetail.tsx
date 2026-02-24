@@ -13,7 +13,7 @@ import VehicleTabs from '@/components/patterns/VehicleTabs';
 import { Button } from '@/components/ui/button';
 import { RadioGroup } from '@/components/ui/radio-group';
 import { Slider } from '@/components/ui/slider';
-import { useToast } from '@/components/ui/toast';
+import { useToast } from '@/components/ui/use-toast';
 import { formatEnglishLabel } from '@/lib/utils';
 import { projectService } from '@/services/projects';
 import {
@@ -94,7 +94,8 @@ function mapAnalysisRecordToVehicleAnalysis(record: ProjectAnalysisRecord | unde
 }
 
 const ProjectDetail: React.FC = () => {
-    const { id } = useParams<{ id: string }>();
+    const params = useParams<{ id?: string; projectId?: string }>();
+    const id = params.id || params.projectId;
 
     const [project, setProject] = useState<Project | null>(null);
     const [petsList, setPetsList] = useState<Pets[]>([]);

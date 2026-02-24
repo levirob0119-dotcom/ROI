@@ -1,16 +1,7 @@
-import { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
 import type { User } from '@/types/models';
+import { AuthContext } from '@/contexts/auth-context';
 import { authService } from '@/services/auth';
-
-interface AuthContextType {
-    user: User | null;
-    isAuthenticated: boolean;
-    isLoading: boolean;
-    login: (token: string, user: User) => void;
-    logout: () => void;
-}
-
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const [user, setUser] = useState<User | null>(null);
@@ -57,12 +48,4 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             {children}
         </AuthContext.Provider>
     );
-};
-
-export const useAuth = () => {
-    const context = useContext(AuthContext);
-    if (context === undefined) {
-        throw new Error('useAuth must be used within an AuthProvider');
-    }
-    return context;
 };

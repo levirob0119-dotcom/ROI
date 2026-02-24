@@ -7,8 +7,10 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Toggle } from '@/components/ui/toggle';
-import { useToast } from '@/components/ui/toast';
+import { useToast } from '@/components/ui/use-toast';
 import { cn } from '@/lib/utils';
 
 interface NotificationState {
@@ -65,9 +67,9 @@ export default function WorkflowSettings() {
                         <p className="text-ds-body-sm text-text-secondary">管理生产密钥和安全状态。</p>
                     </CardHeader>
                     <CardContent className="space-y-3">
-                        <label className="text-ds-caption text-text-secondary" htmlFor="workflow-api-key">
+                        <Label className="text-ds-caption text-text-secondary" htmlFor="workflow-api-key">
                             Production Secret Key
-                        </label>
+                        </Label>
                         <div className="flex gap-2">
                             <Input id="workflow-api-key" readOnly value={apiKey} className="font-mono" />
                             <Button
@@ -144,45 +146,43 @@ export default function WorkflowSettings() {
                     </div>
                 </CardHeader>
                 <CardContent>
-                    <div className="overflow-x-auto rounded-control border border-border">
-                        <table className="w-full border-collapse">
-                            <thead className="bg-surface">
-                                <tr>
-                                    <th className="border-b border-border px-3 py-2 text-left text-ds-caption font-semibold text-text-secondary">Endpoint</th>
-                                    <th className="border-b border-border px-3 py-2 text-left text-ds-caption font-semibold text-text-secondary">事件</th>
-                                    <th className="border-b border-border px-3 py-2 text-left text-ds-caption font-semibold text-text-secondary">状态</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {webhooks.map((webhook) => (
-                                    <tr key={webhook.url}>
-                                        <td className="border-b border-border px-3 py-3 text-ds-body-sm text-text-primary">{webhook.url}</td>
-                                        <td className="border-b border-border px-3 py-3">
-                                            <div className="flex flex-wrap gap-1">
-                                                {webhook.events.map((event) => (
-                                                    <Badge key={event} variant="outline">
-                                                        {event}
-                                                    </Badge>
-                                                ))}
-                                            </div>
-                                        </td>
-                                        <td className="border-b border-border px-3 py-3">
-                                            <span
-                                                className={cn(
-                                                    'inline-flex rounded-full border px-2 py-0.5 text-ds-caption font-semibold',
-                                                    webhook.status === 'active' && 'border-success/30 bg-success/10 text-success',
-                                                    webhook.status === 'failed' && 'border-error/30 bg-error/10 text-error',
-                                                    webhook.status === 'disabled' && 'border-border bg-surface text-text-secondary'
-                                                )}
-                                            >
-                                                {webhook.status}
-                                            </span>
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
+                    <Table>
+                        <TableHeader>
+                            <TableRow>
+                                <TableHead>Endpoint</TableHead>
+                                <TableHead>事件</TableHead>
+                                <TableHead>状态</TableHead>
+                            </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                            {webhooks.map((webhook) => (
+                                <TableRow key={webhook.url}>
+                                    <TableCell>{webhook.url}</TableCell>
+                                    <TableCell>
+                                        <div className="flex flex-wrap gap-1">
+                                            {webhook.events.map((event) => (
+                                                <Badge key={event} variant="outline">
+                                                    {event}
+                                                </Badge>
+                                            ))}
+                                        </div>
+                                    </TableCell>
+                                    <TableCell>
+                                        <Badge
+                                            variant="outline"
+                                            className={cn(
+                                                webhook.status === 'active' && 'border-success/30 bg-success/10 text-success',
+                                                webhook.status === 'failed' && 'border-error/30 bg-error/10 text-error',
+                                                webhook.status === 'disabled' && 'border-border bg-surface text-text-secondary'
+                                            )}
+                                        >
+                                            {webhook.status}
+                                        </Badge>
+                                    </TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
                 </CardContent>
             </Card>
 

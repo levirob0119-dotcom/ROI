@@ -6,6 +6,7 @@ import CreateProjectModal from '@/components/CreateProjectModal';
 import EditProjectModal from '@/components/EditProjectModal';
 import EmptyStateBlock from '@/components/patterns/EmptyStateBlock';
 import ProjectCard from '@/components/patterns/ProjectCard';
+import { ConfirmDialog } from '@/components/ui/confirm-dialog';
 import { projectService } from '@/services/projects';
 import type { Project } from '@/types/models';
 
@@ -15,6 +16,7 @@ const Dashboard: React.FC = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
     const [editingProject, setEditingProject] = useState<Project | null>(null);
+    const [deletingProjectId, setDeletingProjectId] = useState<string | null>(null);
 
     useEffect(() => {
         loadProjects();
@@ -43,21 +45,20 @@ const Dashboard: React.FC = () => {
     const handleCreateSuccess = (newProject: Project) => {
         setProjects((prev) => [newProject, ...prev]);
         setIsCreateModalOpen(false);
+        window.dispatchEvent(new Event('projects:changed'));
     };
 
     const handleEditSuccess = (updatedProject: Project) => {
         setProjects((prev) => prev.map((project) => (project.id === updatedProject.id ? updatedProject : project)));
         setEditingProject(null);
+        window.dispatchEvent(new Event('projects:changed'));
     };
 
     const handleDelete = async (projectId: string) => {
-        if (!window.confirm('确定要删除这个方案吗？')) {
-            return;
-        }
-
         try {
             await projectService.delete(projectId);
             setProjects((prev) => prev.filter((project) => project.id !== projectId));
+            window.dispatchEvent(new Event('projects:changed'));
         } catch (error) {
             console.error('Delete failed', error);
         }
@@ -88,12 +89,12 @@ const Dashboard: React.FC = () => {
                         <ProjectCard
                             key={project.id}
                             project={project}
-                            onOpen={(id) => navigate(`/project/${id}`)}
+                            onOpen={(id) => navigate(`/workspace/${id}/uva`)}
                             onEdit={(id) => {
                                 const target = projects.find((item) => item.id === id) || null;
                                 setEditingProject(target);
                             }}
-                            onDelete={handleDelete}
+                            onDelete={(id) => setDeletingProjectId(id)}
                         />
                     ))}
                 </div>
@@ -113,6 +114,20 @@ const Dashboard: React.FC = () => {
                     onSuccess={handleEditSuccess}
                 />
             ) : null}
+
+            <ConfirmDialog
+                open={deletingProjectId !== null}
+                onOpenChange={(open) => {
+                    if (!open) setDeletingProjectId(null);
+                }}
+                title="删除项目"
+                description="删除后不可恢复，是否继续删除该项目？"
+                confirmLabel="确认删除"
+                onConfirm={() => {
+                    if (!deletingProjectId) return;
+                    void handleDelete(deletingProjectId);
+                }}
+            />
         </div>
     );
 };

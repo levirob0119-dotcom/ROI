@@ -1,6 +1,7 @@
 import { ChevronDown, ChevronRight, Diamond } from 'lucide-react';
 import { useMemo, useState } from 'react';
 
+import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
 interface L2Node {
@@ -64,9 +65,10 @@ export default function ResultHierarchyTree({ list, type }: ResultHierarchyTreeP
               isEnhanced ? 'bg-success/8' : 'bg-error/8'
             )}
           >
-            <button
+            <Button
               type="button"
-              className="flex w-full items-center justify-between px-3 py-2 text-left"
+              variant="ghost"
+              className="h-auto w-full justify-between rounded-none px-3 py-2 text-left hover:bg-transparent"
               onClick={() => setExpanded((prev) => ({ ...prev, [petsId]: !open }))}
             >
               <span className="inline-flex items-center gap-2 text-ds-body-sm font-semibold text-text-primary">
@@ -77,7 +79,7 @@ export default function ResultHierarchyTree({ list, type }: ResultHierarchyTreeP
               <span className={cn('text-ds-body-sm font-semibold', isEnhanced ? 'text-success' : 'text-error')}>
                 {isEnhanced ? '+' : '-'}{formatScore(pets?.totalScore || 0)}
               </span>
-            </button>
+            </Button>
 
             {open ? (
               <div className="space-y-3 bg-white/85 px-3 py-3">

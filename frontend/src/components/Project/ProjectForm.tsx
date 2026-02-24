@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
 import { cn } from '@/lib/utils';
 // import type { Project } from '@/types/models'; // Unused
 
@@ -109,9 +111,21 @@ const ProjectForm: React.FC<ProjectFormProps> = ({
                 description: description.trim(),
                 vehicles: selectedVehicles
             });
-        } catch (err: any) {
+        } catch (err: unknown) {
+            const responseMessage =
+                typeof err === 'object' &&
+                    err !== null &&
+                    'response' in err &&
+                    typeof (err as { response?: { data?: { error?: string } } }).response?.data?.error === 'string'
+                    ? (err as { response?: { data?: { error?: string } } }).response?.data?.error
+                    : undefined;
+            const message =
+                responseMessage ??
+                (err instanceof Error
+                    ? err.message
+                    : '操作失败');
             setErrorField('name');
-            setErrorMessage(err.response?.data?.error || err.message || '操作失败');
+            setErrorMessage(message);
         } finally {
             setIsInternalSubmitting(false);
         }
@@ -121,7 +135,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({
         <form onSubmit={handleSubmit} noValidate>
             <div className="p-6 space-y-4">
                 <div className="space-y-2">
-                    <label className="text-sm font-medium text-slate-700">项目名称</label>
+                    <Label className="text-sm font-medium text-slate-700">项目名称</Label>
                     <Input
                         value={name}
                         onChange={(e) => {
@@ -139,11 +153,11 @@ const ProjectForm: React.FC<ProjectFormProps> = ({
                 </div>
 
                 <div className="space-y-2">
-                    <label className="text-sm font-medium text-slate-700">描述 (可选)</label>
-                    <textarea
+                    <Label className="text-sm font-medium text-slate-700">描述 (可选)</Label>
+                    <Textarea
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
-                        className="flex h-24 w-full resize-none rounded-control border-0 bg-slate-100/90 px-4 py-3 text-base text-slate-900 placeholder:text-slate-400 shadow-none transition-all focus-visible:outline-none focus-visible:bg-white focus-visible:shadow-[inset_0_0_0_2px_rgba(59,130,246,0.32)] disabled:cursor-not-allowed disabled:opacity-50"
+                        className="h-24 resize-none border-0 bg-slate-100/90 px-4 py-3 text-base text-slate-900 shadow-none focus-visible:bg-white focus-visible:shadow-[inset_0_0_0_2px_rgba(59,130,246,0.32)]"
                         placeholder="简要描述背景和目标..."
                         disabled={isSubmitting}
                     />
@@ -152,40 +166,43 @@ const ProjectForm: React.FC<ProjectFormProps> = ({
                 <div className="space-y-2">
                     <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
-                            <label className="text-sm font-medium text-slate-700">车型</label>
+                            <Label className="text-sm font-medium text-slate-700">车型</Label>
                             {vehiclesHasError ? <span className="text-xs text-red-600">{errorMessage}</span> : null}
                         </div>
                         <div className="flex items-center gap-2">
                             <span className="text-xs text-slate-500">
                                 已选 {selectedVehicles.length}/{ALL_VEHICLE_IDS.length}
                             </span>
-                            <button
+                            <Button
                                 type="button"
-                                className="rounded-control bg-slate-100 px-3 py-1.5 text-xs font-medium text-slate-700 transition-colors hover:bg-slate-200 disabled:opacity-50"
+                                variant="outline"
+                                size="sm"
+                                className="h-8 bg-slate-100 text-xs text-slate-700 hover:bg-slate-200"
                                 onClick={handleToggleAllVehicles}
                                 disabled={isSubmitting}
                             >
                                 {selectedVehicles.length === ALL_VEHICLE_IDS.length ? '全不选' : '全选'}
-                            </button>
+                            </Button>
                         </div>
                     </div>
                     <div className="grid grid-cols-2 gap-3">
                         {AVAILABLE_VEHICLES.map(v => (
-                            <button
+                            <Button
                                 key={v.id}
                                 type="button"
                                 onClick={() => handleVehicleToggle(v.id)}
                                 disabled={isSubmitting}
                                 aria-pressed={selectedVehicles.includes(v.id)}
+                                variant={selectedVehicles.includes(v.id) ? 'action' : 'outline'}
                                 className={cn(
-                                    'flex items-center justify-start rounded-control px-4 py-3 text-left transition-colors disabled:cursor-not-allowed disabled:opacity-60',
+                                    'flex h-auto items-center justify-start px-4 py-3 text-left transition-colors disabled:cursor-not-allowed disabled:opacity-60',
                                     selectedVehicles.includes(v.id)
-                                        ? 'bg-blue-100/90 text-slate-900'
+                                        ? 'bg-blue-100/90 text-slate-900 hover:bg-blue-100'
                                         : 'bg-slate-100/90 text-slate-700 hover:bg-slate-200/80'
                                 )}
                             >
                                 <span className="text-ds-body font-medium leading-none">{v.name}</span>
-                            </button>
+                            </Button>
                         ))}
                     </div>
                 </div>
