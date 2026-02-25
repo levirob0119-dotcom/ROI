@@ -1,5 +1,12 @@
-import api from './api';
+/**
+ * 方案服务
+ *
+ * 当前使用 localStorage 实现（localProjectService）。
+ * 后续后端实例到位后，将 localProjectService 换回 API 调用，
+ * 组件层无需改动。
+ */
 import type { Project } from '@/types/models';
+import { localProjectService } from './local-db';
 
 export interface CreateProjectData {
     name: string;
@@ -14,27 +21,18 @@ export interface UpdateProjectData {
 }
 
 export const projectService = {
-    getAll: async (): Promise<Project[]> => {
-        const response = await api.get<Project[]>('/projects');
-        return response.data;
-    },
+    getAll: (): Promise<Project[]> =>
+        localProjectService.getAll(),
 
-    getById: async (id: string): Promise<Project> => {
-        const response = await api.get<Project>(`/projects/${id}`);
-        return response.data;
-    },
+    getById: (id: string): Promise<Project> =>
+        localProjectService.getById(id),
 
-    create: async (data: CreateProjectData): Promise<Project> => {
-        const response = await api.post<Project>('/projects', data);
-        return response.data;
-    },
+    create: (data: CreateProjectData): Promise<Project> =>
+        localProjectService.create(data),
 
-    update: async (id: string, data: UpdateProjectData): Promise<Project> => {
-        const response = await api.put<Project>(`/projects/${id}`, data);
-        return response.data;
-    },
+    update: (id: string, data: UpdateProjectData): Promise<Project> =>
+        localProjectService.update(id, data),
 
-    delete: async (id: string): Promise<void> => {
-        await api.delete(`/projects/${id}`);
-    },
+    delete: (id: string): Promise<void> =>
+        localProjectService.delete(id),
 };

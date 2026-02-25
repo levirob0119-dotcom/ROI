@@ -1,5 +1,6 @@
 import { useEffect, useState, type ReactNode } from 'react';
 import { AuthContext, type SSOUser } from '@/contexts/auth-context';
+import { setCurrentUser } from '@/services/local-db';
 
 const PAGE_GATEWAY = import.meta.env.VITE_PAGE_GATEWAY_URL || 'https://page-gateway.nioint.com';
 
@@ -16,10 +17,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
                 if (response.ok) {
                     const userData = await response.json();
-                    setUser({
+                    const ssoUser: SSOUser = {
                         username: userData.username,
                         displayName: userData.displayName || userData.nickName || userData.username,
-                    });
+                    };
+                    setCurrentUser(ssoUser.username); // 初始化 localStorage 用户隔离
+                    setUser(ssoUser);
                 } else {
                     // 未登录，跳转 SSO
                     window.location.href = `${PAGE_GATEWAY}/account/login?redirect_to=${encodeURIComponent(window.location.href)}`;

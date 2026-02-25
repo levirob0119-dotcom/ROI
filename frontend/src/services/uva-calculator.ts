@@ -5,6 +5,15 @@
 import { dataService } from './data';
 import type { CalculateUvaPayload, CalculateUvaResponse } from './data';
 
+interface L2Item { l2Name: string; score: number; fromPetsId?: string }
+interface L1Group { l1Name: string; totalScore: number; l2List: L2Item[] }
+interface ReqGroup { categoryName: string; totalScore: number; l1List: L1Group[] }
+interface PetsResult {
+    petsId: string; petsName: string; totalScore: number;
+    uvL1List: unknown[]; requirementGroups: ReqGroup[];
+}
+interface CalcResult { totalScore: number; petsList: PetsResult[] }
+
 interface MatrixItem {
     l2_name: string;
     l1_name: string;
@@ -25,23 +34,23 @@ function getSelectionCount(
     return { pets, uv: enhancedUv + reducedUv, enhanced: enhancedUv, reduced: reducedUv };
 }
 
-function calculatePetsScores(matrixData: MatrixItem[], petsSelections: CalculateUvaPayload['enhancedPets']) {
-    const result = { totalScore: 0, petsList: [] as ReturnType<typeof calculatePetsScores>['petsList'] };
+function calculatePetsScores(matrixData: MatrixItem[], petsSelections: CalculateUvaPayload['enhancedPets']): CalcResult {
+    const result: CalcResult = { totalScore: 0, petsList: [] };
     if (!petsSelections || petsSelections.length === 0) return result;
 
     for (const petsSelection of petsSelections) {
         const { petsId, petsName, uvL2Names } = petsSelection;
         if (!uvL2Names || uvL2Names.length === 0) continue;
 
-        const petsResult = {
+        const petsResult: PetsResult = {
             petsId,
             petsName: petsName || `PETS-${petsId}`,
             totalScore: 0,
-            uvL1List: [] as unknown[],
-            requirementGroups: [] as unknown[],
+            uvL1List: [],
+            requirementGroups: [],
         };
 
-        const categoryAgg: Record<string, { categoryName: string; totalScore: number; l1Groups: Record<string, { l1Name: string; totalScore: number; l2List: unknown[] }> }> = {};
+        const categoryAgg: Record<string, { categoryName: string; totalScore: number; l1Groups: Record<string, L1Group> }> = {};
         const l1Groups: Record<string, { l1Name: string; l1Category: string; l1Weight: number; totalScore: number; l2List: { l2Name: string; score: number }[] }> = {};
 
         for (const l2Name of uvL2Names) {
@@ -75,10 +84,10 @@ function calculatePetsScores(matrixData: MatrixItem[], petsSelections: Calculate
                 categoryName: catGroup.categoryName,
                 totalScore: catGroup.totalScore,
                 l1List: Object.values(catGroup.l1Groups)
-                    .map(l1Group => ({ ...l1Group, l2List: [...l1Group.l2List].sort((a: { score: number }, b: { score: number }) => b.score - a.score) }))
+                    .map(l1Group => ({ ...l1Group, l2List: [...l1Group.l2List].sort((a, b) => b.score - a.score) }))
                     .sort((a, b) => b.totalScore - a.totalScore),
             }))
-            .sort((a, b) => {
+            .sort((a: ReqGroup, b: ReqGroup) => {
                 const priority: Record<string, number> = { '核心差异UV': 3, '基线UV': 2, '弱需求': 1 };
                 const pA = priority[a.categoryName] || 0;
                 const pB = priority[b.categoryName] || 0;
