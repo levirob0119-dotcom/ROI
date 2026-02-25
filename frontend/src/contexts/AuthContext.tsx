@@ -1,38 +1,41 @@
 import { useEffect, useState, type ReactNode } from 'react';
-import type { User } from '@/types/models';
-import { AuthContext } from '@/contexts/auth-context';
-import { authService } from '@/services/auth';
+import { AuthContext, type SSOUser } from '@/contexts/auth-context';
+
+const PAGE_GATEWAY = import.meta.env.VITE_PAGE_GATEWAY_URL || 'https://page-gateway.nioint.com';
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-    const [user, setUser] = useState<User | null>(null);
+    const [user, setUser] = useState<SSOUser | null>(null);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         const initAuth = async () => {
-            const token = localStorage.getItem('token');
-            if (token) {
-                try {
-                    const userData = await authService.getCurrentUser();
-                    setUser(userData);
-                } catch (error) {
-                    console.error('Failed to fetch user', error);
-                    localStorage.removeItem('token');
+            try {
+                const response = await fetch(`${PAGE_GATEWAY}/account/current`, {
+                    credentials: 'include',
+                });
+
+                if (response.ok) {
+                    const userData = await response.json();
+                    setUser({
+                        username: userData.username,
+                        displayName: userData.displayName || userData.nickName || userData.username,
+                    });
+                } else {
+                    // 未登录，跳转 SSO
+                    window.location.href = `${PAGE_GATEWAY}/account/login?redirect_to=${encodeURIComponent(window.location.href)}`;
                 }
+            } catch (error) {
+                console.error('SSO 认证失败:', error);
+            } finally {
+                setIsLoading(false);
             }
-            setIsLoading(false);
         };
 
         initAuth();
     }, []);
 
-    const login = (token: string, userData: User) => {
-        localStorage.setItem('token', token);
-        setUser(userData);
-    };
-
     const logout = () => {
-        localStorage.removeItem('token');
-        setUser(null);
+        window.location.href = `${PAGE_GATEWAY}/account/login?redirect_to=${encodeURIComponent(window.location.origin)}`;
     };
 
     return (
@@ -41,7 +44,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
                 user,
                 isAuthenticated: !!user,
                 isLoading,
-                login,
                 logout,
             }}
         >

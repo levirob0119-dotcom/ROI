@@ -1,12 +1,14 @@
 import { createContext } from "react"
 
-import type { User } from "@/types/models"
+export interface SSOUser {
+    username: string;
+    displayName: string;
+}
 
 export interface AuthContextType {
-    user: User | null
+    user: SSOUser | null
     isAuthenticated: boolean
     isLoading: boolean
-    login: (token: string, user: User) => void
     logout: () => void
 }
 

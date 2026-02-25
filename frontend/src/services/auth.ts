@@ -1,20 +1,9 @@
-import api from './api';
-import type { AuthResponse } from '@/types/models';
-
-
+// SSO 认证通过 FX 平台 Cookie 自动处理，AuthContext 负责初始化
+// 此文件保留供后续扩展使用
 export const authService = {
-    login: async (username: string, password: string): Promise<AuthResponse> => {
-        const response = await api.post<AuthResponse>('/auth/login', { username, password });
-        return response.data;
-    },
-
-    register: async (username: string, password: string, displayName?: string): Promise<AuthResponse> => {
-        const response = await api.post<AuthResponse>('/auth/register', { username, password, displayName });
-        return response.data;
-    },
-
     getCurrentUser: async () => {
-        const response = await api.get('/auth/me');
-        return response.data;
+        const response = await fetch('/api/auth/me', { credentials: 'include' });
+        if (!response.ok) throw new Error('未登录');
+        return response.json();
     },
 };

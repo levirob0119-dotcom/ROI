@@ -1,0 +1,26 @@
+[
+    {
+        "id": "leo",
+        "name": "Leo"
+    },
+    {
+        "id": "draco",
+        "name": "Draco"
+    },
+    {
+        "id": "cetus",
+        "name": "Cetus"
+    },
+    {
+        "id": "cygnus",
+        "name": "Cygnus"
+    },
+    {
+        "id": "hercules",
+        "name": "Hercules"
+    },
+    {
+        "id": "pisces",
+        "name": "Pisces"
+    }
+]

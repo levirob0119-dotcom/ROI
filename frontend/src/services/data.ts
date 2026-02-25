@@ -130,30 +130,58 @@ export interface ProjectAnalysisRecord {
     updatedAt: string;
 }
 
+// 缓存已加载的 UVA 矩阵数据
+const uvaMatrixCache: Record<string, unknown[]> = {};
+
 export const dataService = {
     getVehicles: async (): Promise<Vehicle[]> => {
-        const response = await api.get<Vehicle[]>('/data/vehicles');
-        return response.data;
+        const response = await fetch('/data/vehicles.json');
+        if (!response.ok) throw new Error('无法加载车型数据');
+        return response.json();
     },
 
     getVehiclesDataStatus: async (): Promise<VehicleDataStatus[]> => {
-        const response = await api.get<VehicleDataStatus[]>('/data/vehicles-data-status');
-        return response.data;
+        // 已知有数据的车型（与 public/data/uva-matrix/ 目录对应）
+        const VEHICLES_WITH_DATA = ['cetus'];
+        const vehicles = await dataService.getVehicles();
+        return vehicles.map(v => ({
+            id: v.id,
+            name: v.name,
+            hasData: VEHICLES_WITH_DATA.includes(v.id.toLowerCase()),
+        }));
     },
 
     getPets: async (): Promise<Pets[]> => {
-        const response = await api.get<Pets[]>('/data/pets');
-        return response.data;
+        const response = await fetch('/data/pets.json');
+        if (!response.ok) throw new Error('无法加载 PETS 数据');
+        return response.json();
     },
 
     getUVData: async (): Promise<UVL1[]> => {
-        const response = await api.get<UVL1[]>('/data/uv');
-        return response.data;
+        const response = await fetch('/data/uv.json');
+        if (!response.ok) throw new Error('无法加载 UV 数据');
+        return response.json();
+    },
+
+    getUvaMatrix: async (vehicle: string): Promise<unknown[]> => {
+        const key = vehicle.toLowerCase();
+        if (uvaMatrixCache[key]) return uvaMatrixCache[key];
+        const response = await fetch(`/data/uva-matrix/${key}.json`);
+        if (!response.ok) {
+            const fallback = await fetch('/data/uva-matrix/cetus.json');
+            if (!fallback.ok) throw new Error('该车型暂无 UVA 数据');
+            const data = await fallback.json();
+            uvaMatrixCache[key] = data;
+            return data;
+        }
+        const data = await response.json();
+        uvaMatrixCache[key] = data;
+        return data;
     },
 
     calculateUVA: async (payload: CalculateUvaPayload): Promise<CalculateUvaResponse> => {
-        const response = await api.post<CalculateUvaResponse>('/uva/calculate', payload);
-        return response.data;
+        const { calculateUVAFrontend } = await import('./uva-calculator');
+        return calculateUVAFrontend(payload);
     },
 
     saveAnalysis: async (payload: SaveAnalysisPayload): Promise<ProjectAnalysisRecord> => {

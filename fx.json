@@ -1,4 +1,5 @@
 {
+  "useInternalBucket": true,
   "headers": [
     {
       "src": "/assets/**/*",
