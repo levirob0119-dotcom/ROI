@@ -12,6 +12,7 @@ import MatrixView from '@/pages/playground/MatrixView';
 import StreamlinedView from '@/pages/playground/StreamlinedView';
 import PathStreamlinedView from '@/pages/playground/PathStreamlinedView';
 import ComponentShowcase from '@/pages/playground/ComponentShowcase';
+import ComponentReviewShowcase from '@/pages/playground/ComponentReviewShowcase';
 import { AppShell } from '@/components/layout/AppShell';
 import WorkflowSettings from '@/pages/settings/WorkflowSettings';
 import DesignSystemShowpage from '@/pages/design-system/DesignSystemShowpage';
@@ -122,6 +123,7 @@ function AuthenticatedAppRoutes() {
         <Route path="/demo/streamlined" element={<ProtectedRoute><StreamlinedView /></ProtectedRoute>} />
         <Route path="/demo/path" element={<ProtectedRoute><PathStreamlinedView /></ProtectedRoute>} />
         <Route path="/components" element={<ProtectedRoute><AppShell><ComponentShowcase /></AppShell></ProtectedRoute>} />
+        <Route path="/components/review" element={<ProtectedRoute><AppShell><ComponentReviewShowcase /></AppShell></ProtectedRoute>} />
       </Routes>
     </AuthProvider>
   );
@@ -129,7 +131,7 @@ function AuthenticatedAppRoutes() {
 
 function App() {
   return (
-    <Router>
+    <Router basename={import.meta.env.BASE_URL}>
       <Routes>
         <Route path="/design-system" element={<DesignSystemShowpage />} />
         <Route path="*" element={<AuthenticatedAppRoutes />} />
