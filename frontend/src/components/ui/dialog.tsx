@@ -83,7 +83,7 @@ const DialogContent = React.forwardRef<HTMLDivElement, DialogContentProps>(
 
         return createPortal(
             <div
-                className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/55 px-4 backdrop-blur-sm animate-in fade-in duration-200"
+                className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/45 px-4 animate-in fade-in duration-200"
                 onMouseDown={() => {
                     if (closeOnOverlayClick) {
                         onOpenChange(false)
@@ -95,7 +95,7 @@ const DialogContent = React.forwardRef<HTMLDivElement, DialogContentProps>(
                     role="dialog"
                     aria-modal="true"
                     className={cn(
-                        "w-full max-w-lg rounded-card border border-slate-200/80 bg-white shadow-[0_14px_36px_rgba(15,23,42,0.16)] animate-in zoom-in-95 duration-200",
+                        "surface-panel w-full max-w-lg rounded-card shadow-[0_28px_70px_rgba(15,23,42,0.24)] animate-in zoom-in-95 duration-200",
                         className
                     )}
                     onMouseDown={(event) => event.stopPropagation()}
@@ -124,14 +124,14 @@ DialogFooter.displayName = "DialogFooter"
 
 const DialogTitle = React.forwardRef<HTMLHeadingElement, React.HTMLAttributes<HTMLHeadingElement>>(
     ({ className, ...props }, ref) => (
-        <h2 ref={ref} className={cn("text-ds-title-sm font-semibold text-text-primary", className)} {...props} />
+        <h2 ref={ref} className={cn("text-ds-title-sm font-semibold text-slate-900", className)} {...props} />
     )
 )
 DialogTitle.displayName = "DialogTitle"
 
 const DialogDescription = React.forwardRef<HTMLParagraphElement, React.HTMLAttributes<HTMLParagraphElement>>(
     ({ className, ...props }, ref) => (
-        <p ref={ref} className={cn("text-ds-body-sm text-text-secondary", className)} {...props} />
+        <p ref={ref} className={cn("text-ds-body-sm text-slate-600", className)} {...props} />
     )
 )
 DialogDescription.displayName = "DialogDescription"

@@ -25,15 +25,15 @@ export default function DesignSystemShowpage() {
 
   return (
     <div className="ds-page-bg min-h-screen text-text-primary">
-      <header className="sticky top-0 z-40 border-b border-border bg-white/90 backdrop-blur">
-        <div className="mx-auto flex w-full max-w-7xl flex-col gap-3 px-4 py-4 sm:px-6 lg:px-8">
-          <div className="flex items-end justify-between gap-4">
+      <header className="surface-panel-soft surface-divider-bottom sticky top-0 z-40">
+        <div className="mx-auto flex w-full max-w-7xl flex-col gap-3 px-4 py-3 sm:px-6 lg:px-8">
+          <div className="flex flex-col justify-between gap-3 sm:flex-row sm:items-end sm:gap-4">
             <div className="space-y-2">
-              <p className="text-ds-caption uppercase tracking-wide text-text-secondary">ROI Design System</p>
-              <h1 className="text-ds-title text-text-primary">Showpage Review v1</h1>
-              <p className="text-ds-body-sm text-text-secondary">Light mode · NIO blue palette · modular type scale 1.25 · spring motion.</p>
+              <p className="text-ds-caption uppercase tracking-wide text-slate-600">ROI Design System</p>
+              <h1 className="text-ds-title text-slate-900">Showpage Review v1</h1>
+              <p className="text-ds-body-sm text-slate-600">Enterprise UI baseline · cleaner forms · lighter surfaces · pragmatic motion.</p>
             </div>
-            <span className="rounded-control border border-border bg-surface px-3 py-2 text-ds-caption text-text-secondary">
+            <span className="surface-inset hidden rounded-control px-3 py-2 text-ds-caption text-slate-600 sm:inline-flex">
               Route: /design-system
             </span>
           </div>
@@ -44,7 +44,7 @@ export default function DesignSystemShowpage() {
                 <li key={item.id}>
                   <a
                     href={`#${item.id}`}
-                    className="block rounded-control border border-border bg-white px-3 py-2 text-ds-caption text-text-secondary transition-colors hover:border-primary hover:text-primary"
+                    className="surface-inset block rounded-control px-2.5 py-1.5 text-[11px] font-medium text-slate-600 transition-colors hover:bg-white hover:text-primary sm:px-3 sm:py-2 sm:text-ds-caption"
                   >
                     {item.label}
                   </a>
@@ -56,7 +56,7 @@ export default function DesignSystemShowpage() {
       </header>
 
       <motion.main
-        className="mx-auto flex w-full max-w-7xl flex-col gap-6 px-4 py-6 sm:px-6 lg:px-8"
+        className="mx-auto flex w-full max-w-7xl flex-col gap-4 px-4 py-4 sm:gap-6 sm:px-6 sm:py-6 lg:px-8"
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
         transition={shouldReduceMotion ? reducedMotionTransition : pageSpring}

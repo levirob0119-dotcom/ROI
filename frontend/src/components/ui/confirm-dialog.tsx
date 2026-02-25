@@ -36,7 +36,9 @@ export function ConfirmDialog({
             <DialogContent className="max-w-md">
                 <DialogHeader>
                     <DialogTitle className="inline-flex items-center gap-2">
-                        <AlertTriangle className="h-4 w-4 text-warning" />
+                        <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-warning/15 text-warning">
+                            <AlertTriangle className="h-4 w-4" />
+                        </span>
                         {title}
                     </DialogTitle>
                     <DialogDescription>{description}</DialogDescription>

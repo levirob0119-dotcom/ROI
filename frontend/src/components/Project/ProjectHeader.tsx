@@ -25,7 +25,7 @@ const ProjectHeader: React.FC<ProjectHeaderProps> = ({
     const navigate = useNavigate();
 
     return (
-        <header className="flex-shrink-0 bg-white/80 backdrop-blur-md border-b border-slate-200 z-10 sticky top-0">
+        <header className="surface-panel-soft surface-divider-bottom sticky top-0 z-10 flex-shrink-0">
             <div className="flex flex-col md:flex-row items-start md:items-center justify-between px-6 py-4 gap-4">
                 <div className="flex items-center gap-4">
                     <Button
@@ -61,7 +61,7 @@ const ProjectHeader: React.FC<ProjectHeaderProps> = ({
 
                 <div className="flex items-center gap-4 w-full md:w-auto justify-between md:justify-end">
                     {/* Read-only vehicle display */}
-                    <div className="flex items-center gap-2 px-3 py-1.5 bg-slate-100 rounded-full text-sm font-medium text-slate-600">
+                    <div className="surface-inset flex items-center gap-2 rounded-full px-3 py-1.5 text-sm font-medium text-slate-600">
                         <Car className="h-4 w-4 text-slate-500" />
                         <span>Vehicle: {formatEnglishLabel(currentVehicle)}</span>
                     </div>

@@ -125,11 +125,13 @@ export function AppShell({ children }: AppShellProps) {
   const projectSelectValue = activeProjectExists ? activeProjectId || '' : '';
 
   return (
-    <div className="grid h-screen w-full grid-rows-[64px_minmax(0,1fr)] overflow-hidden bg-white text-slate-900">
-      <header className="z-20 border-b border-slate-200 bg-white/90 px-4 py-3 backdrop-blur-sm sm:px-6">
-        <div className="mx-auto flex h-full w-full max-w-[1680px] items-center justify-between gap-3">
-          <div className="flex min-w-0 items-center gap-3">
-            <div className="truncate text-xl font-semibold tracking-tight text-slate-900">PD - UV 工具</div>
+    <div className="grid h-screen w-full grid-rows-[72px_minmax(0,1fr)] overflow-hidden text-slate-900">
+      <header className="surface-panel-soft surface-divider-bottom z-20 px-4 py-3 sm:px-6">
+        <div className="mx-auto flex h-full w-full max-w-[1720px] items-center justify-between gap-3">
+          <div className="flex min-w-0 items-center gap-4">
+            <div className="inline-flex items-center gap-2 px-1">
+              <span className="truncate text-lg font-semibold tracking-tight text-slate-900">PD - UV 工具</span>
+            </div>
             <div className="hidden w-[140px] sm:block">
               <Select
                 value="default"
@@ -138,7 +140,7 @@ export function AppShell({ children }: AppShellProps) {
                 aria-label="工作区切换"
               />
             </div>
-            <div className="w-[200px]">
+            <div className="w-[220px]">
               <Select
                 value={projectSelectValue}
                 onValueChange={handleProjectChange}
@@ -158,7 +160,7 @@ export function AppShell({ children }: AppShellProps) {
               type="button"
               variant="outline"
               size="sm"
-              className="gap-1.5 border-slate-200 bg-white px-2.5 py-1.5 text-slate-700 hover:bg-slate-50"
+              className="gap-1.5 px-2.5 py-1.5 text-slate-700 hover:bg-slate-50"
               onClick={() => setIsAccountDialogOpen(true)}
             >
               <User className="h-4 w-4" />
@@ -178,7 +180,7 @@ export function AppShell({ children }: AppShellProps) {
         )}
       >
         {showToolRail && t2Pinned ? (
-          <aside className="border-r border-slate-200 bg-slate-50/70 p-3">
+          <aside className="surface-panel-soft surface-divider-right p-4">
             <div className="mb-3 flex items-center justify-between">
               <span className="text-xs font-semibold uppercase tracking-wide text-slate-500">Tools</span>
               <Button
@@ -192,7 +194,7 @@ export function AppShell({ children }: AppShellProps) {
                 <PinOff className="h-4 w-4" />
               </Button>
             </div>
-            <div className="space-y-2">
+            <div className="space-y-1.5">
               {TOOL_ITEMS.map((tool) => (
                 <Button
                   key={tool.id}
@@ -212,13 +214,13 @@ export function AppShell({ children }: AppShellProps) {
         {showToolRail && !t2Pinned ? (
           <>
             <div
-              className="relative border-r border-slate-200 bg-slate-50/80"
+              className="surface-panel-soft surface-divider-right relative"
               onMouseEnter={() => setT2PeekOpen(true)}
               aria-label="工具栏触发区"
             />
             <aside
               className={cn(
-                'absolute bottom-0 left-0 top-0 z-10 w-[248px] border-r border-slate-200 bg-slate-50/95 p-3 shadow-[0_18px_34px_rgba(15,23,42,0.18)] transition-transform duration-200',
+                'surface-panel surface-divider-right absolute bottom-0 left-0 top-0 z-10 w-[248px] p-4 shadow-[0_18px_34px_rgba(15,23,42,0.18)] transition-transform duration-200',
                 showToolRail && t2PeekOpen ? 'translate-x-0' : '-translate-x-full'
               )}
               onMouseLeave={() => setT2PeekOpen(false)}
@@ -239,7 +241,7 @@ export function AppShell({ children }: AppShellProps) {
                   <Pin className="h-4 w-4" />
                 </Button>
               </div>
-              <div className="space-y-2">
+              <div className="space-y-1.5">
                 {TOOL_ITEMS.map((tool) => (
                   <Button
                     key={tool.id}

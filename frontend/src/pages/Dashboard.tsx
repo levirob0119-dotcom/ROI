@@ -67,7 +67,7 @@ const Dashboard: React.FC = () => {
     return (
         <div className="mx-auto flex w-full max-w-7xl flex-col gap-5 px-4 py-6 sm:px-6 lg:px-8">
             {isLoading ? (
-                <div className="flex items-center justify-center rounded-control bg-white py-16 shadow-[0_14px_30px_rgba(15,23,42,0.1)]">
+                <div className="surface-panel flex items-center justify-center rounded-control py-16">
                     <Loader2 className="h-8 w-8 animate-spin text-primary" />
                 </div>
             ) : projects.length === 0 ? (
@@ -75,13 +75,13 @@ const Dashboard: React.FC = () => {
                     icon={FolderPlus}
                     iconStrokeWidth={1.7}
                     iconClassName="h-8 w-8 text-slate-600"
-                    iconWrapperClassName="bg-white p-5 shadow-[0_10px_24px_rgba(15,23,42,0.1)]"
+                    iconWrapperClassName="bg-slate-100 p-5"
                     actionLabel="创建"
                     onAction={() => setIsCreateModalOpen(true)}
                     actionVariant="action"
                     actionSize="lg"
                     actionClassName="min-w-[220px] text-base"
-                    containerClassName="bg-slate-50 shadow-none justify-center min-h-[calc(100vh-220px)] gap-8"
+                    containerClassName="surface-inset shadow-none justify-center min-h-[calc(100vh-220px)] gap-8"
                 />
             ) : (
                 <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">

@@ -35,11 +35,11 @@ export default function EmptyStateBlock({
 }: EmptyStateBlockProps) {
   return (
     <div className={cn(
-      'flex flex-col items-center gap-3 rounded-control bg-surface/70 px-6 py-8 text-center shadow-[0_12px_28px_rgba(15,23,42,0.08)]',
+      'surface-panel-soft flex flex-col items-center gap-3 rounded-control px-6 py-8 text-center',
       containerClassName
     )}>
       <div className={cn(
-        'rounded-full bg-white p-4 shadow-[0_8px_18px_rgba(15,23,42,0.12)]',
+        'surface-inset rounded-full p-4',
         iconWrapperClassName
       )}>
         <Icon className={cn('h-7 w-7 text-text-secondary', iconClassName)} strokeWidth={iconStrokeWidth} />

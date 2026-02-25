@@ -4,9 +4,9 @@ import { componentReadiness } from '../designTokens';
 import { SectionShell } from './SectionShell';
 
 const statusClassMap: Record<ComponentReadinessItem['status'], string> = {
-  draft: 'bg-warning/10 text-warning border-warning/30',
-  ready: 'bg-success/10 text-success border-success/30',
-  migrate: 'bg-info/10 text-info border-info/30',
+  draft: 'surface-tint-warning text-warning',
+  ready: 'surface-tint-success text-success',
+  migrate: 'surface-tint-info text-info',
 };
 
 export default function ReadinessMatrixSection() {
@@ -31,7 +31,7 @@ export default function ReadinessMatrixSection() {
               <TableCell>{item.component}</TableCell>
               <TableCell className="text-text-secondary">{item.category}</TableCell>
               <TableCell>
-                <span className={`rounded-control border px-2 py-1 text-ds-caption font-semibold ${statusClassMap[item.status]}`}>
+                <span className={`inline-flex rounded-full px-2 py-1 text-ds-caption font-semibold ${statusClassMap[item.status]}`}>
                   {item.status}
                 </span>
               </TableCell>

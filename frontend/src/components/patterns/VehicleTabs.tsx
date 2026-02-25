@@ -1,6 +1,4 @@
-import { AlertTriangle, Car } from 'lucide-react';
-
-import { Badge } from '@/components/ui/badge';
+import { Car } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn, formatEnglishLabel } from '@/lib/utils';
 
@@ -14,14 +12,13 @@ interface VehicleTabsProps {
   items: VehicleTabItem[];
   value: string;
   onChange: (id: string) => void;
-  onBlockedSelection?: (id: string) => void;
   className?: string;
 }
 
-export default function VehicleTabs({ items, value, onChange, onBlockedSelection, className }: VehicleTabsProps) {
+export default function VehicleTabs({ items, value, onChange, className }: VehicleTabsProps) {
   return (
-    <div className={cn('rounded-control bg-surface/85 p-1.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.85),0_8px_18px_rgba(15,23,42,0.06)]', className)}>
-      <div className="flex flex-wrap items-center gap-2">
+    <div className={cn('surface-panel rounded-card p-2', className)}>
+      <div className="flex flex-wrap items-center gap-1.5">
         {items.map((item) => {
           const hasData = item.hasData !== false;
           const active = item.id === value;
@@ -32,31 +29,19 @@ export default function VehicleTabs({ items, value, onChange, onBlockedSelection
               type="button"
               variant="ghost"
               size="sm"
-              onClick={() => {
-                if (hasData) {
-                  onChange(item.id);
-                  return;
-                }
-                onBlockedSelection?.(item.id);
-              }}
+              onClick={() => onChange(item.id)}
+              disabled={!hasData}
               className={cn(
-                'inline-flex items-center gap-1.5 rounded-control px-3 py-1.5 text-ds-body-sm font-medium transition-all',
-                active
-                  ? 'bg-white text-primary shadow-[0_10px_24px_rgba(19,127,236,0.18)]'
-                  : 'bg-transparent text-text-secondary hover:bg-white/85 hover:text-text-primary hover:shadow-[0_6px_14px_rgba(15,23,42,0.08)]',
-                !hasData && !active && 'opacity-70'
+                'inline-flex items-center gap-1.5 rounded-control px-3 py-2 text-ds-body-sm font-medium transition-[background-color,color,box-shadow]',
+                active && hasData
+                  ? 'bg-primary text-white shadow-[0_8px_18px_rgba(19,127,236,0.26)]'
+                  : 'text-text-secondary hover:bg-slate-100/90 hover:text-text-primary',
+                !hasData && 'text-slate-400 hover:bg-transparent hover:text-slate-400'
               )}
               aria-current={active ? 'page' : undefined}
-              title={hasData ? undefined : '当前车型暂无 UVA 数据'}
             >
               <Car className="h-3.5 w-3.5" />
               {formatEnglishLabel(item.label)}
-              {!hasData ? (
-                <Badge variant="warning" className="inline-flex items-center gap-1 px-1.5 py-0">
-                  <AlertTriangle className="h-3 w-3" />
-                  无数据
-                </Badge>
-                ) : null}
             </Button>
           );
         })}

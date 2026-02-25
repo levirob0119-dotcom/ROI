@@ -13,23 +13,31 @@ interface InlineStatusBarProps {
 
 const toneMap = {
   info: {
-    root: 'bg-info/10 text-info ring-1 ring-info/25 shadow-[0_6px_18px_rgba(14,165,233,0.12)]',
-    description: 'text-text-secondary',
+    root: 'surface-panel-soft',
+    iconWrap: 'bg-info/12 text-info',
+    title: 'text-info',
+    description: 'text-slate-600',
     Icon: Info
   },
   success: {
-    root: 'bg-success/10 text-success ring-1 ring-success/25 shadow-[0_6px_18px_rgba(22,163,74,0.12)]',
-    description: 'text-text-secondary',
+    root: 'surface-panel-soft',
+    iconWrap: 'bg-success/12 text-success',
+    title: 'text-success',
+    description: 'text-slate-600',
     Icon: CheckCircle2
   },
   warning: {
-    root: 'bg-warning/10 text-warning ring-1 ring-warning/25 shadow-[0_6px_18px_rgba(217,119,6,0.12)]',
-    description: 'text-text-secondary',
+    root: 'surface-panel-soft',
+    iconWrap: 'bg-warning/12 text-warning',
+    title: 'text-warning',
+    description: 'text-slate-600',
     Icon: AlertTriangle
   },
   error: {
-    root: 'bg-error/10 text-error ring-1 ring-error/25 shadow-[0_6px_18px_rgba(220,38,38,0.12)]',
-    description: 'text-text-secondary',
+    root: 'surface-panel-soft',
+    iconWrap: 'bg-error/12 text-error',
+    title: 'text-error',
+    description: 'text-slate-600',
     Icon: XCircle
   }
 } as const;
@@ -45,11 +53,13 @@ export default function InlineStatusBar({
   const Icon = config.Icon;
 
   return (
-    <div className={cn('rounded-control px-3 py-2', config.root, className)}>
+    <div className={cn('rounded-control px-4 py-3', config.root, className)}>
       <div className="flex items-start justify-between gap-3">
-        <div className="space-y-1">
-          <p className="inline-flex items-center gap-1 text-ds-body-sm font-semibold">
-            <Icon className="h-4 w-4" />
+        <div className="space-y-1.5">
+          <p className={cn('inline-flex items-center gap-2 text-ds-body-sm font-semibold', config.title)}>
+            <span className={cn('inline-flex h-6 w-6 items-center justify-center rounded-full', config.iconWrap)}>
+              <Icon className="h-3.5 w-3.5" />
+            </span>
             {title}
           </p>
           {description ? <p className={cn('text-ds-caption', config.description)}>{description}</p> : null}

@@ -58,7 +58,7 @@ export default function WorkflowSettings() {
             />
 
             <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
-                <Card className="hover:translate-y-0">
+                <Card>
                     <CardHeader>
                         <CardTitle className="inline-flex items-center gap-2">
                             <Key className="h-4 w-4" />
@@ -92,13 +92,13 @@ export default function WorkflowSettings() {
                     </CardContent>
                 </Card>
 
-                <Card className="hover:translate-y-0">
+                <Card>
                     <CardHeader>
                         <CardTitle>通知策略</CardTitle>
                         <p className="text-ds-body-sm text-text-secondary">配置关键事件的通知优先级和发送频率。</p>
                     </CardHeader>
                     <CardContent className="space-y-3">
-                        <div className="flex items-center justify-between rounded-control border border-border bg-surface px-3 py-2">
+                        <div className="surface-inset flex items-center justify-between rounded-control px-3 py-2">
                             <div>
                                 <p className="text-ds-body-sm font-semibold text-text-primary">失败告警</p>
                                 <p className="text-ds-caption text-text-secondary">关键流程失败时立即通知</p>
@@ -108,7 +108,7 @@ export default function WorkflowSettings() {
                                 onCheckedChange={(checked) => setNotifications((prev) => ({ ...prev, failures: checked }))}
                             />
                         </div>
-                        <div className="flex items-center justify-between rounded-control border border-border bg-surface px-3 py-2">
+                        <div className="surface-inset flex items-center justify-between rounded-control px-3 py-2">
                             <div>
                                 <p className="text-ds-body-sm font-semibold text-text-primary">成功通知</p>
                                 <p className="text-ds-caption text-text-secondary">流程成功结束后发送通知</p>
@@ -118,7 +118,7 @@ export default function WorkflowSettings() {
                                 onCheckedChange={(checked) => setNotifications((prev) => ({ ...prev, success: checked }))}
                             />
                         </div>
-                        <div className="flex items-center justify-between rounded-control border border-border bg-surface px-3 py-2">
+                        <div className="surface-inset flex items-center justify-between rounded-control px-3 py-2">
                             <div>
                                 <p className="text-ds-body-sm font-semibold text-text-primary">每周汇总</p>
                                 <p className="text-ds-caption text-text-secondary">每周一自动发送团队摘要</p>
@@ -132,7 +132,7 @@ export default function WorkflowSettings() {
                 </Card>
             </div>
 
-            <Card className="hover:translate-y-0">
+            <Card>
                 <CardHeader>
                     <div className="flex flex-wrap items-center justify-between gap-2">
                         <div>
@@ -171,9 +171,9 @@ export default function WorkflowSettings() {
                                         <Badge
                                             variant="outline"
                                             className={cn(
-                                                webhook.status === 'active' && 'border-success/30 bg-success/10 text-success',
-                                                webhook.status === 'failed' && 'border-error/30 bg-error/10 text-error',
-                                                webhook.status === 'disabled' && 'border-border bg-surface text-text-secondary'
+                                                webhook.status === 'active' && 'surface-tint-success text-success',
+                                                webhook.status === 'failed' && 'surface-tint-error text-error',
+                                                webhook.status === 'disabled' && 'surface-inset text-slate-600'
                                             )}
                                         >
                                             {webhook.status}

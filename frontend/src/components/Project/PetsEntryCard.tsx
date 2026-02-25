@@ -52,17 +52,16 @@ const PetsEntryCard: React.FC<PetsEntryCardProps> = ({
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={transitions.normal}
-            whileHover={{ y: -2 }}
         >
             <Card
                 className={cn(
                     "overflow-hidden",
-                    isEnhanced ? "ring-2 ring-success/20" : "ring-2 ring-destructive/20"
+                    "surface-panel-soft"
                 )}
             >
                 {/* Header */}
                 <motion.div
-                    className="flex items-center justify-between p-4 cursor-pointer hover:bg-elevated transition-colors"
+                    className="surface-inset flex cursor-pointer items-center justify-between p-4 transition-colors hover:bg-slate-100/80"
                     onClick={onToggleExpand}
                     whileTap={{ scale: 0.995 }}
                 >
@@ -82,7 +81,7 @@ const PetsEntryCard: React.FC<PetsEntryCardProps> = ({
                         </Badge>
                     </div>
                     <div className="flex items-center gap-3">
-                        <span className="text-xs text-muted-foreground bg-muted/50 px-2 py-1 rounded">
+                        <span className="surface-inset rounded-full px-2 py-1 text-xs text-muted-foreground">
                             {entry.uvL2Names.length} 个 UV
                         </span>
                         <Button
@@ -106,7 +105,7 @@ const PetsEntryCard: React.FC<PetsEntryCardProps> = ({
                             transition={transitions.expand}
                             className="overflow-hidden"
                         >
-                            <div className="bg-secondary/25">
+                            <div className="surface-panel-soft">
                                 <CardContent className="p-0">
                                     {uvData.map(l1 => {
                                         const isL1Expanded = expandedL1s.has(l1.l1_id);
@@ -117,10 +116,7 @@ const PetsEntryCard: React.FC<PetsEntryCardProps> = ({
                                             <div key={l1.l1_id} className="mb-1 last:mb-0">
                                                 {/* L1 Header */}
                                                 <motion.div
-                                                    className={cn(
-                                                        "flex items-center justify-between px-4 py-3 cursor-pointer transition-colors",
-                                                        hasSelection ? "bg-primary/5" : "hover:bg-elevated"
-                                                    )}
+                                                    className={cn("flex cursor-pointer items-center justify-between px-4 py-3 transition-colors", hasSelection ? "bg-primary/8" : "hover:bg-slate-100/70")}
                                                     onClick={() => toggleL1(l1.l1_id)}
                                                     whileTap={{ scale: 0.995 }}
                                                 >
@@ -136,8 +132,8 @@ const PetsEntryCard: React.FC<PetsEntryCardProps> = ({
                                                     <span className={cn(
                                                         "text-xs px-2 py-0.5 rounded-full min-w-[36px] text-center",
                                                         hasSelection
-                                                            ? (isEnhanced ? "bg-success/15 text-success" : "bg-destructive/15 text-destructive")
-                                                            : "text-muted-foreground bg-muted"
+                                                            ? (isEnhanced ? "bg-success/12 text-success" : "bg-destructive/12 text-destructive")
+                                                            : "text-muted-foreground bg-slate-100"
                                                     )}>
                                                         {selected}/{total}
                                                     </span>
@@ -153,7 +149,7 @@ const PetsEntryCard: React.FC<PetsEntryCardProps> = ({
                                                             transition={transitions.expand}
                                                             className="overflow-hidden"
                                                         >
-                                                            <div className="bg-background px-4 py-3 grid grid-cols-2 gap-2">
+                                                            <div className="grid grid-cols-2 gap-2 bg-white/70 px-4 py-3">
                                                                 {l1.l2_items.map(l2 => {
                                                                     const isSelected = entry.uvL2Names.includes(l2.name);
 
@@ -161,21 +157,21 @@ const PetsEntryCard: React.FC<PetsEntryCardProps> = ({
                                                                         <motion.div
                                                                             key={l2.id}
                                                                             className={cn(
-                                                                                "flex items-center gap-2 p-2 rounded cursor-pointer ring-1 transition-all",
+                                                                                "flex cursor-pointer items-center gap-2 rounded p-2 transition-all",
                                                                                 isSelected
                                                                                     ? (isEnhanced
-                                                                                        ? "bg-success/10 ring-success/35 text-success shadow-[0_6px_14px_rgba(22,163,74,0.12)]"
-                                                                                        : "bg-destructive/10 ring-destructive/35 text-destructive shadow-[0_6px_14px_rgba(220,38,38,0.12)]")
-                                                                                    : "ring-slate-900/8 text-muted-foreground hover:bg-elevated hover:text-foreground"
+                                                                                        ? "bg-success/12 text-success shadow-[0_6px_14px_rgba(22,163,74,0.12)]"
+                                                                                        : "bg-destructive/12 text-destructive shadow-[0_6px_14px_rgba(220,38,38,0.12)]")
+                                                                                    : "surface-inset text-muted-foreground hover:bg-slate-50 hover:text-foreground"
                                                                             )}
                                                                             onClick={() => onToggleUV(l2.name)}
                                                                             whileTap={{ scale: 0.98 }}
                                                                         >
                                                                             <div className={cn(
-                                                                                "flex items-center justify-center w-4 h-4 rounded ring-1 transition-colors",
+                                                                                "flex h-4 w-4 items-center justify-center rounded transition-colors shadow-[inset_0_0_0_1px_rgba(148,163,184,0.32)]",
                                                                                 isSelected
-                                                                                    ? (isEnhanced ? "bg-success ring-success" : "bg-destructive ring-destructive")
-                                                                                    : "ring-muted-foreground/30 bg-background"
+                                                                                    ? (isEnhanced ? "bg-success shadow-none" : "bg-destructive shadow-none")
+                                                                                    : "bg-background"
                                                                             )}>
                                                                                 {isSelected && <Check className="h-3 w-3 text-white" />}
                                                                             </div>

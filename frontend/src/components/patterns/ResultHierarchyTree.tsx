@@ -61,8 +61,7 @@ export default function ResultHierarchyTree({ list, type }: ResultHierarchyTreeP
           <article
             key={petsId}
             className={cn(
-              'overflow-hidden rounded-control shadow-[0_10px_20px_rgba(15,23,42,0.06)]',
-              isEnhanced ? 'bg-success/8' : 'bg-error/8'
+              'surface-panel-soft overflow-hidden rounded-control'
             )}
           >
             <Button
@@ -82,14 +81,14 @@ export default function ResultHierarchyTree({ list, type }: ResultHierarchyTreeP
             </Button>
 
             {open ? (
-              <div className="space-y-3 bg-white/85 px-3 py-3">
+              <div className="space-y-3 px-3 py-3">
                 {requirementGroups.length === 0 ? (
-                  <div className="rounded-control bg-surface px-3 py-2 text-ds-body-sm text-text-secondary shadow-[inset_0_1px_0_rgba(255,255,255,0.9)]">
+                  <div className="surface-inset rounded-control px-3 py-2 text-ds-body-sm text-text-secondary">
                     该结果缺少层级明细，建议重新测算后查看完整结构。
                   </div>
                 ) : null}
                 {requirementGroups.map((group) => (
-                  <section key={group.categoryName} className="space-y-2 rounded-control bg-white p-3 shadow-[0_8px_16px_rgba(15,23,42,0.06)]">
+                  <section key={group.categoryName} className="surface-inset space-y-2 rounded-control p-3">
                     <div className="flex items-center justify-between">
                       <h5 className="text-ds-body-sm font-semibold text-text-primary">{group.categoryName}</h5>
                       <span className={cn('text-ds-caption font-semibold', isEnhanced ? 'text-success' : 'text-error')}>
@@ -98,7 +97,7 @@ export default function ResultHierarchyTree({ list, type }: ResultHierarchyTreeP
                     </div>
                     <div className="space-y-2">
                       {(group.l1List || []).map((l1) => (
-                        <div key={l1.l1Name} className="rounded-control bg-surface px-2 py-2">
+                        <div key={l1.l1Name} className="surface-inset rounded-control px-2 py-2">
                           <div className="mb-1 flex items-center justify-between text-ds-caption text-text-secondary">
                             <span>{l1.l1Name}</span>
                             <span className={cn('font-semibold', isEnhanced ? 'text-success' : 'text-error')}>

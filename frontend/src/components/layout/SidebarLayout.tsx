@@ -24,10 +24,10 @@ export function SidebarLayout({ children }: SidebarLayoutProps) {
     };
 
     return (
-        <div className="flex h-screen w-full overflow-hidden bg-white text-slate-900 font-sans">
+        <div className="flex h-screen w-full overflow-hidden bg-slate-100 text-slate-900 font-sans">
             {/* Main Content Area */}
-            <main className="flex-1 flex flex-col h-full overflow-hidden bg-white relative">
-                <header className="sticky top-0 z-20 border-b border-slate-200 bg-white/90 px-4 py-3 backdrop-blur-sm sm:px-6">
+            <main className="relative flex h-full flex-1 flex-col overflow-hidden">
+                <header className="surface-panel-soft surface-divider-bottom sticky top-0 z-20 px-4 py-3 sm:px-6">
                     <div className="mx-auto flex w-full max-w-7xl items-center justify-between">
                         <div className="flex items-baseline gap-3">
                             <div className="text-xl font-semibold tracking-tight text-slate-900">PD - UV 工具</div>
@@ -48,7 +48,7 @@ export function SidebarLayout({ children }: SidebarLayoutProps) {
                                 type="button"
                                 variant="outline"
                                 size="sm"
-                                className="gap-1.5 border-slate-200 bg-white px-2.5 py-1.5 text-slate-700 hover:bg-slate-50"
+                                className="gap-1.5 px-2.5 py-1.5 text-slate-700 hover:bg-slate-50"
                                 onClick={() => setIsAccountDialogOpen(true)}
                             >
                                 <User className="h-4 w-4" />

@@ -9,10 +9,10 @@ interface SectionShellProps {
 
 export function SectionShell({ id, title, description, children }: SectionShellProps) {
   return (
-    <section id={id} aria-label={title} className="rounded-card border border-border bg-white p-6 shadow-ds-sm">
+    <section id={id} aria-label={title} className="surface-panel rounded-card p-4 sm:p-6">
       <div className="space-y-2 pb-4">
-        <h2 className="text-ds-title-sm text-text-primary">{title}</h2>
-        <p className="text-ds-body-sm text-text-secondary">{description}</p>
+        <h2 className="text-ds-title-sm text-slate-900">{title}</h2>
+        <p className="text-ds-body-sm text-slate-600">{description}</p>
       </div>
       <div className="space-y-4">{children}</div>
     </section>

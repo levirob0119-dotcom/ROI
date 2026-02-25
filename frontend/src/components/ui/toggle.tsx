@@ -19,11 +19,11 @@ const Toggle = React.forwardRef<HTMLInputElement, ToggleProps>(
                     {...props}
                 />
                 <div className={cn(
-                    "h-6 w-11 rounded-full border-2 border-transparent bg-slate-200 transition-colors peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-primary peer-focus:ring-offset-2 peer-disabled:cursor-not-allowed peer-disabled:opacity-50 peer-checked:bg-primary",
+                    "h-6 w-10 rounded-full bg-slate-300/90 shadow-[inset_0_0_0_1px_rgba(148,163,184,0.2)] transition-[background-color,box-shadow] peer-focus-visible:outline-none peer-focus-visible:ring-4 peer-focus-visible:ring-primary/15 peer-disabled:cursor-not-allowed peer-disabled:opacity-50 peer-checked:bg-primary peer-checked:shadow-[0_6px_14px_rgba(19,127,236,0.25)]",
                     className
                 )} />
                 <span className={cn(
-                    "absolute left-0.5 top-0.5 block h-5 w-5 rounded-full bg-white shadow-sm transition-transform peer-checked:translate-x-5",
+                    "absolute left-[2px] top-[2px] block h-5 w-5 rounded-full bg-white shadow-[0_2px_6px_rgba(15,23,42,0.24)] transition-transform peer-checked:translate-x-4",
                     "pointer-events-none"
                 )} />
             </label>

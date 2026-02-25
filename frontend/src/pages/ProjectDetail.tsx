@@ -14,7 +14,7 @@ import { Button } from '@/components/ui/button';
 import { RadioGroup } from '@/components/ui/radio-group';
 import { Slider } from '@/components/ui/slider';
 import { useToast } from '@/components/ui/use-toast';
-import { formatEnglishLabel } from '@/lib/utils';
+import { cn, formatEnglishLabel } from '@/lib/utils';
 import { projectService } from '@/services/projects';
 import {
     dataService,
@@ -33,7 +33,6 @@ function buildValidationState(analysis: VehicleAnalysis, hasVehicleData: boolean
     const selectedUvCount = analysis.petsEntries.reduce((count, entry) => count + entry.uvL2Names.length, 0);
     const blockers: string[] = [];
 
-    if (!hasVehicleData) blockers.push('当前车型暂无 UVA 数据');
     if (selectedPetsCount === 0) blockers.push('至少添加一个 Pets 维度');
     if (selectedUvCount === 0) blockers.push('至少选择一个 UV 指标');
     if (!analysis.kanoType) blockers.push('请选择 Kano 需求属性');
@@ -41,7 +40,7 @@ function buildValidationState(analysis: VehicleAnalysis, hasVehicleData: boolean
     if (analysis.penetrationRate === undefined) blockers.push('请设置渗透率');
 
     return {
-        canCalculate: blockers.length === 0,
+        canCalculate: hasVehicleData && blockers.length === 0,
         blockers,
         selectedPetsCount,
         selectedUvCount,
@@ -333,7 +332,7 @@ const ProjectDetail: React.FC = () => {
 
         const validationState = currentAnalysis.validationState || buildValidationState(currentAnalysis, vehicleHasData(currentVehicle));
         if (!validationState.canCalculate) {
-            showToast(validationState.blockers[0] || '请先补齐配置', 'warning');
+            showToast(validationState.blockers[0] || (validationState.hasVehicleData ? '请先补齐配置' : '当前车型暂不可操作'), 'warning');
             return;
         }
 
@@ -402,9 +401,10 @@ const ProjectDetail: React.FC = () => {
     });
 
     const currentValidation = currentAnalysis.validationState || buildValidationState(currentAnalysis, vehicleHasData(currentVehicle));
+    const currentVehicleOperable = vehicleHasData(currentVehicle);
 
     return (
-        <div className="mx-auto flex w-full max-w-[1600px] flex-col gap-4 px-4 py-4 sm:px-6 lg:px-8">
+        <div className="mx-auto flex w-full max-w-[1680px] flex-col gap-5 px-4 py-5 sm:px-6 lg:px-8">
             <PageHeader
                 title={project.name}
                 description={project.description || '暂无描述'}
@@ -435,10 +435,11 @@ const ProjectDetail: React.FC = () => {
                 }))}
                 value={currentVehicle}
                 onChange={setCurrentVehicle}
-                onBlockedSelection={() => showToast('当前车型暂无 UVA 数据', 'warning')}
             />
 
-            {currentValidation.canCalculate ? (
+            {!currentVehicleOperable ? (
+                <InlineStatusBar tone="info" title="当前车型为只读状态" description="录入与测算控件已禁用，请切换到可操作车型。" />
+            ) : currentValidation.canCalculate ? (
                 <InlineStatusBar
                     tone="success"
                     title="当前车型可直接测算"
@@ -448,37 +449,27 @@ const ProjectDetail: React.FC = () => {
                 <InlineStatusBar
                     tone="warning"
                     title="还有配置项未完成"
-                    description={currentValidation.blockers.join('；')}
+                    description={currentValidation.blockers.length > 0 ? currentValidation.blockers.join('；') : '请补齐配置后再进行测算。'}
                 />
             )}
 
-            <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
-                <section className="space-y-4 rounded-card bg-white p-4 shadow-[0_18px_38px_rgba(15,23,42,0.11)]">
+            <div className="grid grid-cols-1 gap-4 xl:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] xl:items-start">
+                <section className={cn('surface-panel space-y-5 rounded-card p-5 sm:p-6', !currentVehicleOperable && 'surface-disabled')}>
                     <div className="flex items-center justify-between">
-                        <h2 className="text-ds-title-sm text-text-primary">体验维度录入 · {formatEnglishLabel(currentVehicle)}</h2>
+                        <div className="space-y-1">
+                            <p className="ui-label">Input Workspace</p>
+                            <h2 className="ui-h2 text-text-primary">体验维度录入 · {formatEnglishLabel(currentVehicle)}</h2>
+                        </div>
                         <Button
                             type="button"
                             variant="outline"
-                            onClick={() => {
-                                if (!vehicleHasData(currentVehicle)) {
-                                    showToast('当前车型暂无数据，请先切换车型', 'warning');
-                                    return;
-                                }
-                                setIsAddPetsOpen(true);
-                            }}
+                            onClick={() => setIsAddPetsOpen(true)}
+                            disabled={!currentVehicleOperable}
                         >
                             <Plus className="h-4 w-4" />
                             添加 Pets
                         </Button>
                     </div>
-
-                    {!vehicleHasData(currentVehicle) ? (
-                        <InlineStatusBar
-                            tone="warning"
-                            title="该车型暂无 UVA 数据"
-                            description="请切换到已导入数据的车型后再进行录入。"
-                        />
-                    ) : null}
 
                     {currentAnalysis.petsEntries.length === 0 ? (
                         <EmptyStateBlock
@@ -503,8 +494,11 @@ const ProjectDetail: React.FC = () => {
                     )}
 
                     {currentAnalysis.petsEntries.length > 0 ? (
-                        <div className="space-y-4 rounded-control bg-surface/88 p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.85)]">
-                            <h3 className="text-ds-body-sm font-semibold text-text-primary">附加配置</h3>
+                        <div className="surface-inset space-y-4 rounded-card p-4 sm:p-5">
+                            <div className="space-y-1">
+                                <p className="ui-label">Parameters</p>
+                                <h3 className="text-ds-body font-semibold text-text-primary">附加配置</h3>
+                            </div>
 
                             <div className="space-y-2">
                                 <label className="text-ds-caption text-text-secondary">Kano 需求属性</label>
@@ -521,7 +515,7 @@ const ProjectDetail: React.FC = () => {
                             </div>
 
                             <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
-                                <div className="rounded-control bg-white p-3 shadow-[0_8px_18px_rgba(15,23,42,0.08)]">
+                                <div className="surface-panel-soft rounded-control p-3.5">
                                     <label className="mb-3 block text-ds-caption text-text-secondary">使用率</label>
                                     <Slider
                                         value={currentAnalysis.usageRate ?? 0}
@@ -531,7 +525,7 @@ const ProjectDetail: React.FC = () => {
                                         onChange={(value) => handleUpdateConfig('usageRate', value)}
                                     />
                                 </div>
-                                <div className="rounded-control bg-white p-3 shadow-[0_8px_18px_rgba(15,23,42,0.08)]">
+                                <div className="surface-panel-soft rounded-control p-3.5">
                                     <label className="mb-3 block text-ds-caption text-text-secondary">渗透率</label>
                                     <Slider
                                         value={currentAnalysis.penetrationRate ?? 0}
@@ -546,8 +540,11 @@ const ProjectDetail: React.FC = () => {
                     ) : null}
                 </section>
 
-                <section className="space-y-3 rounded-card bg-white p-4 shadow-[0_18px_38px_rgba(15,23,42,0.11)]">
-                    <h2 className="text-ds-title-sm text-text-primary">UVA 测算结果</h2>
+                <section className="surface-panel space-y-4 rounded-card p-5 sm:p-6">
+                    <div className="space-y-1">
+                        <p className="ui-label">Output Workspace</p>
+                        <h2 className="ui-h2 text-text-primary">UVA 测算结果</h2>
+                    </div>
                     {orderedVehicles.map((vehicle) => (
                         <VehicleResultPanel
                             key={vehicle}

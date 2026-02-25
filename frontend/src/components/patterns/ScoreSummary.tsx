@@ -24,14 +24,14 @@ export default function ScoreSummary({
 }: ScoreSummaryProps) {
   return (
     <div className={cn('grid grid-cols-1 gap-3 md:grid-cols-3', className)}>
-      <div className="rounded-control bg-white p-4 shadow-[0_10px_24px_rgba(15,23,42,0.08)]">
+      <div className="surface-panel rounded-control p-4">
         <div className="mb-1 inline-flex items-center gap-1 text-ds-caption text-text-secondary">
           <Gauge className="h-3.5 w-3.5" />
           UVA 总分
         </div>
         <div
           className={cn(
-            'text-ds-title font-semibold',
+            'text-[2rem] font-semibold leading-none tracking-tight',
             finalScore > 0 ? 'text-success' : finalScore < 0 ? 'text-error' : 'text-text-primary'
           )}
         >
@@ -43,7 +43,7 @@ export default function ScoreSummary({
         ) : null}
       </div>
 
-      <div className="rounded-control bg-success/8 p-4 shadow-[0_10px_24px_rgba(22,163,74,0.12)]">
+      <div className="surface-inset rounded-control p-4">
         <div className="mb-1 inline-flex items-center gap-1 text-ds-caption text-success">
           <TrendingUp className="h-3.5 w-3.5" />
           提升体验
@@ -51,7 +51,7 @@ export default function ScoreSummary({
         <div className="text-ds-title-sm font-semibold text-success">+{formatScore(totalEnhanced)}</div>
       </div>
 
-      <div className="rounded-control bg-error/8 p-4 shadow-[0_10px_24px_rgba(220,38,38,0.12)]">
+      <div className="surface-inset rounded-control p-4">
         <div className="mb-1 inline-flex items-center gap-1 text-ds-caption text-error">
           <TrendingDown className="h-3.5 w-3.5" />
           降低体验

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
@@ -54,10 +55,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({
     const nameHasError = errorField === 'name';
     const vehiclesHasError = errorField === 'vehicles';
     const namePlaceholder = nameHasError ? errorMessage : '例如：2026Q1 满意度优化';
-    const fieldSurfaceClassName = cn(
-        'h-12 rounded-control border-0 bg-slate-100/90 px-4 text-base text-slate-900 shadow-none placeholder:text-slate-400 focus-visible:bg-white focus-visible:shadow-[inset_0_0_0_2px_rgba(59,130,246,0.32)]',
-        nameHasError && 'text-red-600 placeholder:text-red-500 focus-visible:shadow-[inset_0_0_0_2px_rgba(220,38,38,0.28)]'
-    );
+    const fieldSurfaceClassName = cn(nameHasError && 'text-error placeholder:text-error/70');
 
     // Update state when initialData changes
     useEffect(() => {
@@ -148,6 +146,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({
                         placeholder={namePlaceholder}
                         disabled={isSubmitting}
                         autoFocus
+                        aria-invalid={nameHasError || undefined}
                         className={fieldSurfaceClassName}
                     />
                 </div>
@@ -157,7 +156,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({
                     <Textarea
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
-                        className="h-24 resize-none border-0 bg-slate-100/90 px-4 py-3 text-base text-slate-900 shadow-none focus-visible:bg-white focus-visible:shadow-[inset_0_0_0_2px_rgba(59,130,246,0.32)]"
+                        className="h-24 resize-none"
                         placeholder="简要描述背景和目标..."
                         disabled={isSubmitting}
                     />
@@ -177,7 +176,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({
                                 type="button"
                                 variant="outline"
                                 size="sm"
-                                className="h-8 bg-slate-100 text-xs text-slate-700 hover:bg-slate-200"
+                                className="h-8 text-xs text-slate-700"
                                 onClick={handleToggleAllVehicles}
                                 disabled={isSubmitting}
                             >
@@ -187,22 +186,24 @@ const ProjectForm: React.FC<ProjectFormProps> = ({
                     </div>
                     <div className="grid grid-cols-2 gap-3">
                         {AVAILABLE_VEHICLES.map(v => (
-                            <Button
+                            <label
                                 key={v.id}
-                                type="button"
-                                onClick={() => handleVehicleToggle(v.id)}
-                                disabled={isSubmitting}
-                                aria-pressed={selectedVehicles.includes(v.id)}
-                                variant={selectedVehicles.includes(v.id) ? 'action' : 'outline'}
                                 className={cn(
-                                    'flex h-auto items-center justify-start px-4 py-3 text-left transition-colors disabled:cursor-not-allowed disabled:opacity-60',
+                                    'surface-inset flex cursor-pointer items-center gap-2 rounded-control px-3 py-2 transition-[box-shadow,background-color]',
                                     selectedVehicles.includes(v.id)
-                                        ? 'bg-blue-100/90 text-slate-900 hover:bg-blue-100'
-                                        : 'bg-slate-100/90 text-slate-700 hover:bg-slate-200/80'
+                                        ? 'surface-tint-info text-info shadow-[inset_0_0_0_2px_rgba(14,165,233,0.26)]'
+                                        : 'hover:bg-slate-50',
+                                    isSubmitting && 'pointer-events-none opacity-60'
                                 )}
                             >
-                                <span className="text-ds-body font-medium leading-none">{v.name}</span>
-                            </Button>
+                                <Checkbox
+                                    checked={selectedVehicles.includes(v.id)}
+                                    onCheckedChange={() => handleVehicleToggle(v.id)}
+                                    disabled={isSubmitting}
+                                    aria-label={`选择车型 ${v.name}`}
+                                />
+                                <span className="text-ds-body-sm font-medium text-slate-800">{v.name}</span>
+                            </label>
                         ))}
                     </div>
                 </div>
@@ -213,7 +214,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({
                     type="button"
                     variant="outline"
                     size="lg"
-                    className="w-full bg-slate-300/70 text-slate-800 hover:bg-slate-300 text-base font-medium shadow-none hover:shadow-none"
+                    className="w-full text-base font-medium"
                     onClick={onCancel}
                     disabled={isSubmitting}
                 >
@@ -223,7 +224,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({
                     type="submit"
                     variant="action"
                     size="lg"
-                    className="w-full text-base font-semibold shadow-none hover:shadow-none"
+                    className="w-full text-base font-semibold"
                     disabled={isSubmitting}
                 >
                     {isSubmitting ? (

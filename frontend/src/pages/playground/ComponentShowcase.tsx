@@ -8,9 +8,12 @@ import VehicleTabs from '@/components/patterns/VehicleTabs';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Select } from '@/components/ui/select';
 import { Slider } from '@/components/ui/slider';
+import { Textarea } from '@/components/ui/textarea';
 import { Toggle } from '@/components/ui/toggle';
 
 export default function ComponentShowcase() {
@@ -23,7 +26,7 @@ export default function ComponentShowcase() {
             />
 
             <section className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-                <Card className="hover:translate-y-0">
+                <Card>
                     <CardHeader>
                         <CardTitle>基础组件状态</CardTitle>
                         <CardDescription>Button / Input / Toggle / Slider</CardDescription>
@@ -38,15 +41,37 @@ export default function ComponentShowcase() {
                             <Label htmlFor="component-email">通知邮箱</Label>
                             <Input id="component-email" placeholder="team@company.com" />
                         </div>
+                        <div className="space-y-2">
+                            <Label htmlFor="component-type">需求类型</Label>
+                            <Select
+                                id="component-type"
+                                placeholder="请选择类型"
+                                value="performance"
+                                onValueChange={() => undefined}
+                                options={[
+                                    { label: 'Must-be', value: 'must-be' },
+                                    { label: 'Performance', value: 'performance' },
+                                    { label: 'Attractive', value: 'attractive' },
+                                ]}
+                            />
+                        </div>
+                        <div className="space-y-2">
+                            <Label htmlFor="component-note">备注说明</Label>
+                            <Textarea id="component-note" placeholder="输入说明..." />
+                        </div>
                         <div className="flex items-center justify-between rounded-control border border-border bg-surface px-3 py-2">
                             <span className="text-ds-body-sm text-text-primary">开启每周汇总</span>
                             <Toggle defaultChecked />
                         </div>
+                        <label className="flex items-center gap-2 text-ds-body-sm text-text-primary">
+                            <Checkbox defaultChecked aria-label="自动创建提醒任务" />
+                            自动创建提醒任务
+                        </label>
                         <Slider value={68} onChange={() => undefined} unit="%" />
                     </CardContent>
                 </Card>
 
-                <Card className="hover:translate-y-0">
+                <Card>
                     <CardHeader>
                         <CardTitle>业务复合组件</CardTitle>
                         <CardDescription>状态条 / 车型切换 / 空态 / 分值摘要</CardDescription>
@@ -60,7 +85,6 @@ export default function ComponentShowcase() {
                             ]}
                             value="leo"
                             onChange={() => undefined}
-                            onBlockedSelection={() => undefined}
                         />
                         <InlineStatusBar
                             tone="warning"
@@ -73,7 +97,7 @@ export default function ComponentShowcase() {
             </section>
 
             <section className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-                <Card className="hover:translate-y-0">
+                <Card>
                     <CardHeader>
                         <CardTitle>空态模板</CardTitle>
                     </CardHeader>
@@ -88,7 +112,7 @@ export default function ComponentShowcase() {
                     </CardContent>
                 </Card>
 
-                <Card className="hover:translate-y-0">
+                <Card>
                     <CardHeader>
                         <CardTitle>语义标签</CardTitle>
                     </CardHeader>

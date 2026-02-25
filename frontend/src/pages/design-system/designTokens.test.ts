@@ -8,8 +8,10 @@ describe('designTokens', () => {
 
     expect(colorMap.get('Primary')).toBe('#137FEC');
     expect(colorMap.get('Primary Hover')).toBe('#1170D2');
-    expect(colorMap.get('Background')).toBe('#FFFFFF');
-    expect(colorMap.get('Surface')).toBe('#F8FAFC');
+    expect(colorMap.get('Canvas')).toBe('#EEF2F7');
+    expect(colorMap.get('Surface 1')).toBe('rgba(255,255,255,0.96)');
+    expect(colorMap.get('Surface 2')).toBe('rgba(255,255,255,0.82)');
+    expect(colorMap.get('Surface 3')).toBe('rgba(246,249,253,0.95)');
     expect(colorMap.get('Success')).toBe('#16A34A');
     expect(colorMap.get('Warning')).toBe('#D97706');
     expect(colorMap.get('Error')).toBe('#DC2626');
@@ -22,7 +24,7 @@ describe('designTokens', () => {
 
   it('defines the expected modular typography scale', () => {
     const sizes = designTokens.typography.map((item) => item.size);
-    expect(sizes).toEqual([12, 14, 16, 20, 25, 31, 39]);
+    expect(sizes).toEqual([12, 12, 14, 16, 22, 34]);
   });
 
   it('provides all three motion presets and readiness data', () => {

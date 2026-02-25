@@ -34,7 +34,7 @@ const VehicleResultPanel: React.FC<VehicleResultPanelProps> = ({ vehicle, result
 
     if (!result) {
         return (
-            <section className={`rounded-card bg-white p-4 shadow-[0_14px_30px_rgba(15,23,42,0.1)] ${isActive ? 'bg-primary/5' : ''}`}>
+            <section className={`surface-panel rounded-card p-4 ${isActive ? 'shadow-[0_16px_32px_rgba(19,127,236,0.12)]' : ''}`}>
                 <div className="mb-2 flex items-center gap-2">
                     <Car size={16} className={isActive ? 'text-primary' : 'text-text-secondary'} />
                     <h3 className="text-ds-body font-semibold text-text-primary">{formatEnglishLabel(vehicle)}</h3>
@@ -48,11 +48,11 @@ const VehicleResultPanel: React.FC<VehicleResultPanelProps> = ({ vehicle, result
     const { totalEnhanced, totalReduced, finalScore, enhanced, reduced } = result;
 
     return (
-        <section className={`overflow-hidden rounded-card bg-white shadow-[0_14px_30px_rgba(15,23,42,0.1)] ${isActive ? 'bg-primary/[0.02]' : ''}`}>
+        <section className={`surface-panel overflow-hidden rounded-card ${isActive ? 'shadow-[0_18px_36px_rgba(19,127,236,0.12)]' : ''}`}>
             <Button
                 type="button"
                 variant="ghost"
-                className={`h-auto w-full justify-between rounded-none px-4 py-3 text-left hover:bg-surface ${isActive ? 'bg-primary/5 hover:bg-primary/5' : 'bg-surface'}`}
+                className={`h-auto w-full justify-between rounded-none px-4 py-3 text-left hover:bg-slate-100/80 ${isActive ? 'bg-primary/10 shadow-[inset_0_0_0_1px_rgba(19,127,236,0.22)] hover:bg-primary/10' : 'surface-inset'}`}
                 onClick={() => setIsExpanded((prev) => !prev)}
             >
                 <span className="inline-flex items-center gap-2 text-ds-body font-semibold text-text-primary">
@@ -64,7 +64,7 @@ const VehicleResultPanel: React.FC<VehicleResultPanelProps> = ({ vehicle, result
             </Button>
 
             {isExpanded ? (
-                <div className="space-y-4 p-4">
+                <div className="space-y-4 p-4 sm:p-5">
                     <ScoreSummary
                         finalScore={finalScore}
                         totalEnhanced={totalEnhanced}
@@ -74,21 +74,21 @@ const VehicleResultPanel: React.FC<VehicleResultPanelProps> = ({ vehicle, result
 
                     {config ? (
                         <div className="grid grid-cols-1 gap-2 md:grid-cols-3">
-                            <div className="rounded-control bg-surface px-3 py-2">
+                            <div className="surface-inset rounded-control px-3 py-2">
                                 <p className="mb-1 inline-flex items-center gap-1 text-ds-caption text-text-secondary">
                                     <Tag className="h-3.5 w-3.5" />
                                     Kano 类型
                                 </p>
                                 <p className="text-ds-body-sm font-semibold text-text-primary">{getKanoLabel(config.kanoType)}</p>
                             </div>
-                            <div className="rounded-control bg-surface px-3 py-2">
+                            <div className="surface-inset rounded-control px-3 py-2">
                                 <p className="mb-1 inline-flex items-center gap-1 text-ds-caption text-text-secondary">
                                     <Gauge className="h-3.5 w-3.5" />
                                     使用率
                                 </p>
                                 <p className="text-ds-body-sm font-semibold text-text-primary">{config.usageRate ?? 0}%</p>
                             </div>
-                            <div className="rounded-control bg-surface px-3 py-2">
+                            <div className="surface-inset rounded-control px-3 py-2">
                                 <p className="mb-1 inline-flex items-center gap-1 text-ds-caption text-text-secondary">
                                     <Users className="h-3.5 w-3.5" />
                                     渗透率
@@ -100,7 +100,7 @@ const VehicleResultPanel: React.FC<VehicleResultPanelProps> = ({ vehicle, result
 
                     <div className="space-y-4">
                         <div className="space-y-2">
-                            <div className="flex items-center justify-between border-b border-success/20 pb-1">
+                            <div className="flex items-center justify-between pb-1">
                                 <h4 className="text-ds-body-sm font-semibold text-success">提升体验</h4>
                                 <span className="text-ds-body-sm font-semibold text-success">+{(totalEnhanced || 0).toFixed(1)}</span>
                             </div>
@@ -108,7 +108,7 @@ const VehicleResultPanel: React.FC<VehicleResultPanelProps> = ({ vehicle, result
                         </div>
 
                         <div className="space-y-2">
-                            <div className="flex items-center justify-between border-b border-error/20 pb-1">
+                            <div className="flex items-center justify-between pb-1">
                                 <h4 className="text-ds-body-sm font-semibold text-error">降低体验</h4>
                                 <span className="text-ds-body-sm font-semibold text-error">-{(totalReduced || 0).toFixed(1)}</span>
                             </div>

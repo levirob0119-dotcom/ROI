@@ -30,7 +30,7 @@ export default function MotionLabSection({
       title="Motion Lab"
       description="Three spring layers with a reduced-motion simulation switch."
     >
-      <div className="flex flex-col gap-4 rounded-control border border-border bg-surface p-4 md:flex-row md:items-center md:justify-between">
+      <div className="surface-inset flex flex-col gap-4 rounded-control p-4 md:flex-row md:items-center md:justify-between">
         <div className="space-y-1">
           <p className="text-ds-body font-semibold text-text-primary">Reduced motion simulation</p>
           <p className="text-ds-body-sm text-text-secondary" data-testid="reduced-motion-status">
@@ -48,14 +48,14 @@ export default function MotionLabSection({
         {motionPresets.map((preset) => {
           const transition = shouldReduce ? reducedMotionTransition : springById[preset.id];
           return (
-            <div key={preset.id} className="rounded-control border border-border bg-white p-4">
+            <div key={preset.id} className="surface-panel-soft rounded-control p-4">
               <div className="space-y-1 pb-3">
                 <p className="text-ds-body font-semibold text-text-primary">{preset.name}</p>
                 <p className="text-ds-caption text-text-secondary">stiffness {preset.stiffness} · damping {preset.damping}</p>
                 <p className="text-ds-caption text-text-secondary">{preset.usage}</p>
               </div>
 
-              <div className="rounded-control border border-border bg-surface p-3">
+              <div className="surface-inset rounded-control p-3">
                 <motion.div
                   data-testid={`motion-sample-${preset.id}`}
                   data-reduced-motion={shouldReduce ? 'true' : 'false'}

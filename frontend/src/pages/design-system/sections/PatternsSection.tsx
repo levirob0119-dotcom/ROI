@@ -28,7 +28,7 @@ export default function PatternsSection() {
       description="Production-ready business patterns for RI workflow pages."
     >
       <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
-        <Card className="hover:translate-y-0">
+        <Card>
           <CardHeader>
             <CardTitle>Page status + vehicle tabs</CardTitle>
           </CardHeader>
@@ -52,12 +52,11 @@ export default function PatternsSection() {
               ]}
               value="leo"
               onChange={() => undefined}
-              onBlockedSelection={() => showToast('该车型暂无 UVA 数据', 'warning')}
             />
           </CardContent>
         </Card>
 
-        <Card className="hover:translate-y-0">
+        <Card>
           <CardHeader>
             <CardTitle>Score summary pattern</CardTitle>
           </CardHeader>
@@ -75,7 +74,7 @@ export default function PatternsSection() {
           onDelete={() => undefined}
         />
 
-        <Card className="hover:translate-y-0">
+        <Card>
           <CardHeader>
             <CardTitle>Empty state pattern</CardTitle>
           </CardHeader>

@@ -10,7 +10,7 @@ export default function UV1000Workspace() {
         status={{ label: '规划中', tone: 'warning' }}
       />
 
-      <Card className="hover:translate-y-0">
+      <Card>
         <CardHeader>
           <CardTitle>即将支持</CardTitle>
         </CardHeader>

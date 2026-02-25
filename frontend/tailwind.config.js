@@ -25,11 +25,11 @@ export default {
             borderRadius: {
                 'sm': '4px',
                 DEFAULT: '6px',
-                'md': '8px',
-                'lg': '12px',
-                'xl': '16px',
-                'control': '8px',
-                'card': '12px',
+                'md': '10px',
+                'lg': '14px',
+                'xl': '20px',
+                'control': '12px',
+                'card': '20px',
                 'full': '9999px',
             },
             colors: {

@@ -34,23 +34,28 @@ const Toast: React.FC<ToastProps> = ({
     }
 
     const styles = {
-        info: 'bg-slate-800 text-white',
-        success: 'bg-green-600 text-white',
-        warning: 'bg-amber-500 text-white',
-        error: 'bg-red-500 text-white'
+        info: 'surface-panel text-slate-800',
+        success: 'surface-tint-success text-success',
+        warning: 'surface-tint-warning text-warning',
+        error: 'surface-tint-error text-destructive'
     }
 
     return (
-        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 animate-in fade-in slide-in-from-bottom-4 duration-300">
+        <div
+            className="fixed bottom-6 left-1/2 z-50 -translate-x-1/2 animate-in fade-in slide-in-from-bottom-4 duration-300"
+            role="status"
+            aria-live="polite"
+        >
             <div className={cn(
-                "flex items-center gap-3 px-4 py-3 rounded-lg shadow-lg",
+                "flex min-w-[280px] items-center gap-3 rounded-control px-4 py-3 shadow-[0_10px_24px_rgba(15,23,42,0.12)]",
                 styles[type]
             )}>
                 {icons[type]}
                 <span className="text-sm font-medium">{message}</span>
                 <button
                     onClick={onClose}
-                    className="ml-2 p-1 hover:bg-white/20 rounded transition-colors"
+                    className="ml-2 rounded p-1 transition-colors hover:bg-slate-200/60"
+                    aria-label="关闭通知"
                 >
                     <X size={14} />
                 </button>

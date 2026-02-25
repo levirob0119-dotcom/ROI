@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { Plus, Minus, Monitor, Car, AlertTriangle, X } from 'lucide-react';
+import { Plus, Minus, Monitor, Car, X } from 'lucide-react';
 import type { Pets, UVL1, VehicleDataStatus } from '@/services/data';
 import PetsEntryCard from './PetsEntryCard';
 import { Button } from '@/components/ui/button';
@@ -53,6 +53,7 @@ const AnalysisInput: React.FC<AnalysisInputProps> = ({
         const status = vehiclesDataStatus.find(v => v.id.toLowerCase() === currentVehicle.toLowerCase());
         return status?.hasData ?? false;
     }, [vehiclesDataStatus, currentVehicle]);
+    const currentVehicleOperable = currentVehicleHasData;
 
     const handleSelectPets = (petsId: string) => {
         if (!addMode) return;
@@ -64,14 +65,14 @@ const AnalysisInput: React.FC<AnalysisInputProps> = ({
     };
 
     return (
-        <div className="flex flex-col h-full bg-card rounded-xl border border-border/40 shadow-sm">
+        <div className="surface-panel flex h-full flex-col rounded-card">
             {/* Header */}
-            <div className="flex flex-col border-b">
+            <div className="surface-divider-bottom flex flex-col">
                 <div className="p-4 pb-2">
                     <h2 className="text-base font-semibold text-foreground">体验维度录入</h2>
                 </div>
 
-                {/* 车型 Tabs - Legacy Pill Style */}
+                {/* 车型 Tabs */}
                 <div className="px-4 pb-4 flex flex-wrap gap-2">
                     {vehicles.map(v => {
                         const isActive = currentVehicle === v;
@@ -82,69 +83,58 @@ const AnalysisInput: React.FC<AnalysisInputProps> = ({
                             <button
                                 key={v}
                                 onClick={() => onVehicleChange(v)}
+                                disabled={!hasData}
                                 className={cn(
-                                    "flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg transition-all border",
-                                    isActive
-                                        ? "bg-primary text-primary-foreground shadow-sm border-transparent"
-                                        : "bg-muted/40 text-muted-foreground border-transparent hover:bg-muted hover:text-foreground",
-                                    !hasData && !isActive && "opacity-50 border-dashed border-border"
+                                    "flex items-center gap-1.5 rounded-control px-3 py-1.5 text-xs font-medium transition-[color,background-color,box-shadow]",
+                                    isActive && hasData
+                                        ? "bg-primary text-primary-foreground shadow-[0_8px_18px_rgba(19,127,236,0.24)]"
+                                        : "surface-inset text-muted-foreground hover:bg-slate-100 hover:text-foreground",
+                                    !hasData && "text-slate-400 hover:bg-transparent hover:text-slate-400"
                                 )}
-                                title={hasData ? '' : '暂无 UVA 数据'}
                             >
                                 <Car className="h-3.5 w-3.5" />
                                 {formatEnglishLabel(v)}
-                                {!hasData && (
-                                    <span className="w-1.5 h-1.5 rounded-full bg-warning ml-0.5" />
-                                )}
                             </button>
                         );
                     })}
                 </div>
             </div>
 
-            {/* 无数据警告横条 - Full Width Strip */}
-            {!currentVehicleHasData && (
-                <div className="w-full bg-warning/10 border-b border-warning/20 text-warning-foreground px-4 py-2 flex items-center justify-center gap-2 text-sm font-medium animate-in fade-in slide-in-from-top-1">
-                    <AlertTriangle className="h-4 w-4 text-warning" />
-                    <span>{formatEnglishLabel(currentVehicle)} 暂无 UVA 数据，无法进行测算</span>
-                </div>
-            )}
-
-            {/* 两个添加按钮 - Distinct Outlined Style */}
-            <div className="p-4 border-b bg-white/50">
+            {/* 两个添加按钮 */}
+            <div className={cn("surface-divider-bottom p-4", !currentVehicleOperable && "surface-disabled")}>
                 <div className="flex gap-4">
                     <button
                         className={cn(
-                            "flex-1 flex items-center justify-center gap-2 h-10 rounded-md text-sm font-medium border transition-all outline-none focus:ring-2 focus:ring-offset-1 focus:ring-success",
+                            "flex h-10 flex-1 items-center justify-center gap-2 rounded-control text-sm font-medium transition-[color,background-color,box-shadow] outline-none focus-visible:ring-4 focus-visible:ring-success/20",
                             addMode === 'enhanced'
-                                ? "bg-success border-success text-success-foreground shadow-md"
-                                : "bg-card border-success/30 text-success hover:bg-success/5 hover:border-success/50",
-                            (!availablePets.length || !currentVehicleHasData) && "opacity-50 cursor-not-allowed grayscale"
+                                ? "bg-success text-success-foreground shadow-[0_10px_22px_rgba(22,163,74,0.24)]"
+                                : "surface-tint-success text-success hover:bg-success/15",
+                            (!availablePets.length || !currentVehicleOperable) && "opacity-50 cursor-not-allowed grayscale"
                         )}
                         onClick={() => {
-                            if (availablePets.length > 0 && currentVehicleHasData) {
+                            if (availablePets.length > 0 && currentVehicleOperable) {
                                 setAddMode(addMode === 'enhanced' ? null : 'enhanced');
                             }
                         }}
-                        disabled={availablePets.length === 0 || !currentVehicleHasData}
+                        disabled={availablePets.length === 0 || !currentVehicleOperable}
                     >
                         <Plus className="h-4 w-4" />
                         提升体验
                     </button>
                     <button
                         className={cn(
-                            "flex-1 flex items-center justify-center gap-2 h-10 rounded-md text-sm font-medium border transition-all outline-none focus:ring-2 focus:ring-offset-1 focus:ring-destructive",
+                            "flex h-10 flex-1 items-center justify-center gap-2 rounded-control text-sm font-medium transition-[color,background-color,box-shadow] outline-none focus-visible:ring-4 focus-visible:ring-destructive/20",
                             addMode === 'reduced'
-                                ? "bg-destructive border-destructive text-destructive-foreground shadow-md"
-                                : "bg-card border-destructive/30 text-destructive hover:bg-destructive/5 hover:border-destructive/50",
-                            (!availablePets.length || !currentVehicleHasData) && "opacity-50 cursor-not-allowed grayscale"
+                                ? "bg-destructive text-destructive-foreground shadow-[0_10px_22px_rgba(220,38,38,0.24)]"
+                                : "surface-tint-error text-destructive hover:bg-destructive/15",
+                            (!availablePets.length || !currentVehicleOperable) && "opacity-50 cursor-not-allowed grayscale"
                         )}
                         onClick={() => {
-                            if (availablePets.length > 0 && currentVehicleHasData) {
+                            if (availablePets.length > 0 && currentVehicleOperable) {
                                 setAddMode(addMode === 'reduced' ? null : 'reduced');
                             }
                         }}
-                        disabled={availablePets.length === 0 || !currentVehicleHasData}
+                        disabled={availablePets.length === 0 || !currentVehicleOperable}
                     >
                         <Minus className="h-4 w-4" />
                         降低体验
@@ -153,8 +143,8 @@ const AnalysisInput: React.FC<AnalysisInputProps> = ({
             </div>
 
             {/* PETS 选择面板 */}
-            {addMode && availablePets.length > 0 && currentVehicleHasData && (
-                <div className="px-4 py-3 bg-muted/30 border-b animate-in slide-in-from-top-2 duration-200">
+            {addMode && availablePets.length > 0 && currentVehicleOperable && (
+                <div className="surface-inset px-4 py-3 animate-in slide-in-from-top-2 duration-200">
                     <div className="flex items-center justify-between mb-3">
                         <span className="text-sm font-medium text-muted-foreground">
                             选择要<span className={addMode === 'enhanced' ? "text-success" : "text-destructive"}>{addMode === 'enhanced' ? '提升' : '降低'}</span>的维度:
@@ -167,7 +157,7 @@ const AnalysisInput: React.FC<AnalysisInputProps> = ({
                         {availablePets.map(pets => (
                             <button
                                 key={pets.id}
-                                className="px-3 py-2 text-sm bg-white border rounded-md hover:border-primary hover:text-primary transition-colors text-left truncate shadow-sm"
+                                className="surface-panel-soft px-3 py-2 text-sm rounded-control text-text-secondary hover:bg-white hover:text-primary transition-colors text-left truncate"
                                 onClick={() => handleSelectPets(pets.id)}
                             >
                                 {pets.name}
@@ -178,20 +168,10 @@ const AnalysisInput: React.FC<AnalysisInputProps> = ({
             )}
 
             {/* Content Area */}
-            <div className="flex-1 overflow-y-auto p-4 bg-muted/5">
-                {!currentVehicleHasData ? (
-                    <div className="flex flex-col items-center justify-center p-8 mt-4 text-center border border-dashed border-warning/30 bg-warning/5 rounded-xl">
-                        <div className="mb-4 p-3 bg-warning/10 rounded-full">
-                            <AlertTriangle className="h-8 w-8 text-warning" />
-                        </div>
-                        <h3 className="text-base font-semibold text-warning-foreground">该车型暂无数据</h3>
-                        <p className="mt-1 text-sm text-muted-foreground max-w-[280px]">
-                            请切换至有数据的车型（如 Cetus）或联系管理员导入数据
-                        </p>
-                    </div>
-                ) : petsEntries.length === 0 ? (
-                    <div className="flex flex-col items-center justify-center p-8 mt-4 text-center border-2 border-dashed border-border rounded-xl">
-                        <div className="mb-4 p-3 bg-muted rounded-full">
+            <div className={cn("flex-1 overflow-y-auto p-4", !currentVehicleOperable && "surface-disabled")}>
+                {petsEntries.length === 0 ? (
+                    <div className="surface-inset mt-4 flex flex-col items-center justify-center rounded-card p-8 text-center">
+                        <div className="mb-4 rounded-full bg-slate-100 p-3">
                             <Monitor className="h-6 w-6 text-muted-foreground" />
                         </div>
                         <h3 className="text-sm font-medium text-muted-foreground">暂无录入数据</h3>
