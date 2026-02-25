@@ -17,9 +17,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
                 if (response.ok) {
                     const userData = await response.json();
+                    // SSO response structure: { result_code, data: { user_name, display_name, ... } }
+                    const d = userData.data || userData;
                     const ssoUser: SSOUser = {
-                        username: userData.username,
-                        displayName: userData.displayName || userData.nickName || userData.username,
+                        username: d.user_name || d.username || d.domain_account || '',
+                        displayName: d.display_name || d.displayName || d.nickName || d.user_name || '',
                     };
                     setCurrentUser(ssoUser.username); // 初始化 localStorage 用户隔离
                     setUser(ssoUser);
