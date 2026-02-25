@@ -1,0 +1,8 @@
+{
+  "headers": [
+    {
+      "src": "/assets/**/*",
+      "headers": [{ "key": "Cache-Control", "value": "max-age=2592000" }]
+    }
+  ]
+}
