@@ -87,7 +87,14 @@ export default function ResultHierarchyTree({ list, type }: ResultHierarchyTreeP
                     该结果缺少层级明细，建议重新测算后查看完整结构。
                   </div>
                 ) : null}
-                {requirementGroups.map((group) => (
+                {[...requirementGroups]
+                  .sort((a, b) => {
+                    const priority: Record<string, number> = { '差异化需求': 3, '基础需求': 2, '拓展需求': 1 };
+                    const pA = priority[a.categoryName] ?? 0;
+                    const pB = priority[b.categoryName] ?? 0;
+                    return pA !== pB ? pB - pA : b.totalScore - a.totalScore;
+                  })
+                  .map((group) => (
                   <section key={group.categoryName} className="surface-inset space-y-2 rounded-control p-3">
                     <div className="flex items-center justify-between">
                       <h5 className="text-ds-body-sm font-semibold text-text-primary">{group.categoryName}</h5>
