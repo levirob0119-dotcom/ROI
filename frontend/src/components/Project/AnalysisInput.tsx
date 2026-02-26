@@ -186,9 +186,9 @@ const AnalysisInput: React.FC<AnalysisInputProps> = ({
                                 key={entry.petsId}
                                 entry={entry}
                                 uvData={uvData}
-                                onToggleExpand={() => onToggleExpand(entry.petsId)}
-                                onDelete={() => onDeletePets(entry.petsId)}
-                                onToggleUV={(uvName) => onToggleUV(entry.petsId, uvName)}
+                                onToggleExpand={onToggleExpand}
+                                onDelete={onDeletePets}
+                                onToggleUV={onToggleUV}
                             />
                         ))}
                     </div>

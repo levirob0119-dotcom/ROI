@@ -297,23 +297,23 @@ const ProjectDetail: React.FC = () => {
         }));
     };
 
-    const handleDeletePets = (petsId: string) => {
+    const handleDeletePets = useCallback((petsId: string) => {
         updateVehicleAnalysis(currentVehicle, (previous) => ({
             ...previous,
             petsEntries: previous.petsEntries.filter((entry) => entry.petsId !== petsId)
         }));
-    };
+    }, [updateVehicleAnalysis, currentVehicle]);
 
-    const handleToggleExpand = (petsId: string) => {
+    const handleToggleExpand = useCallback((petsId: string) => {
         updateVehicleAnalysis(currentVehicle, (previous) => ({
             ...previous,
             petsEntries: previous.petsEntries.map((entry) =>
                 entry.petsId === petsId ? { ...entry, isExpanded: !entry.isExpanded } : entry
             )
         }));
-    };
+    }, [updateVehicleAnalysis, currentVehicle]);
 
-    const handleToggleUV = (petsId: string, uvL2Name: string) => {
+    const handleToggleUV = useCallback((petsId: string, uvL2Name: string) => {
         updateVehicleAnalysis(currentVehicle, (previous) => ({
             ...previous,
             petsEntries: previous.petsEntries.map((entry) => {
@@ -328,7 +328,7 @@ const ProjectDetail: React.FC = () => {
                 };
             })
         }));
-    };
+    }, [updateVehicleAnalysis, currentVehicle]);
 
     const handleUpdateConfig = (
         field: 'kanoType' | 'usageRate' | 'penetrationRate',
@@ -499,9 +499,9 @@ const ProjectDetail: React.FC = () => {
                                     entry={entry}
                                     uvData={uvData}
                                     matrixRows={uvaMatrixData}
-                                    onToggleExpand={() => handleToggleExpand(entry.petsId)}
-                                    onDelete={() => handleDeletePets(entry.petsId)}
-                                    onToggleUV={(uvName) => handleToggleUV(entry.petsId, uvName)}
+                                    onToggleExpand={handleToggleExpand}
+                                    onDelete={handleDeletePets}
+                                    onToggleUV={handleToggleUV}
                                 />
                             ))}
                         </div>

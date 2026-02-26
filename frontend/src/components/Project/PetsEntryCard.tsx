@@ -19,9 +19,9 @@ interface PetsEntryCardProps {
     entry: PetsEntry;
     uvData: UVL1[];
     matrixRows?: MatrixRow[];
-    onToggleExpand: () => void;
-    onDelete: () => void;
-    onToggleUV: (uvL2Name: string) => void;
+    onToggleExpand: (petsId: string) => void;
+    onDelete: (petsId: string) => void;
+    onToggleUV: (petsId: string, uvL2Name: string) => void;
 }
 
 const PetsEntryCard: React.FC<PetsEntryCardProps> = ({
@@ -79,7 +79,7 @@ const PetsEntryCard: React.FC<PetsEntryCardProps> = ({
                 {/* Header */}
                 <motion.div
                     className="surface-inset flex cursor-pointer items-center justify-between p-4 transition-colors hover:bg-slate-100/80"
-                    onClick={onToggleExpand}
+                    onClick={() => onToggleExpand(entry.petsId)}
                     whileTap={{ scale: 0.995 }}
                 >
                     <div className="flex items-center gap-2">
@@ -105,7 +105,7 @@ const PetsEntryCard: React.FC<PetsEntryCardProps> = ({
                             variant="ghost"
                             size="icon"
                             className="h-7 w-7 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
-                            onClick={(e) => { e.stopPropagation(); onDelete(); }}
+                            onClick={(e) => { e.stopPropagation(); onDelete(entry.petsId); }}
                         >
                             <Trash2 className="h-4 w-4" />
                         </Button>
@@ -184,7 +184,7 @@ const PetsEntryCard: React.FC<PetsEntryCardProps> = ({
                                                                                         : "bg-destructive/12 text-destructive shadow-[0_6px_14px_rgba(220,38,38,0.12)]")
                                                                                     : "surface-inset text-muted-foreground hover:bg-slate-50 hover:text-foreground"
                                                                             )}
-                                                                            onClick={() => onToggleUV(l2.name)}
+                                                                            onClick={() => onToggleUV(entry.petsId, l2.name)}
                                                                             whileTap={{ scale: 0.98 }}
                                                                         >
                                                                             <div className={cn(
@@ -216,4 +216,4 @@ const PetsEntryCard: React.FC<PetsEntryCardProps> = ({
     );
 };
 
-export default PetsEntryCard;
+export default React.memo(PetsEntryCard);
