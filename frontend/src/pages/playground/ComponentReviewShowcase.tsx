@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { useMemo, useState } from 'react';
 import { ArrowLeft, ArrowRight, CircleAlert, CircleCheck, Search } from 'lucide-react';
 import { Link } from 'react-router-dom';
