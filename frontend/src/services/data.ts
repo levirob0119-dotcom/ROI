@@ -1,4 +1,24 @@
 import api from './api';
+import { localAnalysisService } from './local-db';
+
+/**
+ * 网络级别错误（DNS 未解析、连接超时等），axios 特征：err.response 为 undefined
+ */
+function isNetworkError(err: unknown): boolean {
+    return !!(err && typeof err === 'object' && !('response' in err && (err as any).response));
+}
+
+async function withFallback<T>(apiFn: () => Promise<T>, localFn: () => Promise<T>): Promise<T> {
+    try {
+        return await apiFn();
+    } catch (err) {
+        if (isNetworkError(err)) {
+            console.warn('[dataService] 后端不可达，降级使用本地存储');
+            return localFn();
+        }
+        throw err;
+    }
+}
 
 export interface Vehicle {
     id: string;
@@ -188,8 +208,14 @@ export const dataService = {
     },
 
     saveAnalysis: (payload: SaveAnalysisPayload): Promise<ProjectAnalysisRecord> =>
-        api.post<ProjectAnalysisRecord>('/uva/save', payload).then(r => r.data),
+        withFallback(
+            () => api.post<ProjectAnalysisRecord>('/uva/save', payload).then(r => r.data),
+            () => localAnalysisService.save(payload),
+        ),
 
     getProjectAnalysis: (projectId: string): Promise<ProjectAnalysisRecord[]> =>
-        api.get<ProjectAnalysisRecord[]>(`/uva/project/${projectId}`).then(r => r.data),
+        withFallback(
+            () => api.get<ProjectAnalysisRecord[]>(`/uva/project/${projectId}`).then(r => r.data),
+            () => localAnalysisService.getByProject(projectId),
+        ),
 };
