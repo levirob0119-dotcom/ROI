@@ -1,4 +1,4 @@
-import { localAnalysisService } from './local-db';
+import api from './api';
 
 export interface Vehicle {
     id: string;
@@ -187,10 +187,9 @@ export const dataService = {
         return calculateUVAFrontend(payload);
     },
 
-    // 后续后端到位后，将下面两个方法换回 API 调用即可
     saveAnalysis: (payload: SaveAnalysisPayload): Promise<ProjectAnalysisRecord> =>
-        localAnalysisService.save(payload),
+        api.post<ProjectAnalysisRecord>('/uva/save', payload).then(r => r.data),
 
     getProjectAnalysis: (projectId: string): Promise<ProjectAnalysisRecord[]> =>
-        localAnalysisService.getByProject(projectId),
+        api.get<ProjectAnalysisRecord[]>(`/uva/project/${projectId}`).then(r => r.data),
 };

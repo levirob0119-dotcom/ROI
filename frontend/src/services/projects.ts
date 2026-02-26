@@ -1,12 +1,11 @@
 /**
  * 方案服务
  *
- * 当前使用 localStorage 实现（localProjectService）。
- * 后续后端实例到位后，将 localProjectService 换回 API 调用，
- * 组件层无需改动。
+ * 使用后端 REST API（axios）实现。
+ * SSO Cookie 通过 withCredentials 自动携带，后端 authMiddleware 负责校验。
  */
 import type { Project } from '@/types/models';
-import { localProjectService } from './local-db';
+import api from './api';
 
 export interface CreateProjectData {
     name: string;
@@ -22,17 +21,17 @@ export interface UpdateProjectData {
 
 export const projectService = {
     getAll: (): Promise<Project[]> =>
-        localProjectService.getAll(),
+        api.get<Project[]>('/projects').then(r => r.data),
 
     getById: (id: string): Promise<Project> =>
-        localProjectService.getById(id),
+        api.get<Project>(`/projects/${id}`).then(r => r.data),
 
     create: (data: CreateProjectData): Promise<Project> =>
-        localProjectService.create(data),
+        api.post<Project>('/projects', data).then(r => r.data),
 
     update: (id: string, data: UpdateProjectData): Promise<Project> =>
-        localProjectService.update(id, data),
+        api.put<Project>(`/projects/${id}`, data).then(r => r.data),
 
     delete: (id: string): Promise<void> =>
-        localProjectService.delete(id),
+        api.delete(`/projects/${id}`).then(() => undefined),
 };

@@ -1,6 +1,16 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { dataService } from './data';
 
+// Mock api axios instance for saveAnalysis / getProjectAnalysis
+vi.mock('./api', () => ({
+    default: {
+        post: vi.fn(),
+        get: vi.fn(),
+    },
+}));
+
+import api from './api';
+
 // Mock uva-calculator to avoid internal fetch calls in tests
 vi.mock('./uva-calculator', () => ({
     calculateUVAFrontend: vi.fn().mockResolvedValue({
@@ -79,5 +89,44 @@ describe('dataService', () => {
 
         expect(result).toBeDefined();
         expect(result.vehicle).toBe('cetus');
+    });
+});
+
+describe('dataService - API methods', () => {
+    beforeEach(() => {
+        vi.clearAllMocks();
+    });
+
+    const mockRecord = {
+        id: 'analysis-1',
+        projectId: 'proj-1',
+        vehicle: 'cetus',
+        enhancedPets: [],
+        reducedPets: [],
+        isDraft: false,
+        analysisMeta: { isDraft: false, updatedAt: '2024-01-01T00:00:00.000Z' },
+        createdAt: '2024-01-01T00:00:00.000Z',
+        updatedAt: '2024-01-01T00:00:00.000Z',
+    };
+
+    it('saveAnalysis calls POST /uva/save and returns record', async () => {
+        vi.mocked(api.post).mockResolvedValue({ data: mockRecord });
+        const payload = { projectId: 'proj-1', vehicle: 'cetus', enhancedPets: [], reducedPets: [] };
+
+        const result = await dataService.saveAnalysis(payload);
+
+        expect(api.post).toHaveBeenCalledWith('/uva/save', payload);
+        expect(result).toEqual(mockRecord);
+        expect(result.id).toBe('analysis-1');
+    });
+
+    it('getProjectAnalysis calls GET /uva/project/:id and returns list', async () => {
+        vi.mocked(api.get).mockResolvedValue({ data: [mockRecord] });
+
+        const result = await dataService.getProjectAnalysis('proj-1');
+
+        expect(api.get).toHaveBeenCalledWith('/uva/project/proj-1');
+        expect(result).toEqual([mockRecord]);
+        expect(result).toHaveLength(1);
     });
 });
