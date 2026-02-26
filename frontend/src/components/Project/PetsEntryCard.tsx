@@ -10,9 +10,15 @@ import { transitions } from '@/lib/motion';
 
 import type { PetsEntry } from '@/types/analysis';
 
+interface MatrixRow {
+    l2_name: string;
+    pets_scores: Record<string, number>;
+}
+
 interface PetsEntryCardProps {
     entry: PetsEntry;
     uvData: UVL1[];
+    matrixRows?: MatrixRow[];
     onToggleExpand: () => void;
     onDelete: () => void;
     onToggleUV: (uvL2Name: string) => void;
@@ -21,6 +27,7 @@ interface PetsEntryCardProps {
 const PetsEntryCard: React.FC<PetsEntryCardProps> = ({
     entry,
     uvData,
+    matrixRows,
     onToggleExpand,
     onDelete,
     onToggleUV
@@ -40,9 +47,19 @@ const PetsEntryCard: React.FC<PetsEntryCardProps> = ({
         });
     };
 
+    // 过滤：仅显示当前 PETS 维度下 pets_scores 不为 0 的 L2 条目
+    const getVisibleL2Items = (l1: UVL1): UVL2[] => {
+        if (!matrixRows) return l1.l2_items;
+        return l1.l2_items.filter(l2 => {
+            const row = matrixRows.find(r => r.l2_name === l2.name);
+            return !row || (row.pets_scores[entry.petsId] ?? 0) !== 0;
+        });
+    };
+
     const getL1SelectionCount = (l1: UVL1): { selected: number; total: number } => {
-        const total = l1.l2_items.length;
-        const selected = l1.l2_items.filter(l2 => entry.uvL2Names.includes(l2.name)).length;
+        const visibleItems = getVisibleL2Items(l1);
+        const total = visibleItems.length;
+        const selected = visibleItems.filter(l2 => entry.uvL2Names.includes(l2.name)).length;
         return { selected, total };
     };
 
@@ -108,6 +125,9 @@ const PetsEntryCard: React.FC<PetsEntryCardProps> = ({
                             <div className="surface-panel-soft">
                                 <CardContent className="p-0">
                                     {uvData.map(l1 => {
+                                        const visibleL2 = getVisibleL2Items(l1);
+                                        if (visibleL2.length === 0) return null;
+
                                         const isL1Expanded = expandedL1s.has(l1.l1_id);
                                         const { selected, total } = getL1SelectionCount(l1);
                                         const hasSelection = selected > 0;
@@ -150,7 +170,7 @@ const PetsEntryCard: React.FC<PetsEntryCardProps> = ({
                                                             className="overflow-hidden"
                                                         >
                                                             <div className="grid grid-cols-2 gap-2 bg-white/70 px-4 py-3">
-                                                                {l1.l2_items.map(l2 => {
+                                                                {visibleL2.map(l2 => {
                                                                     const isSelected = entry.uvL2Names.includes(l2.name);
 
                                                                     return (

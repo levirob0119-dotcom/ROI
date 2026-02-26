@@ -83,17 +83,17 @@ const VehicleResultPanel: React.FC<VehicleResultPanelProps> = ({ vehicle, result
                             </div>
                             <div className="surface-inset rounded-control px-3 py-2">
                                 <p className="mb-1 inline-flex items-center gap-1 text-ds-caption text-text-secondary">
-                                    <Gauge className="h-3.5 w-3.5" />
-                                    使用率
-                                </p>
-                                <p className="text-ds-body-sm font-semibold text-text-primary">{config.usageRate ?? 0}%</p>
-                            </div>
-                            <div className="surface-inset rounded-control px-3 py-2">
-                                <p className="mb-1 inline-flex items-center gap-1 text-ds-caption text-text-secondary">
                                     <Users className="h-3.5 w-3.5" />
                                     渗透率
                                 </p>
                                 <p className="text-ds-body-sm font-semibold text-text-primary">{config.penetrationRate ?? 0}%</p>
+                            </div>
+                            <div className="surface-inset rounded-control px-3 py-2">
+                                <p className="mb-1 inline-flex items-center gap-1 text-ds-caption text-text-secondary">
+                                    <Gauge className="h-3.5 w-3.5" />
+                                    使用率
+                                </p>
+                                <p className="text-ds-body-sm font-semibold text-text-primary">{config.usageRate ?? 0}%</p>
                             </div>
                         </div>
                     ) : null}

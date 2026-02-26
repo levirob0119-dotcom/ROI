@@ -100,6 +100,7 @@ const ProjectDetail: React.FC = () => {
     const [petsList, setPetsList] = useState<Pets[]>([]);
     const [uvData, setUVData] = useState<UVL1[]>([]);
     const [vehicleDataStatus, setVehicleDataStatus] = useState<VehicleDataStatus[]>([]);
+    const [uvaMatrixData, setUvaMatrixData] = useState<Array<{ l2_name: string; pets_scores: Record<string, number> }>>([]);
 
     const [isLoading, setIsLoading] = useState(true);
     const [isCalculating, setIsCalculating] = useState(false);
@@ -175,6 +176,18 @@ const ProjectDetail: React.FC = () => {
 
         void init();
     }, [id, showToast]);
+
+    // 当前车型切换时加载对应 UVA 矩阵数据（用于过滤 PETS 下 score=0 的 L2 条目）
+    useEffect(() => {
+        if (!currentVehicle) return;
+        void dataService.getUvaMatrix(currentVehicle)
+            .then((data) => {
+                setUvaMatrixData(data as Array<{ l2_name: string; pets_scores: Record<string, number> }>);
+            })
+            .catch(() => {
+                setUvaMatrixData([]);
+            });
+    }, [currentVehicle]);
 
     const currentAnalysis = useMemo<VehicleAnalysis>(
         () =>
@@ -485,6 +498,7 @@ const ProjectDetail: React.FC = () => {
                                     key={entry.petsId}
                                     entry={entry}
                                     uvData={uvData}
+                                    matrixRows={uvaMatrixData}
                                     onToggleExpand={() => handleToggleExpand(entry.petsId)}
                                     onDelete={() => handleDeletePets(entry.petsId)}
                                     onToggleUV={(uvName) => handleToggleUV(entry.petsId, uvName)}
@@ -516,16 +530,6 @@ const ProjectDetail: React.FC = () => {
 
                             <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
                                 <div className="surface-panel-soft rounded-control p-3.5">
-                                    <label className="mb-3 block text-ds-caption text-text-secondary">使用率</label>
-                                    <Slider
-                                        value={currentAnalysis.usageRate ?? 0}
-                                        min={0}
-                                        max={100}
-                                        unit="%"
-                                        onChange={(value) => handleUpdateConfig('usageRate', value)}
-                                    />
-                                </div>
-                                <div className="surface-panel-soft rounded-control p-3.5">
                                     <label className="mb-3 block text-ds-caption text-text-secondary">渗透率</label>
                                     <Slider
                                         value={currentAnalysis.penetrationRate ?? 0}
@@ -533,6 +537,16 @@ const ProjectDetail: React.FC = () => {
                                         max={100}
                                         unit="%"
                                         onChange={(value) => handleUpdateConfig('penetrationRate', value)}
+                                    />
+                                </div>
+                                <div className="surface-panel-soft rounded-control p-3.5">
+                                    <label className="mb-3 block text-ds-caption text-text-secondary">使用率</label>
+                                    <Slider
+                                        value={currentAnalysis.usageRate ?? 0}
+                                        min={0}
+                                        max={100}
+                                        unit="%"
+                                        onChange={(value) => handleUpdateConfig('usageRate', value)}
                                     />
                                 </div>
                             </div>
