@@ -88,7 +88,7 @@ function calculatePetsScores(matrixData: MatrixItem[], petsSelections: Calculate
                     .sort((a, b) => b.totalScore - a.totalScore),
             }))
             .sort((a: ReqGroup, b: ReqGroup) => {
-                const priority: Record<string, number> = { '核心差异UV': 3, '基线UV': 2, '弱需求': 1 };
+                const priority: Record<string, number> = { '差异化需求': 3, '基础需求': 2, '拓展需求': 1 };
                 const pA = priority[a.categoryName] || 0;
                 const pB = priority[b.categoryName] || 0;
                 return pA !== pB ? pB - pA : b.totalScore - a.totalScore;
