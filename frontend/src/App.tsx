@@ -16,6 +16,7 @@ import ComponentReviewShowcase from '@/pages/playground/ComponentReviewShowcase'
 import { AppShell } from '@/components/layout/AppShell';
 import WorkflowSettings from '@/pages/settings/WorkflowSettings';
 import DesignSystemShowpage from '@/pages/design-system/DesignSystemShowpage';
+import DataUploadPage from '@/pages/DataUploadPage';
 
 // 保护路由组件
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
@@ -122,8 +123,8 @@ function AuthenticatedAppRoutes() {
         <Route path="/demo/matrix" element={<ProtectedRoute><MatrixView /></ProtectedRoute>} />
         <Route path="/demo/streamlined" element={<ProtectedRoute><StreamlinedView /></ProtectedRoute>} />
         <Route path="/demo/path" element={<ProtectedRoute><PathStreamlinedView /></ProtectedRoute>} />
-        <Route path="/components" element={<ProtectedRoute><AppShell><ComponentShowcase /></AppShell></ProtectedRoute>} />
-        <Route path="/components/review" element={<ProtectedRoute><AppShell><ComponentReviewShowcase /></AppShell></ProtectedRoute>} />
+        {/* 数据管理 */}
+        <Route path="/data-upload" element={<ProtectedRoute><DataUploadPage /></ProtectedRoute>} />
       </Routes>
     </AuthProvider>
   );
@@ -134,6 +135,8 @@ function App() {
     <Router basename={import.meta.env.BASE_URL}>
       <Routes>
         <Route path="/design-system" element={<DesignSystemShowpage />} />
+        <Route path="/components" element={<ComponentShowcase />} />
+        <Route path="/components/review" element={<ComponentReviewShowcase />} />
         <Route path="*" element={<AuthenticatedAppRoutes />} />
       </Routes>
     </Router>

@@ -153,6 +153,19 @@ export interface ProjectAnalysisRecord {
 // 缓存已加载的 UVA 矩阵数据
 const uvaMatrixCache: Record<string, unknown[]> = {};
 
+/**
+ * 清除 UVA 矩阵缓存
+ * 上传新底表后调用，确保下次 getUvaMatrix 获取最新数据
+ * @param vehicle 指定车型清除；不传则清除全部
+ */
+export function clearUvaMatrixCache(vehicle?: string) {
+    if (vehicle) {
+        delete uvaMatrixCache[vehicle.toLowerCase()];
+    } else {
+        Object.keys(uvaMatrixCache).forEach(k => delete uvaMatrixCache[k]);
+    }
+}
+
 // 使用 import.meta.env.BASE_URL 确保在生产环境（/pages/PD-UV/）下路径正确
 const base = import.meta.env.BASE_URL; // 开发: '/'  生产: '/pages/PD-UV/'
 
@@ -189,17 +202,26 @@ export const dataService = {
     getUvaMatrix: async (vehicle: string): Promise<unknown[]> => {
         const key = vehicle.toLowerCase();
         if (uvaMatrixCache[key]) return uvaMatrixCache[key];
-        const response = await fetch(`${base}data/uva-matrix/${key}.json`);
-        if (!response.ok) {
-            const fallback = await fetch(`${base}data/uva-matrix/cetus.json`);
-            if (!fallback.ok) throw new Error('该车型暂无 UVA 数据');
-            const data = await fallback.json();
+
+        try {
+            // 优先从后端 API 获取（已上传的最新数据）
+            const data = await api.get<unknown[]>(`/data/uva-matrix/${key}`).then(r => r.data);
+            uvaMatrixCache[key] = data;
+            return data;
+        } catch {
+            // 后端不可达时降级到静态文件
+            const response = await fetch(`${base}data/uva-matrix/${key}.json`);
+            if (!response.ok) {
+                const fallback = await fetch(`${base}data/uva-matrix/cetus.json`);
+                if (!fallback.ok) throw new Error('该车型暂无 UVA 数据');
+                const data = await fallback.json();
+                uvaMatrixCache[key] = data;
+                return data;
+            }
+            const data = await response.json();
             uvaMatrixCache[key] = data;
             return data;
         }
-        const data = await response.json();
-        uvaMatrixCache[key] = data;
-        return data;
     },
 
     calculateUVA: async (payload: CalculateUvaPayload): Promise<CalculateUvaResponse> => {
