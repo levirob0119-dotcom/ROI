@@ -133,9 +133,12 @@ export interface ProjectAnalysisRecord {
 // 缓存已加载的 UVA 矩阵数据
 const uvaMatrixCache: Record<string, unknown[]> = {};
 
+// 使用 import.meta.env.BASE_URL 确保在生产环境（/pages/PD-UV/）下路径正确
+const base = import.meta.env.BASE_URL; // 开发: '/'  生产: '/pages/PD-UV/'
+
 export const dataService = {
     getVehicles: async (): Promise<Vehicle[]> => {
-        const response = await fetch('/data/vehicles.json');
+        const response = await fetch(`${base}data/vehicles.json`);
         if (!response.ok) throw new Error('无法加载车型数据');
         return response.json();
     },
@@ -152,13 +155,13 @@ export const dataService = {
     },
 
     getPets: async (): Promise<Pets[]> => {
-        const response = await fetch('/data/pets.json');
+        const response = await fetch(`${base}data/pets.json`);
         if (!response.ok) throw new Error('无法加载 PETS 数据');
         return response.json();
     },
 
     getUVData: async (): Promise<UVL1[]> => {
-        const response = await fetch('/data/uv.json');
+        const response = await fetch(`${base}data/uv.json`);
         if (!response.ok) throw new Error('无法加载 UV 数据');
         return response.json();
     },
@@ -166,9 +169,9 @@ export const dataService = {
     getUvaMatrix: async (vehicle: string): Promise<unknown[]> => {
         const key = vehicle.toLowerCase();
         if (uvaMatrixCache[key]) return uvaMatrixCache[key];
-        const response = await fetch(`/data/uva-matrix/${key}.json`);
+        const response = await fetch(`${base}data/uva-matrix/${key}.json`);
         if (!response.ok) {
-            const fallback = await fetch('/data/uva-matrix/cetus.json');
+            const fallback = await fetch(`${base}data/uva-matrix/cetus.json`);
             if (!fallback.ok) throw new Error('该车型暂无 UVA 数据');
             const data = await fallback.json();
             uvaMatrixCache[key] = data;

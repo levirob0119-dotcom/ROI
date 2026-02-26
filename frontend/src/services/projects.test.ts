@@ -1,77 +1,71 @@
-
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { projectService } from './projects';
-import api from './api';
+import { setCurrentUser } from './local-db';
 
-// Mock the api module
-vi.mock('./api', () => ({
-    default: {
-        get: vi.fn(),
-        post: vi.fn(),
-        put: vi.fn(),
-        delete: vi.fn(),
-    },
-}));
+// jsdom 测试环境的 localStorage 可能缺少完整实现，手动 mock
+const store: Record<string, string> = {};
+const localStorageMock = {
+    getItem: (key: string) => store[key] ?? null,
+    setItem: (key: string, value: string) => { store[key] = String(value); },
+    removeItem: (key: string) => { delete store[key]; },
+    clear: () => { Object.keys(store).forEach((k) => delete store[k]); },
+    get length() { return Object.keys(store).length; },
+    key: (n: number) => Object.keys(store)[n] ?? null,
+};
 
-describe('projectService', () => {
-    const mockedApi = {
-        get: api.get as unknown as ReturnType<typeof vi.fn>,
-        post: api.post as unknown as ReturnType<typeof vi.fn>,
-        put: api.put as unknown as ReturnType<typeof vi.fn>,
-        delete: api.delete as unknown as ReturnType<typeof vi.fn>,
-    };
+vi.stubGlobal('localStorage', localStorageMock);
 
+let testId = 0;
+
+describe('projectService (localStorage)', () => {
     beforeEach(() => {
-        vi.clearAllMocks();
+        testId++;
+        setCurrentUser(`test-user-${testId}`);
+        localStorageMock.clear();
     });
 
-    it('getAll fetches projects correctly', async () => {
-        const mockProjects = [{ id: 'p1', name: 'Project 1' }];
-        mockedApi.get.mockResolvedValue({ data: mockProjects });
-
+    it('getAll returns empty array when no projects', async () => {
         const result = await projectService.getAll();
-
-        expect(api.get).toHaveBeenCalledWith('/projects');
-        expect(result).toEqual(mockProjects);
+        expect(result).toEqual([]);
     });
 
-    it('getById fetches a single project correctly', async () => {
-        const mockProject = { id: 'p1', name: 'Project 1' };
-        mockedApi.get.mockResolvedValue({ data: mockProject });
+    it('create and getAll work correctly', async () => {
+        const created = await projectService.create({
+            name: 'Test Project',
+            vehicles: ['cetus'],
+            description: '测试',
+        });
 
-        const result = await projectService.getById('p1');
+        expect(created.name).toBe('Test Project');
+        expect(created.vehicles).toEqual(['cetus']);
+        expect(created.id).toBeDefined();
 
-        expect(api.get).toHaveBeenCalledWith('/projects/p1');
-        expect(result).toEqual(mockProject);
+        const projects = await projectService.getAll();
+        expect(projects).toHaveLength(1);
+        expect(projects[0].name).toBe('Test Project');
     });
 
-    it('create sends correct payload', async () => {
-        const newProject = { name: 'New Project', vehicles: [] };
-        const mockResponse = { id: 'p2', ...newProject };
-        mockedApi.post.mockResolvedValue({ data: mockResponse });
+    it('getById returns the correct project', async () => {
+        const created = await projectService.create({ name: 'Find Me', vehicles: [] });
+        const found = await projectService.getById(created.id);
 
-        const result = await projectService.create(newProject);
-
-        expect(api.post).toHaveBeenCalledWith('/projects', newProject);
-        expect(result).toEqual(mockResponse);
+        expect(found.id).toBe(created.id);
+        expect(found.name).toBe('Find Me');
     });
 
-    it('update sends correct payload', async () => {
-        const updateData = { name: 'Updated Project' };
-        const mockResponse = { id: 'p1', ...updateData };
-        mockedApi.put.mockResolvedValue({ data: mockResponse });
+    it('update modifies the project', async () => {
+        const created = await projectService.create({ name: 'Old Name', vehicles: [] });
+        const updated = await projectService.update(created.id, { name: 'New Name' });
 
-        const result = await projectService.update('p1', updateData);
-
-        expect(api.put).toHaveBeenCalledWith('/projects/p1', updateData);
-        expect(result).toEqual(mockResponse);
+        expect(updated.name).toBe('New Name');
+        expect(updated.id).toBe(created.id);
     });
 
-    it('delete calls correct endpoint', async () => {
-        mockedApi.delete.mockResolvedValue({});
+    it('delete removes the project', async () => {
+        const created = await projectService.create({ name: 'To Delete', vehicles: [] });
+        await projectService.delete(created.id);
 
-        await projectService.delete('p1');
-
-        expect(api.delete).toHaveBeenCalledWith('/projects/p1');
+        const projects = await projectService.getAll();
+        expect(projects).toHaveLength(0);
     });
 });
