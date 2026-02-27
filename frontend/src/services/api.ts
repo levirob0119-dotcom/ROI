@@ -8,15 +8,11 @@ const api = axios.create({
     withCredentials: true, // 携带 SSO Cookie，后端 authMiddleware 依赖此 Cookie
 });
 
-// 响应拦截器：处理 401（未登录或 SSO 会话过期）
+// 响应拦截器：401 不再自动跳转，SSO 登录由 AuthContext 统一管理
+// 避免 SSO 已认证但后端 authMiddleware 暂时不可用时产生无限循环跳转
 api.interceptors.response.use(
     (response) => response,
     (error) => {
-        if (error.response?.status === 401) {
-            // 使用 BASE_URL 前缀，避免跳转到 F[x] 平台的 /login
-            const base = import.meta.env.BASE_URL || '/';
-            window.location.href = `${base}login`;
-        }
         return Promise.reject(error);
     }
 );
