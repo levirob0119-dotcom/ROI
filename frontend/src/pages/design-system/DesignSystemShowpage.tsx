@@ -3,6 +3,7 @@ import { motion, useReducedMotion } from 'framer-motion';
 
 import { pageSpring, reducedMotionTransition } from '@/lib/motion';
 import ComponentStatesSection from './sections/ComponentStatesSection';
+import ComponentReviewSection from './sections/ComponentReviewSection';
 import FoundationSection from './sections/FoundationSection';
 import MotionLabSection from './sections/MotionLabSection';
 import PatternsSection from './sections/PatternsSection';
@@ -14,6 +15,7 @@ const navItems = [
   { id: 'typography', label: 'Typography' },
   { id: 'motion-lab', label: 'Motion Lab' },
   { id: 'component-states', label: 'Component States' },
+  { id: 'component-review', label: 'Component Review' },
   { id: 'patterns', label: 'Patterns' },
   { id: 'readiness-matrix', label: 'Readiness Matrix' },
 ] as const;
@@ -69,6 +71,7 @@ export default function DesignSystemShowpage() {
           onReducedMotionChange={setReducedMotion}
         />
         <ComponentStatesSection />
+        <ComponentReviewSection />
         <PatternsSection />
         <ReadinessMatrixSection />
       </motion.main>

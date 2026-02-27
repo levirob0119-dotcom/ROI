@@ -216,4 +216,4 @@ const PetsEntryCard: React.FC<PetsEntryCardProps> = ({
     );
 };
 
-export default React.memo(PetsEntryCard);
+export default PetsEntryCard;

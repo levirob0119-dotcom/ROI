@@ -1,16 +1,58 @@
 import * as React from "react"
+import { cva, type VariantProps } from "class-variance-authority"
 
 import { cn } from "@/lib/utils"
 
+const cardVariants = cva(
+    "rounded-card text-card-foreground transition-[box-shadow,transform,background-color]",
+    {
+        variants: {
+            variant: {
+                default: "surface-panel",
+                subtle: "surface-panel-soft",
+                elevated: "surface-panel shadow-[0_22px_46px_rgba(15,23,42,0.12)]",
+            },
+            interactive: {
+                true: "cursor-pointer hover:-translate-y-0.5 hover:shadow-[0_1px_1px_rgba(15,23,42,0.03),0_22px_42px_rgba(15,23,42,0.14)] focus-within:-translate-y-0.5 focus-within:shadow-[0_1px_1px_rgba(15,23,42,0.03),0_22px_42px_rgba(15,23,42,0.14)]",
+                false: "",
+            },
+        },
+        defaultVariants: {
+            variant: "default",
+            interactive: false,
+        },
+    }
+)
+
+const sectionSpacing = {
+    default: {
+        header: "p-5 sm:p-6",
+        content: "p-5 pt-0 sm:p-6 sm:pt-0",
+        footer: "p-5 pt-0 sm:p-6 sm:pt-0",
+    },
+    compact: {
+        header: "p-4 sm:p-5",
+        content: "p-4 pt-0 sm:p-5 sm:pt-0",
+        footer: "p-4 pt-0 sm:p-5 sm:pt-0",
+    },
+} as const
+
+type CardDensity = keyof typeof sectionSpacing
+
+interface CardProps extends React.HTMLAttributes<HTMLDivElement>, VariantProps<typeof cardVariants> {}
+interface CardSectionProps extends React.HTMLAttributes<HTMLDivElement> {
+    density?: CardDensity
+}
+
 const Card = React.forwardRef<
     HTMLDivElement,
-    React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
+    CardProps
+>(({ className, variant, interactive, ...props }, ref) => (
     <div
         ref={ref}
         className={cn(
-            "surface-panel rounded-card text-card-foreground",
-            className
+            cardVariants({ variant, interactive }),
+            className,
         )}
         {...props}
     />
@@ -19,11 +61,11 @@ Card.displayName = "Card"
 
 const CardHeader = React.forwardRef<
     HTMLDivElement,
-    React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
+    CardSectionProps
+>(({ className, density = "default", ...props }, ref) => (
     <div
         ref={ref}
-        className={cn("flex flex-col gap-1.5 p-5 sm:p-6", className)}
+        className={cn("flex flex-col gap-1.5", sectionSpacing[density].header, className)}
         {...props}
     />
 ))
@@ -58,19 +100,19 @@ CardDescription.displayName = "CardDescription"
 
 const CardContent = React.forwardRef<
     HTMLDivElement,
-    React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
-    <div ref={ref} className={cn("p-5 pt-0 sm:p-6 sm:pt-0", className)} {...props} />
+    CardSectionProps
+>(({ className, density = "default", ...props }, ref) => (
+    <div ref={ref} className={cn(sectionSpacing[density].content, className)} {...props} />
 ))
 CardContent.displayName = "CardContent"
 
 const CardFooter = React.forwardRef<
     HTMLDivElement,
-    React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
+    CardSectionProps
+>(({ className, density = "default", ...props }, ref) => (
     <div
         ref={ref}
-        className={cn("flex items-center p-5 pt-0 sm:p-6 sm:pt-0", className)}
+        className={cn("flex items-center", sectionSpacing[density].footer, className)}
         {...props}
     />
 ))

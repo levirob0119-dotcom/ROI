@@ -1,4 +1,5 @@
 import { Car, Database } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 import EmptyStateBlock from '@/components/patterns/EmptyStateBlock';
 import InlineStatusBar from '@/components/patterns/InlineStatusBar';
@@ -24,6 +25,21 @@ export default function ComponentShowcase() {
                 description="基础组件 + 业务复合组件在真实业务场景下的组合示例。"
                 status={{ label: 'Review Ready', tone: 'success' }}
             />
+
+            <Card variant="subtle">
+                <CardHeader>
+                    <CardTitle>逐个评审入口</CardTitle>
+                    <CardDescription>已挑选 5 个高频基础组件，支持单组件查看与逐条评审记录。</CardDescription>
+                </CardHeader>
+                <CardContent className="flex flex-wrap gap-2">
+                    <Button asChild variant="action">
+                        <Link to="/components/review">进入 5 组件评审模式</Link>
+                    </Button>
+                    <Button asChild variant="outline">
+                        <Link to="/design-system">查看设计系统总览</Link>
+                    </Button>
+                </CardContent>
+            </Card>
 
             <section className="grid grid-cols-1 gap-4 lg:grid-cols-2">
                 <Card>

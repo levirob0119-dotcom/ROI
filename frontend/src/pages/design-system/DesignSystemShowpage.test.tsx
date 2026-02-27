@@ -12,6 +12,7 @@ describe('DesignSystemShowpage', () => {
     expect(screen.getByRole('heading', { name: 'Typography' })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'Motion Lab' })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'Component States' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Component Review' })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'Patterns' })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'Readiness Matrix' })).toBeInTheDocument();
   });
