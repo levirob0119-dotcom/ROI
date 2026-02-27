@@ -13,7 +13,9 @@ api.interceptors.response.use(
     (response) => response,
     (error) => {
         if (error.response?.status === 401) {
-            window.location.href = '/login';
+            // 使用 BASE_URL 前缀，避免跳转到 F[x] 平台的 /login
+            const base = import.meta.env.BASE_URL || '/';
+            window.location.href = `${base}login`;
         }
         return Promise.reject(error);
     }
