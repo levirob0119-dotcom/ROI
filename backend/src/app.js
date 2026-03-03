@@ -40,6 +40,69 @@ app.get('/api/health', (req, res) => {
     res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
+// 网络诊断接口（临时，用于排查容器内 page-gateway 连通性）
+app.get('/api/debug/network', async (req, res) => {
+    const results = {
+        nodeVersion: process.version,
+        hasFetch: typeof globalThis.fetch === 'function',
+        env: {
+            NODE_ENV: process.env.NODE_ENV,
+            K8S_ENV: process.env.K8S_ENV,
+            ALLOWED_ORIGINS: process.env.ALLOWED_ORIGINS,
+        },
+        cookies: req.headers.cookie ? '(present)' : '(none)',
+        tests: {},
+    };
+
+    // 测试 1：DNS 解析
+    try {
+        const dns = await import('dns');
+        const addresses = await dns.promises.resolve4('page-gateway.nioint.com');
+        results.tests.dns = { ok: true, addresses };
+    } catch (e) {
+        results.tests.dns = { ok: false, error: e.message };
+    }
+
+    // 测试 2：fetch page-gateway（不带 cookie）
+    try {
+        const resp = await fetch('https://page-gateway.nioint.com/account/current');
+        results.tests.fetchNoCookie = { ok: true, status: resp.status };
+    } catch (e) {
+        results.tests.fetchNoCookie = { ok: false, error: e.message, code: e.cause?.code };
+    }
+
+    // 测试 3：fetch page-gateway（带 cookie）
+    if (req.headers.cookie) {
+        try {
+            const resp = await fetch('https://page-gateway.nioint.com/account/current', {
+                headers: { cookie: req.headers.cookie },
+            });
+            const body = await resp.json().catch(() => null);
+            results.tests.fetchWithCookie = { ok: true, status: resp.status, body };
+        } catch (e) {
+            results.tests.fetchWithCookie = { ok: false, error: e.message, code: e.cause?.code };
+        }
+    }
+
+    // 测试 4：用 https 模块替代 fetch
+    try {
+        const https = await import('https');
+        const testHttps = await new Promise((resolve, reject) => {
+            const r = https.get('https://page-gateway.nioint.com/account/current', (resp) => {
+                resolve({ ok: true, status: resp.statusCode });
+                resp.resume(); // drain
+            });
+            r.on('error', (e) => reject(e));
+            r.setTimeout(5000, () => { r.destroy(); reject(new Error('timeout')); });
+        });
+        results.tests.httpsModule = testHttps;
+    } catch (e) {
+        results.tests.httpsModule = { ok: false, error: e.message, code: e.code };
+    }
+
+    res.json(results);
+});
+
 // Error handling
 app.use((err, req, res, next) => {
     console.error(err.stack);
